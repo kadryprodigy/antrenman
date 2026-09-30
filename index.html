@@ -16,11 +16,11 @@
 /* Renkler olimpik ağırlık plakalarından: her antrenman günü bir plaka rengi taşır (Upper kırmızı, Lower mavi, Push sarı, Pull yeşil).
    Nötrler beton/çelik grisi. Tek font ailesi Archivo: normal genişlik metin, dar genişlik başlık ve sayılar. */
 :root{--bg:#E9EAEC;--sf:#FFFFFF;--ink:#15171A;--mut:#596069;--line:#D3D6DB;--pri:#15171A;--onpri:#FFFFFF;--err:#B00F2A;
---red:#C4122F;--blue:#1C4E9D;--yel:#F0BE00;--grn:#1B7A47;--rest:#6B727C;
+--red:#C4122F;--blue:#1C4E9D;--yel:#F0BE00;--grn:#1B7A47;--rest:#6B727C;--up:#17703F;--bar:#8E959E;
 --f:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#111315;--sf:#1B1E22;--ink:#ECEEF0;--mut:#A3AAB3;--line:#30353B;--pri:#ECEEF0;--onpri:#111315;--err:#FF7A7A;--rest:#4A5058;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#111315;--sf:#1B1E22;--ink:#ECEEF0;--mut:#A3AAB3;--line:#30353B;--pri:#ECEEF0;--onpri:#111315;--err:#FF7A7A;--rest:#4A5058;color-scheme:dark}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#111315;--sf:#1B1E22;--ink:#ECEEF0;--mut:#A3AAB3;--line:#30353B;--pri:#ECEEF0;--onpri:#111315;--err:#FF7A7A;--rest:#4A5058;--up:#5BC98A;--bar:#6B727C;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#111315;--sf:#1B1E22;--ink:#ECEEF0;--mut:#A3AAB3;--line:#30353B;--pri:#ECEEF0;--onpri:#111315;--err:#FF7A7A;--rest:#4A5058;--up:#5BC98A;--bar:#6B727C;color-scheme:dark}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 var(--f);-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
 button,input,select{font-family:inherit}
@@ -89,8 +89,25 @@ button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .opt button{background:none;border:0;padding:5px 0;font-size:13px;font-weight:500;color:var(--mut);display:inline-flex;align-items:center;gap:6px;text-align:left}
 .opt button::before{content:"";width:13px;height:13px;border-radius:50%;box-shadow:inset 0 0 0 1.5px currentColor;flex:none}
 .opt .on{color:var(--ink);font-weight:700}.opt .on::before{box-shadow:inset 0 0 0 4.5px var(--ink)}
-.kv{display:flex;gap:28px;margin:16px 0 4px}.kv small{display:block;font-size:12px;font-weight:600;color:var(--mut)}.kv b{font-size:32px;line-height:1}
 .tip{background:var(--sf);border-radius:6px;padding:10px 12px;font-size:14px;margin:10px 0}
+.goal{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin:16px 0 4px}.goal b{font-stretch:70%;font-weight:800;font-size:34px;line-height:1}.goal .of{font-weight:700;color:var(--mut)}.goal .tg{margin-left:auto;font-weight:700}
+.last{font-size:14px;margin:12px 0 0}
+.small{font-size:13px;margin:8px 0 0}
+.segm.sm{display:flex;flex-wrap:wrap}.segm.sm button{padding:8px 13px;flex:1}
+.li .sub{font-weight:400}
+.segm{display:inline-flex;box-shadow:inset 0 0 0 1.5px var(--ink);border-radius:6px;overflow:hidden}.segm button{background:none;border:0;padding:9px 18px;font-weight:700;font-size:15px;color:var(--ink)}.segm .on{background:var(--ink);color:var(--bg)}
+.fig{margin:0;padding:12px 0 4px}.ro{font-size:13px;font-weight:700;margin:0 0 4px;min-height:2.8em}
+.svg{width:100%;height:auto;display:block;overflow:visible}.svg .gl{stroke:var(--line);stroke-width:1}
+.svg text{font-family:var(--f);font-size:12px;fill:var(--mut)}.svg .yt{text-anchor:end}.svg .xl{text-anchor:middle}.svg .vl{text-anchor:middle;fill:var(--ink);font-weight:700}
+.bar path{fill:var(--bar)}.bar.cur path{fill:var(--ink)}.bar.act path{fill:var(--mut)}.bar.cur.act path{fill:var(--ink);opacity:.75}
+.bar,.hit{outline:none;cursor:pointer}.bar:focus-visible rect,.hit:focus-visible rect{stroke:var(--ink);stroke-width:1.5}
+.ln{fill:none;stroke:var(--ink);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}.pt2{fill:var(--ink);stroke:var(--sf);stroke-width:2}
+.ch{stroke:var(--mut);stroke-width:1;opacity:0}.hit.act .ch{opacity:1}.pt2.opt{opacity:0}.hit.act .pt2.opt{opacity:1}
+.tv summary{cursor:pointer;font-weight:700;font-size:14px;padding:10px 0;text-decoration:underline;text-underline-offset:3px;list-style:none}.tv summary::-webkit-details-marker{display:none}
+.tb{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:8px}.tb th,.tb td{text-align:left;padding:6px 4px;border-top:1px solid var(--line)}.tb th{color:var(--mut);font-weight:600}.tb .n{text-align:right}
+textarea{width:100%;background:var(--sf);color:var(--ink);border:1.5px solid var(--line);border-radius:6px;padding:10px 12px;font:inherit;font-size:16px;resize:vertical;min-height:64px}textarea:focus{outline:none;border-color:var(--ink)}
+.unote{color:var(--ink)}
+.tr{display:flex;gap:12px;flex-wrap:wrap;margin-top:3px;font-size:13px;font-weight:700}.dl.up{color:var(--up)}.dl.dn{color:var(--err)}.dl.eq{color:var(--mut)}
 .timer{font-size:132px;line-height:.9;text-align:center;margin:4px 0 12px}
 .rbar{height:8px;background:var(--line);border-radius:2px;overflow:hidden}.rbar i{display:block;height:100%;background:var(--pc);transition:width .25s linear}
 .nx{text-align:center;margin:14px 0 4px}
@@ -112,11 +129,13 @@ button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .tl{position:absolute;inset:0;display:grid;place-items:center;padding-left:56px;color:var(--mut);font-weight:700;font-size:15px;pointer-events:none}
 .knob{position:absolute;left:5px;top:5px;width:50px;height:50px;border-radius:4px;border:0;background:var(--ink);color:var(--bg);cursor:grab;touch-action:none;transition:transform .25s ease}
 .knob::before{content:"";position:absolute;left:50%;top:50%;width:2px;height:20px;margin:-10px 0 0 -1px;background:currentColor;box-shadow:-6px 0 currentColor,6px 0 currentColor}
+.who{touch-action:auto}.splash input{-webkit-user-select:text;user-select:text}.who .pt{margin-top:18px}
 .sp-hint{text-align:center;font-size:13px;color:var(--mut);margin:10px 0 0}
 @media (prefers-reduced-motion:reduce){.knob,.rbar i{transition:none}}
 </style></head><body><div id="app"></div><input type="file" id="impf" accept=".json,application/json" hidden>
 <script>
-const KEY='ulppl_v1',DAYS=['Pzt','Sal','Çar','Per','Cum','Cmt','Paz'],DAYL=['Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi','Pazar'];
+// Her kişinin verisi ayrı anahtarda: ulppl_v1:<isim>. Kişi listesi PKEY'de.
+const LEGACY='ulppl_v1',PKEY='antrenman_kisiler';let PROF='',KEY='';const DAYS=['Pzt','Sal','Çar','Per','Cum','Cmt','Paz'],DAYL=['Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi','Pazar'];
 const X=(n,sets,reps,rest,rir,note)=>({n,sets,reps,rest,rir,note});
 const DEF={
 Upper:[
@@ -170,19 +189,818 @@ const ALT={'Machine Chest Press':['Smith Machine Bench Press','DB Bench Press'],
 const nm=e=>{const p=S.pick&&S.pick[e.n];return p&&ALT[e.n]&&ALT[e.n].includes(p)?p:e.n};
 const chips=e=>ALT[e.n]?`<div class="opt" role="radiogroup" aria-label="Hareket seçimi">${[e.n,...ALT[e.n]].map(v=>`<button role="radio" aria-checked="${nm(e)==v}" class="${nm(e)==v?'on':''}" data-a="alt" data-o="${esc(e.n)}" data-v="${esc(v)}">${esc(v)}</button>`).join('')}</div>`:'';
 const clone=o=>JSON.parse(JSON.stringify(o));
-function mig(s){if(!s.v)['Upper','Push'].forEach(k=>{if(!s.w[k])s.w[k]=clone(DEF[k])});
+// ---- Hazır programlar (PDF'lerden aktarıldı). Her kişi birini seçer; S.prog aktif programın kimliği. ----
+const PROGS=[{id:'ulppl',name:'ULPPL: Upper/Lower/Push/Pull',src:'ULPPL',weeks:12,editable:1,
+desc:'Haftada 4 gün Upper, Lower, Push ve Pull. 12 hafta; 1. ve 7. haftalar tanıtım haftası, son haftalarda son set teknikleri eklenir. Programı düzenle ekranından değiştirilebilen tek program budur.',
+sched:['Upper','Lower','','Push','Pull','','']}];
+// Comeback Program (Jeff Nippard): ara verdikten sonra düzenli antrenmana köprü. 4 hafta. Yoğunluk RPE veya %1RM.
+// Satır: [ad, ısınma seti, set (hafta dizisi ya da tek), tekrar (dizi ya da tek), yoğunluk (hafta dizisi), not]
+(()=>{
+const N={
+sq:'Formu oturt: geriye ve aşağı otur, dizlerin içe kapanmasın.',
+su:'Her bacak 6 tekrar; kutu diz hizasının biraz altında olsun.',
+llc:'Hamstringle zihin-kas bağlantısı kur.',
+scr:'Her tekrarın altında ve üstünde dur, hafif ağırlık kullan.',
+cc:'Karnını sıkarken sırtını yuvarla.',
+bp:'Formu oturt: barı göğsüne değdir.',
+msp:'Sürekli gerilimli tekrarlar, pump hedefle.',
+cco:'Üst göğüsle zihin-kas bağlantısı kur.',
+dsc:'Dirsekleri sabit tut, dambılları başının biraz arkasına doğru indir.',
+elr:'Kabloyu bacaklarının arasından geçir, kablodan uzağa doğru yaslan.',
+lpi:'Ön aktivasyon: sadece lat\'larda pump hisset.',
+pu:'Gerekirse destek kullan, tam hareket açıklığı.',
+tb:'Dirsekleri geriye sür, üstte kürek kemiklerini sık.',
+fp:'İpi alnına doğru çek, arka omuzla bağlantı kur.',
+ez:'Barbell veya dambıl da olur; barı dışa ve yukarı savur.',
+dl:'Formu oturt: göğüs dik, çekmeden önce bardaki boşluğu al.',
+lp:'Hafif ağırlık, akıcı tekrarlar.',
+sbl:'Tekrarlar boyunca kalçanı sıkılı tut.',
+le:'Yavaş ve kontrollü tekrarlar.',
+scalf:'Her tekrarın altında kısa bir an dur.',
+hlr:'Tükenişe gitme, sadece karnı çalıştır.',
+ohp:'Hafif ağırlık! Yukarı ve hafif geriye doğru it.',
+idp:'15-30° düşük eğim, üst göğüsle bağlantı kur.',
+dlr:'Dambılları yukarı ve dışa doğru kaldır.',
+tp:'Dirsekleri sabit tut, akıcı ve düzenli tekrarlar.',
+push:'Göğüste pump hedefle, depoda 5+ tekrar bırak. Tekrar sayısı serbest.',
+lpd:'Orta-geniş tutuş, üstte lat\'ları esnet.',
+scrw:'Nötr tutuş, dirsekleri aşağı ve içeri sür.',
+shr:'Ağır gitme, hafif öne eğil, üst trapezleri sık.',
+rpd:'Arka omuzla zihin-kas bağlantısı kur.',
+hc:'Dambılı sapın ortasından tut, sıkıca kavra.'};
+const PCT=['%50','%60','%65-70','%67-72'];
+const alt={'1-Arm Lat Pull-In':['Lat Pulldown'],'Barbell Bench Press':['Dumbbell Press','Machine Chest Press','Smith Machine Bench Press'],'Cable Crossover':['Pec Deck'],
+'Cable Crunch':['Bodyweight Crunch','V Sit-Up','Bicycle Crunch'],'Chest-Supported T-Bar Row':['Chest-Supported Row','Cable Single-Arm Row'],'Deadlift':['Sumo Deadlift'],
+'Dumbbell Shrug':['Barbell Shrug','Smith Machine Shrug'],'Dumbbell Skull Crusher':['EZ-Bar Skull Crusher','Floor Press','Pin Press','JM Press'],
+'Egyptian Lateral Raise':['Dumbbell Lateral Raise','Machine Lateral Raise'],'EZ-Bar Biceps Curl':['Dumbbell Biceps Curl','Cable Curl'],'Hammer Curl':['EZ-Bar Pronated Curl','Rope Hammer Curl'],
+'Hanging Leg Raise':['Captain\'s Chair Crunch','Reverse Crunch'],'Incline Dumbbell Press':['Barbell Incline Press','Deficit Push-Up'],'Lat Pulldown':['Pull-Up','Supinated Pulldown'],
+'Leg Extension':['Sissy Squat','Goblet Squat'],'Leg Press':['Goblet Squat','Walking Lunge'],'Lying Leg Curl':['Seated Leg Curl','Sliding Leg Curl'],
+'Machine Shoulder Press':['Seated Dumbbell Shoulder Press'],'Overhead Press':['Seated Barbell Overhead Press','Dumbbell Shoulder Press'],'Push-Up':['Dumbbell Floor Press','Machine Chest Press'],
+'Reverse Pec Deck':['Reverse Cable Flye','Reverse Dumbbell Flye'],'Rope Face Pull':['Reverse Dumbbell Flye','Reverse Cable Flye'],'Seated Cable Row':['Chest-Supported T-Bar Row','Machine Row','Dumbbell Row'],
+'Seated Calf Raise':['Standing Calf Raise'],'Back Squat':['Hack Squat','Smith Machine Squat','Leg Press + 15 Back Extension'],'Standing Calf Raise':['Seated Calf Raise'],
+'Step-Up':['Walking Lunge','Single-Leg Press'],'Swiss Ball Leg Curl':['Sliding Leg Curl','Seated Leg Curl','Lying Leg Curl'],'Triceps Pushdown':['Rope Overhead Triceps Extension','Dumbbell Kickback']};
+const S23=[2,2,3,3];
+const legs1=['Legs 1',[['Back Squat',3,S23,[5,5,4,5],PCT,N.sq],['Step-Up',1,S23,6,[6,7,7,8],N.su],['Lying Leg Curl',1,S23,'10-12',[7,8,8,8],N.llc],['Standing Calf Raise',1,3,'12-15',[7,8,8,8],N.scr],['Cable Crunch',0,S23,'12-15',[7,8,8,8],N.cc]]];
+const push1=['Push 1',[['Barbell Bench Press',3,S23,[5,5,4,5],PCT,N.bp],['Machine Shoulder Press',1,S23,'8-10',[6,7,7,8],N.msp],['Cable Crossover',1,S23,'10-12',[7,8,8,8],N.cco],['Dumbbell Skull Crusher',1,2,'10-12',[7,8,8,8],N.dsc],['Egyptian Lateral Raise',1,2,'10-12',[7,8,8,8],N.elr]]];
+const pull1=['Pull 1',[['1-Arm Lat Pull-In',0,2,'15-20',[4,4,4,4],N.lpi],['Pull-Up',1,S23,'6-8',[6,7,7,8],N.pu],['Chest-Supported T-Bar Row',1,S23,'10-12',[6,7,7,8],N.tb],['Rope Face Pull',0,3,'12-15',[7,8,8,8],N.fp],['EZ-Bar Biceps Curl',0,3,'8-10',[7,8,8,9],N.ez]]];
+const legs2=['Legs 2',[['Deadlift',3,S23,[4,4,3,4],PCT,N.dl],['Leg Press',2,S23,8,[6,6,6,7],N.lp],['Swiss Ball Leg Curl',0,S23,'12-15',[6,6,6,7],N.sbl],['Leg Extension',0,2,'10-12',[7,8,8,9],N.le],['Seated Calf Raise',1,S23,'15-20',[7,7,7,8],N.scalf],['Hanging Leg Raise',0,S23,'6-10',[6,6,6,7],N.hlr]]];
+const push2=['Push 2',[['Overhead Press',2,S23,4,[5,5,5,6],N.ohp],['Incline Dumbbell Press',1,2,'8-10',[6,7,7,8],N.idp],['Dumbbell Lateral Raise',0,S23,'12-15',[7,8,8,9],N.dlr],['Triceps Pushdown',1,S23,'8-10',[7,8,8,9],N.tp],['Push-Up',0,1,'serbest',[5,5,5,5],N.push]]];
+const pull2=['Pull 2',[['Lat Pulldown',2,S23,'10-12',[7,8,8,9],N.lpd],['Seated Cable Row',1,S23,'12-15',[7,8,8,9],N.scrw],['Dumbbell Shrug',1,S23,'8-10',[7,7,7,8],N.shr],['Reverse Pec Deck',0,S23,'12-15',[7,8,8,9],N.rpd],['Hammer Curl',0,S23,'8-10',[8,8,9,10],N.hc]]];
+PROGS.push({id:'cb-ppl',name:'Comeback: Push/Pull/Legs',src:'Comeback Program',weeks:4,desc:'Ara verdikten sonra dönüş için 4 haftalık, haftada 6 gün PPL. Bir aydan uzun tam ara verdiysen 1-4. haftaları sırayla yap; 1-2 ay sadece vücut ağırlığıyla çalıştıysan yalnızca 1. ve 4. haftayı yap.',
+ int:'rpe',sched:['Legs 1','Push 1','Pull 1','Legs 2','Push 2','Pull 2',''],alt,days:[legs1,push1,pull1,legs2,push2,pull2]});
+const lower1=['Lower 1',[['Back Squat',3,S23,5,PCT,N.sq],['Step-Up',1,S23,6,[6,7,7,8],N.su],['Lying Leg Curl',1,S23,'10-12',[7,8,8,8],N.llc],['Standing Calf Raise',0,3,'12-15',[7,8,8,8],N.scr],['Dumbbell Shrug',1,S23,'8-10',[7,8,8,8],N.shr],['Cable Crunch',0,S23,'12-15',[7,8,8,8],N.cc]]];
+const upper1=['Upper 1',[['Barbell Bench Press',3,S23,[5,5,4,5],PCT,N.bp],['Lat Pulldown',2,S23,'10-12',[7,7,7,8],N.lpd],['Cable Crossover',1,3,'10-12',[7,8,8,8],N.cco],['Seated Cable Row',1,S23,'12-15',[7,7,7,8],N.scrw],['Egyptian Lateral Raise',1,S23,'10-12',[7,8,8,8],N.elr],['EZ-Bar Biceps Curl',0,3,'8-10',[7,8,8,9],N.ez],['Dumbbell Skull Crusher',1,S23,'10-12',[7,8,8,8],N.dsc]]];
+const lower2=['Lower 2',[['Deadlift',3,S23,[4,4,3,4],PCT,N.dl],['Leg Press',2,S23,8,[6,6,6,7],N.lp],['Swiss Ball Leg Curl',0,S23,'12-15',[6,6,6,7],N.sbl],['Leg Extension',0,2,'10-12',[7,8,8,9],N.le],['Seated Calf Raise',1,S23,'15-20',[7,7,8,8],N.scalf],['Hanging Leg Raise',0,S23,'6-10',[6,6,6,7],N.hlr]]];
+const upper2=['Upper 2',[['Pull-Up',1,S23,'6-8',[6,7,7,8],N.pu],['Overhead Press',2,S23,4,[5,5,5,6],N.ohp],['Chest-Supported T-Bar Row',1,S23,'10-12',[6,7,8,9],N.tb],['Incline Dumbbell Press',1,2,'8-10',[6,7,8,9],N.idp],['Rope Face Pull',0,3,'12-15',[7,8,8,9],N.fp],['Hammer Curl',0,S23,'8-10',[8,8,9,10],N.hc]]];
+PROGS.push({id:'cb-ul',name:'Comeback: Upper/Lower',src:'Comeback Program',weeks:4,desc:'Ara verdikten sonra dönüş için 4 haftalık, haftada 4 gün Upper/Lower. Bir aydan uzun tam ara verdiysen 1-4. haftaları sırayla yap; 1-2 ay sadece vücut ağırlığıyla çalıştıysan yalnızca 1. ve 4. haftayı yap.',
+ int:'rpe',sched:['Lower 1','Upper 1','','Lower 2','Upper 2','',''],alt,days:[lower1,upper1,lower2,upper2]});
+})();
+// C.A.R.D. Workout (Jeff Nippard): ekipmansız, iskambil destesiyle. Her antrenmanda 52 kart karılır, 20 kart çekilir.
+// Kartın rengi hareket grubunu, değeri tekrar sayısını belirler (2-10: değer+10; J/Q/K: 20; As: 2 dk dinlenme).
+// Aynı renk her çekildiğinde o grubun listesinde sıradaki harekete geçilir.
+PROGS.push({id:'card',name:'C.A.R.D. (evde, ekipmansız)',src:'C.A.R.D. Workout',weeks:1,card:1,
+desc:'Her antrenmanda desteden 20 kart çekilir. Maça: itiş, sinek: çekiş, kupa: bacak, karo: izolasyon. Tekrar sayısı kart değeri artı 10 (vale, kız, papaz 20). As çıkarsa 2 dakika dinlen; bunun dışında kartlar arasında dinlenme yok. Dambıl veya bant varsa aynı hareketlerde kullanabilirsin.',
+sched:['C.A.R.D.','','C.A.R.D.','','C.A.R.D.','',''],
+suits:[
+ ['♠','Maça: itiş',[['Push-Up',['Incline Push-Up']],['Pike Push-Up',['Vertical Push-Up']],['Standing Jug Press',['Standing Dumbbell Press']],['Jug Lateral Raise',['Doorway Lateral Hold','Dumbbell/Band Lateral Raise']]]],
+ ['♣','Sinek: çekiş',[['Doorway Pull-Up',['Tree Branch Pull-Up','Banded Pulldown']],['Table Inverted Row',['Dumbbell Row']],['Jug Rear Delt Flye',['Dumbbell Rear Delt Flye']],['Backpack Upright Row',['Jug Upright Row','Dumbbell/Band Upright Row']]]],
+ ['♥','Kupa: bacak',[['Walking Lunge (sırt çantalı)',['Dumbbell Walking Lunge']],['Bulgarian Split Squat',[]],['Single-Leg Hip Thrust',[]],['Nordic Ham Curl',[]]]],
+ ['♦','Karo: izolasyon',[['Jug Biceps Curl',['Weightless Flex Curl','Dumbbell Curl']],['Bodyweight Skull Crusher (masa)',['Close-Grip Push-Up','Dumbbell Floor Skull Crusher']],['Bicycle Crunch',['Reverse Crunch']],['Standing Calf Raise (yüklü)',[]]]]],
+notes:{'Jug Lateral Raise':'Kapı pervazında izometrik tutuşta "tekrar" yerine saniye say: 6 gelirse 16 saniye tut.','Standing Jug Press':'Su bidonu veya dolu şişe kullan; dambıl varsa dambılla yap.','Walking Lunge (sırt çantalı)':'Ağırlık için sırt çantasına kitap koyabilirsin.','Standing Calf Raise (yüklü)':'Sırt çantası, bidon veya dambılla yükle.','Jug Biceps Curl':'Ağırlıksız versiyonda bicepsi olabildiğince sert sık.'}});
+// The Essentials Program 3x/hafta (Jeff Nippard). 12 hafta, 3 blok (1-4, 5-8, 9-12); blok içindeki haftalar aynı.
+// Blok satırı: [ad, ısınma, set, tekrar, RPE, dinlenme sn, [alternatif1, alternatif2], not, işaret]
+// işaret: 'ss' = sonraki hareketle süperset (A1/A2), 'drop' = her sette drop set, 'dropL' = sadece son sette drop set
+(()=>{
+const D='Drop set: tekrarları bitir, ağırlığı ~%50 düşür, aynı sayıda tekrar daha yap.';
+const DL='Sadece son sette drop set: tekrarları bitir, ağırlığı ~%50 düşür, aynı sayıda tekrar daha yap.';
+const HV='Güç odaklı: her hafta ağırlık ya da tekrar ekle, formu sabit tut.';
+PROGS.push({id:'ess3',name:'Essentials (haftada 3 gün)',src:'The Essentials Program',weeks:12,int:'rpe',
+desc:'Yoğun ve verimli, antrenman başına ~45 dakika. Full Body, Upper ve Lower olmak üzere haftada 3 gün, 12 hafta. Her 4 haftada hareketler değişir. Isınma setleri ayrıca belirtilir; RPE hedefi çalışma setleri içindir.',
+sched:['Full Body','','Upper','','Lower','',''],
+blocks:[
+{from:1,to:4,days:[
+['Full Body',[
+ ['Hack Squat (Heavy)','2-3',1,'4-6','8-9',180,['Machine Squat','Leg Press'],HV],
+ ['Hack Squat (Back-off)',0,1,'8-10','8-9',180,['Machine Squat','Leg Press'],'Ağırlığı düşür, negatifi kontrol et; akıcı ve düzenli tempo.'],
+ ['Incline DB Press',2,2,'8-10','8-9',120,['Incline Machine Press','Incline Smith Machine Press'],'Dambılları rahatça inebildiğin kadar aşağı indir.'],
+ ['Seated Hamstring Curl',1,1,'10-12','10',90,['Nordic Ham Curl','Lying Leg Curl'],'Mümkünse oturarak yap; yoksa lying leg curl ya da nordic.'],
+ ['T-Bar Row',1,2,'10-12','9-10',90,['Helms DB Row','Chest-Supported Machine Row'],'Üstte kürek kemiklerini sık, ağırlığı kontrol et.'],
+ ['DB Biceps Curl',1,1,'12-15','10',90,['EZ-Bar Curl','Cable EZ-Curl'],D+' Avuçlar altta nötr, kaldırırken yukarı döner; iki kol aynı anda.','drop'],
+ ['DB Lateral Raise',1,1,'12-15','10',90,['Cable Lateral Raise','Machine Lateral Raise'],D+' Dambılları yukarı değil dışa kaldır, orta omuzla bağlantı kur.','drop'],
+ ['Cable Crunch',0,1,'12-15','10',90,['Machine Crunch','Plate-Weighted Crunch'],D+' Sırtını yuvarlayarak crunch yap.','drop']]],
+['Upper',[
+ ['Flat DB Press (Heavy)','2-3',1,'4-6','8-9',180,['Machine Chest Press','Weighted Dip'],HV],
+ ['Flat DB Press (Back-off)',0,1,'8-10','9-10',180,['Machine Chest Press','Weighted Dip'],'Göğüsle zihin-kas bağlantısı: ağırlığı düşür, esnemeye ve sıkmaya odaklan.'],
+ ['2-Grip Lat Pulldown',2,2,'10-12','9-10',120,['2-Grip Pull-Up','Machine Pulldown'],'İlk set geniş (omuzun 1,5 katı) üstten tutuş, ikinci set omuz genişliğinde alttan tutuş.'],
+ ['Seated DB Shoulder Press',1,2,'10-12','9-10',120,['Machine Shoulder Press','Standing DB Arnold Press'],'Dambılları sonuna kadar indir, gövdeni dik tut.'],
+ ['Seated Cable Row',1,2,'10-12','9-10',120,['Incline Chest-Supported DB Row','Chest-Supported T-Bar Row'],'Kürek kemiklerini birleştir, dirsekleri aşağı ve geriye sür. '+DL,'dropL'],
+ ['EZ-Bar Skull Crusher',1,2,'12-15','10',0,['Overhead Cable Triceps Extension','DB French Press'],'Barı başının arkasına doğru yay çizerek indir, tricepste sürekli gerilim.','ss'],
+ ['EZ-Bar Curl',1,2,'12-15','10',90,['DB Curl','Cable EZ Curl'],'Barı yukarı değil dışa doğru yay çizerek kaldır, bicepsi sık.']]],
+['Lower',[
+ ['Romanian Deadlift',2,2,'10-12','8-9',120,['DB Romanian Deadlift','45° Hyperextension'],'Bel nötr, kalçayı geriye it, omurga yuvarlanmasın.'],
+ ['Leg Press',2,3,'10-12','8-9',120,['Goblet Squat','DB Walking Lunge'],'Ayaklar platformda orta genişlikte, belin yuvarlanmasın.'],
+ ['Leg Extension',1,1,'10-12','9-10',90,['DB Step-Up','Goblet Squat'],D+' Ağırlığı quadriceps\'i sıkarak kaldır.','drop'],
+ ['Seated Calf Raise',1,2,'12-15','10',0,['Standing Calf Raise','Leg Press Toe Press'],'Parmak uçlarına kadar it, altta baldırı esnet, zıplatma.','ss'],
+ ['Cable Crunch',1,2,'12-15','10',90,['Machine Crunch','Plate-Weighted Crunch'],'Sırtını yuvarlayarak crunch yap.']]]]},
+{from:5,to:8,days:[
+['Full Body',[
+ ['Incline Machine Press','1-2',2,'8-10','9-10',120,['Incline Smith Machine Press','Incline DB Press'],'45° eğim, göğsü sıkmaya odaklan.'],
+ ['Single-Leg Leg Press (Heavy)','2-3',1,'6-8/bacak','8-9',180,['Machine Squat','Hack Squat'],'Ayaklar platformda yüksek ve geniş, zayıf bacakla başla.'],
+ ['Single-Leg Leg Press (Back-off)',0,1,'10-12/bacak','8-9',180,['Machine Squat','Hack Squat'],'Ayaklar platformda yüksek ve geniş, zayıf bacakla başla.'],
+ ['Pendlay Row',2,2,'8-10','9-10',120,['T-Bar Row','Seated Cable Row'],'Harekete kürek kemiklerini sıkarak başla, alt göğse çek, momentum kullanma.'],
+ ['Glute-Ham Raise',1,1,'10-12','10',90,['Nordic Ham Curl','Lying Leg Curl'],'Kalçanı düz tut; GHR makinesi yoksa nordic ham curl yap.'],
+ ['Spider Curl',1,1,'12-15','10',90,['DB Preacher Curl','Bayesian Cable Curl'],D+' Göğsünü eğimli sehpaya daya, dirsekler hafif önde.','drop'],
+ ['Cable Lateral Raise',1,1,'12-15','10',90,['Machine Lateral Raise','DB Lateral Raise'],D+' Kablodan uzağa yaslan, omzu sıkmaya odaklan.','drop'],
+ ['Hanging Leg Raise',0,1,'12-15','10',90,['Roman Chair Crunch','Reverse Crunch'],'Dizler göğse, kontrollü tekrarlar; zorlaştırmak için bacakları daha çok düzleştir.']]],
+['Upper',[
+ ['2-Grip Pull-Up','1-2',2,'8-10','9-10',120,['Machine Pulldown','2-Grip Lat Pulldown'],'İlk set omuzun 1,5 katı, ikinci set omuz genişliğinde tutuş.'],
+ ['Weighted Dip (Heavy)','2-3',1,'6-8','8-9',180,['Machine Chest Press','Flat DB Press'],'Dirsekler 45°, gövde 15° öne eğik; omuz genişliği ya da biraz geniş tutuş.'],
+ ['Weighted Dip (Back-off)',0,1,'10-12','9-10',180,['Machine Chest Press','Flat DB Press'],'Dirsekler 45°, gövde 15° öne eğik; omuz genişliği ya da biraz geniş tutuş.'],
+ ['Incline Chest-Supported DB Row',1,2,'8-10','9-10',120,['Chest-Supported T-Bar Row','Seated Cable Row'],'Dirsekler gövdeden ~30° açıda, ağırlığı göbeğine doğru çek.'],
+ ['Standing DB Arnold Press',1,2,'8-10','9-10',120,['Machine Shoulder Press','Seated DB Shoulder Press'],'Dirsekler önde, avuçlar içe bakarak başla; iterken dambılları çevir, avuçlar öne baksın.'],
+ ['DB Incline Curl',1,2,'15-20','10',0,['Cable EZ Curl','EZ-Bar Curl'],'Üst sırtını 45° sehpaya daya, omuzları geride tut.','ss'],
+ ['DB French Press',1,2,'15-20','10',90,['Overhead Cable Triceps Extension','EZ-Bar Skull Crusher'],'Oturarak ya da ayakta; dambılı başının arkasında düz yukarı-aşağı it.']]],
+['Lower',[
+ ['DB Bulgarian Split Squat',2,3,'10-12','8-9',120,['Goblet Squat','Leg Press'],'Zayıf bacakla başla, derin in.'],
+ ['DB Romanian Deadlift',2,2,'10-12','8-9',120,['Romanian Deadlift','45° Hyperextension'],'Hamstringdeki esnemeyi vurgula, belinin yuvarlanmasını engelle.'],
+ ['Goblet Squat',1,1,'12-15','9-10',90,['Leg Extension','Step-Up'],'Dambılı çenenin altında tut, geriye ve aşağı otur, dizleri dışa it.'],
+ ['Leg Press Toe Press',1,2,'15-20','10',0,['Standing Calf Raise','Seated Calf Raise'],'Parmak uçlarına kadar it, altta baldırı esnet, zıplatma.','ss'],
+ ['Machine Crunch',1,2,'10-12','9',90,['Plate-Weighted Crunch','Cable Crunch'],'Ağırlığı karnını sıkarak hareket ettir, kollarınla yardım etme.']]]]},
+{from:9,to:12,days:[
+['Full Body',[
+ ['Machine Squat (Heavy)','2-3',1,'4-6','8-9',180,['Hack Squat','Leg Press'],HV],
+ ['Machine Squat (Back-off)',0,1,'8-10','8-9',180,['Hack Squat','Leg Press'],'Ağırlığı düşür, negatifi kontrol et; akıcı ve düzenli tempo.'],
+ ['Standing DB Arnold Press',2,2,'8-10','9-10',120,['Seated DB Shoulder Press','Machine Shoulder Press'],'Dirsekler önde, avuçlar içe bakarak başla; iterken dambılları çevir, avuçlar öne baksın.'],
+ ['Nordic Ham Curl',1,1,'8-10','10',90,['Lying Leg Curl','Glute-Ham Raise'],'Kalçanı olabildiğince düz tut; lying leg curl ile değiştirebilirsin.'],
+ ['Meadows Row',2,2,'10-12','9-10',120,['Single-Arm DB Row','Pendlay Row'],'Boştaki elinle dizine dayan, hafif kal, formu vurgula.'],
+ ['Inverse Zottman Curl',1,1,'10-12','10',90,['Hammer Curl','DB Curl'],D+' Kaldırırken çekiç tutuş, indirirken avuçlar yukarı.','drop'],
+ ['Machine Lateral Raise',1,1,'10-12','10',90,['DB Lateral Raise','Cable Lateral Raise'],D+' Ağırlığı yan omzu sıkarak hareket ettir.','drop'],
+ ['Pec Deck',1,1,'10-12','10',90,['Cable Flye','DB Flye'],D+' Ellerini değil dirseklerinin içini birbirine yaklaştırmaya odaklan.','drop']]],
+['Upper',[
+ ['Machine Chest Press (Heavy)','2-3',1,'4-6','8-9',180,['Flat DB Press','Weighted Dip'],'Göğsü sıkmaya odaklan.'],
+ ['Machine Chest Press (Back-off)',0,1,'8-10','9-10',180,['Flat DB Press','Weighted Dip'],'Göğsü sıkmaya odaklan.'],
+ ['Machine Pulldown',2,2,'10-12','9-10',120,['2-Grip Lat Pulldown','Weighted Pull-Up'],'Dirsekleri "aşağı ve içeri" çektiğini düşün. '+DL,'dropL'],
+ ['Cable Shoulder Press',1,2,'12-15','9-10',120,['Machine Shoulder Press','Seated DB Shoulder Press'],'Kabloları omuz hizasına kadar indir, gövde dik. '+DL,'dropL'],
+ ['Helms DB Row',1,2,'10-12','9-10',120,['Chest-Supported T-Bar Row','Machine Row'],'Formda çok katı ol, dirsekleri 45° açıyla dışa ve geriye sür.'],
+ ['Overhead Cable Triceps Extension',1,2,'12-15','10',0,['EZ-Bar Skull Crusher','DB French Press'],'İki kol birlikte, negatife direnç göster.','ss'],
+ ['Cable EZ Curl',1,2,'12-15','10',90,['EZ-Bar Curl','DB Curl'],'Bicepsi sıkmaya odaklan, negatifi kontrol et.']]],
+['Lower',[
+ ['Romanian Deadlift',2,2,'10-12','8-9',120,['DB Romanian Deadlift','45° Hyperextension'],'Bel nötr, kalçayı geriye it, omurga yuvarlanmasın.'],
+ ['DB Walking Lunge',2,3,'8-10','8-9',120,['DB Step-Up','DB Bulgarian Split Squat'],'Orta boy adımlar at, arka bacaktan itmeyi en aza indir.'],
+ ['Leg Extension',1,1,'12-15','9-10',90,['Goblet Squat','DB Step-Up'],D+' Ağırlığı quadriceps\'i sıkarak kaldır.','drop'],
+ ['Standing Calf Raise',1,2,'15-20','10',0,['Seated Calf Raise','Leg Press Toe Press'],'Parmak uçlarına kadar it, altta baldırı esnet, zıplatma.','ss'],
+ ['Plate-Weighted Crunch',1,2,'12-15','10',90,['Cable Crunch','Machine Crunch'],'Plakayı ya da dambılı göğsünde tut ve güçlü crunch yap.']]]]}]});
+})();
+// The Pure Bodybuilding Program Phase 2 (Jeff Nippard). 10 hafta, haftada 5 gün (4 Full Body + Kol & Zayıf Nokta).
+// Blok 1 (1-5): 1. hafta giriş/deload, 2-5 aynı. Blok 2 (6-10): 6. hafta giriş/deload, 7-10 aynı.
+// RPE 'erken|son': erken setler ve son set için ayrı hedef. Son set tekniği kodları TECHS'te.
+(()=>{
+const E=(n,wu,reps,rest,alt,note)=>(sets,rpe,tech,r2)=>[n,wu,sets,r2||reps,rpe,rest,alt,note,'',tech||''];
+const BH='Tüm tekrarlar hareketin alt yarısında (esneme bölümünde).';
+const CALF='Sadece parmak ucuna çıkmak yerine ayak bileğini parmak tabanında ileri-geri yuvarladığını düşün.';
+const RDL='RPE bilerek düşük: çok kas hasarı yaratır, ağırlaşma. Hamstringde gerilimi korumak için kilitlemenin ~%75\'inde dur (hareketin alt 3/4\'ünde kal).';
+const WP1='Hypertrophy Handbook\'taki zayıf nokta tablosundan zayıf noktanı seç ve "Egzersiz 1" altındaki hareketlerden BİRİNİ yap. İsteğe bağlı.';
+const WP2='Zayıf noktan toparlanmış hissediyorsa (ağrı ya da yorgunluk yok) 2. egzersizi yap; hâlâ ağrılıysa bu hafta yapma. İsteğe bağlı.';
+// Blok 1 hareketleri
+const pu=E('Wide-Grip Pull-Up','2-3','8-10',150,['Wide-Grip Machine Pulldown','Wide-Grip Lat Pulldown'],'Omuzun 1,5 katı üstten tutuş. 2-3 sn yavaş negatif, inerken lat\'ların ayrıldığını hisset. Altta 0,5-1 sn dur, göğsü kaldırıp dirsekleri aşağı sürerek çık. Gerekirse destek ya da ek ağırlık kullan.');
+const mcp=E('Flat Machine Chest Press','2-3','8-10',240,['Flat DB Bench Press','Barbell Bench Press'],'Göğüste gerilimi koruyarak altta 1 sn dur.');
+const ghr=E('Glute-Ham Raise','1-2','10-12',150,['Single-Leg DB Hip Thrust','DB RDL'],'Hamstringde gerilimin az olduğu üst ~%25\'lik kısmı kes; kendini hamstringleri sıkarak yukarı çek.');
+const le=E('Leg Extension','1-2','10-12',90,['Reverse Nordic','Sissy Squat'],'Koltuğu rahat olduğun kadar geri al, tutamakları çekip kalçanı koltuğa bastır. 2-3 sn negatif; quadriceps\'in esnediğini hisset.');
+const mlr=E('Meadows Incline DB Lateral Raise',1,'10-12',90,['Cuffed Behind-The-Back Lateral Raise','DB Lateral Raise'],'~30° sehpaya yan yat. Dambılı önünden yere paralel kaldır, arkana doğru indirip omuzda derin esneme hisset, sonra tersini yap (2 tekrar). Tekrarlar arasında durma.');
+const scr=E('Standing Calf Raise',1,'15-20',90,['Leg Press Calf Press','Seated Calf Raise'],'Her tekrarın altında 1-2 sn dur. '+CALF);
+const slc=E('Seated Leg Curl','1-2','8-10',90,['Lying Leg Curl','Nordic Ham Curl'],'Hamstringde maksimum esneme için makinede öne eğil.');
+const bsq=E('Bottom-Half Smith Machine Squat','2-4','6-8',240,['Bottom-Half DB Bulgarian Split Squat','High-Bar Back Squat'],BH+' Ayakları normal squat pozisyonundan ~8-15 cm öne al, bara doğru geriye yaslan: daha dik squat, quadriceps\'e daha çok gerilim. Topuk kalkarsa ayakları öne, ayak kayıyor ya da bel yuvarlanıyorsa biraz geri al.');
+const cmr=E('Chest-Supported Machine Row',2,'8-10',150,['Chest-Supported T-Bar Row','Chest-Supported Incline DB Row'],'Göğüs pedini her tekrarda derin esneme alacak şekilde ayarla.');
+const bcf=E('Bottom-Half Seated Cable Flye',2,'8-10',150,['Bottom-Half DB Flye','Bottom-Half Pec Deck'],BH+' Her tekrarın altında göğüste derin esnemeyi hisset.');
+const hab=E('Machine Hip Abduction','1-2','12-15',90,['Cable Hip Abduction','Lateral Band Walk'],'Mümkünse pedlerle hareket açıklığını artır; öne eğilip makinenin raylarını tutarak kalçayı daha çok esnet.');
+const ote=E('Overhead Cable Triceps Extension (Bar)',1,'12-15',90,['Overhead Cable Triceps Extension (Rope)','DB Skull Crusher'],'Negatif boyunca tricepste güçlü esneme hisset; esneme noktasında 1 sn dur.');
+const sdr=E('Smith Machine Deficit Row','2-3','8-10',210,['Pendlay Deficit Row','Helms Row'],'Büyük esneme al, her tekrarda barı karnına/göğsüne değdir.');
+const bip=E('Bottom-Half Low Incline DB Press','2-3','10-12',150,['Bottom-Half Low Incline Smith Machine Press','Bottom-Half Low Incline Barbell Press'],BH+' Sehpa ~15° eğim; göğüste gerilimi koruyarak her tekrarda altta 1 sn dur.');
+const srl=E('Smith Machine Reverse Lunge','2-3','10-12/bacak',150,['DB Reverse Lunge','DB Walking Lunge'],'Her bacak için 2 set. Arka bacağın katkısını en aza indir, kalçayla zihin-kas bağlantısı kur.');
+const hcl=E('High-Cable Cuffed Lateral Raise',1,'12-15',90,['High-Cable Lateral Raise','DB Lateral Raise'],'Ağırlığı yan omzu sıkarak hareket ettir.');
+const bcr=E('Bottom-Half Standing Calf Raise',1,'10-12',90,['Seated Calf Raise','Donkey Calf Raise'],BH+' Altta 1-2 sn dur. '+CALF);
+const bpc=E('Bottom-Half EZ-Bar Preacher Curl','1-2','12-15',90,['Bottom-Half DB Preacher Curl','Bottom-Half Machine Preacher Curl'],BH+' Tricepsler pede sıkıca bassın; üstte ve altta durma, bicepste sürekli gerilim.');
+const rdl=E('Barbell RDL','2-3','8-10',240,['DB RDL','Deadlift'],RDL);
+const slp=E('Super-ROM Leg Press','2-4','8-10',240,['Single-Leg Leg Press','High-Bar Back Squat'],'Quadriceps odağı için ayaklar platformda aşağıda. Bel aşırı yuvarlanmadan inebildiğin kadar derin in; negatifi kontrol et, altta kısa dur.');
+const nlp=E('Neutral-Grip Lat Pulldown',2,'8-10',150,['Neutral-Grip Pull-Up','Cross-Body Lat Pull-Around'],'Tutacağı biraz önünde tut; pullover ile pulldown arası bir hareket. Ağırlıktan çok lat\'larına odaklan.');
+const msp=E('Machine Shoulder Press','2-3','10-12',150,['Seated Smith Machine Shoulder Press','Seated DB Shoulder Press'],'Altta omuzlardaki gerilimi koru.');
+const had=E('Machine Hip Adduction','1-2','12-15',90,['Cable Hip Adduction','Copenhagen Hip Adduction'],'İç bacakla zihin-kas bağlantısı kur; uyluğa önden kütle katar. Sert it!');
+const rpd=E('Super-Stretch Reverse Pec Deck',1,'12-15',90,['Bent-Over Reverse DB Flye','Cable Reverse Flye'],'Makineye yan dur, kolunu gövdenin karşısına çekerek arka omzu ön-esnet. Tek kol çalış, zayıf kolla başla.');
+const w1=E('Weak Point Exercise 1','1-3','8-12',120,[],WP1),w2=E('Weak Point Exercise 2','1-3','8-12',120,[],WP2);
+const ecc=E('EZ-Bar Cable Curl',1,'10-12',90,['EZ-Bar Curl','DB Curl'],'Makarayı en alta ayarla; bicepste sürekli gerilim, yavaş ve kontrollü.');
+const esc2=E('EZ-Bar Skull Crusher',1,'10-12',90,['DB Skull Crusher','Overhead Cable Triceps Extension (Rope)'],'Negatif boyunca tricepste güçlü esneme hisset; esnemede 1 sn dur.');
+const bic=E('Bottom-Half Incline DB Curl',1,'12-15',90,['Bottom-Half Bayesian Cable Curl','Incline DB Stretch-Curl'],BH+' Üst sırtın sehpada sabit; hafif git, bicepsin çekip sıkışına odaklan.');
+const tpb=E('Triceps Pressdown (Bar)',1,'12-15',90,['Triceps Pressdown (Rope)','DB Triceps Kickback'],'Ağırlığı tricepsi sıkarak hareket ettir.');
+const rcl=E('Roman Chair Leg Raise',1,'10-20',90,['Machine Crunch','Cable Crunch'],'Bacaklarını kaldırırken belinin yuvarlanmasına izin ver. 10-20 bilerek geniş: kontrollü formla RPE 9-10\'a ulaşana kadar devam et.');
+// Blok 2 hareketleri
+const wlp=E('Wide-Grip Lat Pulldown','2-3','10-12',150,['Wide-Grip Pull-Up','Wide-Grip Machine Pulldown'],'Dirsekleri "aşağı ve içeri" çektiğini düşün.');
+const sbp=E('Flat Smith Machine Bench Press','2-3','10-12',240,['Flat DB Bench Press','Barbell Bench Press'],'Göğüste gerilimi koruyarak her tekrarda altta 1 sn dur.');
+const hth=E('Single-Leg DB Hip Thrust','1-2','8-10',150,['Glute-Ham Raise','Reverse Hyper'],'2-3 sn yavaş negatif, kontrollü şekilde patlayarak çık; üstte kalçayı sıkıca sık.');
+const bhs=E('Bottom-Half Hack Squat','2-4','8-10',240,['Bottom-Half DB Bulgarian Split Squat','High-Bar Back Squat'],BH+' Dizlerin ayak parmaklarını geçmesine izin ver, gerilimi quadriceps\'te tut.');
+const der=E('Dual-Handle Elbows-Out Cable Row',2,'10-12',150,['Arm-Out Single-Arm DB Row','Chest-Supported Machine Row'],'Dirsekleri ~45° dışa aç; akıcı, kontrollü tekrarlar.');
+const bpd=E('Bottom-Half Pec Deck',2,'8-10',150,['Bottom-Half DB Flye','Bottom-Half Seated Cable Flye'],BH+' Altta göğüste derin esnemeyi hisset.');
+const dpr=E('Deficit Pendlay Row','2-3','10-12',210,['Smith Machine Deficit Row','DB Row'],'Bir plakanın üstüne çık; büyük esneme al, her tekrarda barı karnına/göğsüne değdir.');
+const bss=E('DB Bulgarian Split Squat','1-2','6-8/bacak',150,['DB Static Lunge','Smith Machine Reverse Lunge'],'Tekrarlar bacak başına. Zayıf bacakla başla, derin in.');
+const rhc=E('Cable Rope Hammer Curl',1,'10-12',90,['DB Hammer Curl','Straight-Bar Cable Curl'],'İpi sıkıca kavrayarak kaldır; akıcı, kontrollü tekrarlar.');
+const drdl=E('DB RDL','2-3','10-12',240,['Barbell RDL','Deadlift'],RDL);
+const bsq2=E('Belt Squat','2-4','6-8',240,['Leg Press','Front Squat'],'Bel aşırı yuvarlanmadan inebildiğin kadar derin in; negatifi kontrol et, altta kısa dur.');
+const alp=E('1-Arm Lat Pulldown',2,'10-12',150,['Neutral-Grip Pull-Up','Neutral-Grip Lat Pulldown'],'Dirseği gövdene yakın tut, ağırlığı lat\'ını sıkarak hareket ettir.');
+const dsp=E('Seated DB Shoulder Press','2-3','8-10',150,['Machine Shoulder Press','Seated Smith Machine Shoulder Press'],'Negatifte dambılları hafifçe içe çevir, iterken dirsekleri dışa aç.');
+const bmp=E('Bottom-Half Machine Preacher Curl',1,'10-12',90,['Bottom-Half EZ-Bar Preacher Curl','Bottom-Half DB Preacher Curl'],BH+' Akıcı, kontrollü; bicepsle zihin-kas bağlantısı.');
+const dvp=E('Triceps Diverging Pressdown',1,'10-12',90,['Triceps Pressdown (Rope)','DB Triceps Kickback'],'İki ip ya da uzun bir ip kullan. Hafif öne eğil, dirsekleri hafif dışa aç, kollar gövdeyle hizada; altta tricepsi tam sık.');
+const izc=E('Inverse DB Zottman Curl',1,'12-15',90,['DB Hammer Curl','Reverse-Grip DB Curl'],'Kaldırırken çekiç tutuş; üstte avuçları yukarı çevir ve öyle indir.');
+const cgp=E('Close-Grip Push-Up',1,'AMRAP',90,['Diamond Push-Up','Bodyweight Dip'],'Hedef RPE\'ye ulaşana kadar olabildiğince çok tekrar, kontrollü. Eller yaklaşık omuz genişliğinde, dirsekler gövdeye yakın.');
+const abw=E('Ab Wheel Rollout',1,'12-15',90,['Swiss Ball Rollout','Long-Lever Plank'],'Sadece kalçadan kırılma; karnınla kontrollü şekilde in ve kendini geri çek. Tam açılamıyorsan hareket açıklığını haftadan haftaya artır.');
+PROGS.push({id:'pbb2',name:'Pure Bodybuilding Phase 2',src:'The Pure Bodybuilding Program - Phase 2',weeks:10,int:'rpe2',
+desc:'10 hafta, haftada 5 gün: 4 Full Body günü ve bir Kol & Zayıf Nokta günü. İki blok; her blok bir giriş/deload haftasıyla başlar (1. ve 6. hafta, RPE ~7-9), sonraki haftalarda setlerin çoğu tükenişe ~1 tekrar kala ya da tükenişe gider. Erken setler biraz daha kolay, son set en zorudur.',
+sched:['Full Body 1','Full Body 2','','Full Body 3','Full Body 4','Arms & Weak Points',''],
+blocks:[
+{from:1,to:1,days:[
+['Full Body 1',[pu(2,'7|9'),mcp(2,'7|9'),ghr(2,'7|9'),le(2,'7-8|9'),mlr(3,'7-8|9'),scr(3,'7-8|9')]],
+['Full Body 2',[slc(2,'7-8|9'),bsq(2,'7|8'),cmr(2,'7|9'),bcf(2,'7-8|9'),hab(2,'7-8|9'),ote(2,'7-8|9')]],
+['Full Body 3',[sdr(2,'7|9'),bip(2,'7|9'),srl(2,'7|9'),hcl(3,'7-8|9'),bcr(3,'7-8|9'),bpc(3,'7-8|9')]],
+['Full Body 4',[rdl(2,'5|5-6'),slp(2,'7|8'),nlp(2,'7|9','IP'),msp(2,'7|9'),had(2,'7-8|9'),rpd(2,'7-8|9')]],
+['Arms & Weak Points',[w1(2,'7-8|9'),w2(2,'7-8|9'),ecc(2,'7-8|9'),esc2(2,'7-8|9'),bic(2,'7-8|9'),tpb(2,'7-8|9'),rcl(3,'7-8|9')]]]},
+{from:2,to:5,days:[
+['Full Body 1',[pu(3,'8-9|9-10','LP'),mcp(3,'8-9|9-10','LP'),ghr(3,'7-8|8-9'),le(3,'9|10','LP'),mlr(3,'9|10','F'),scr(3,'9|10','SH')]],
+['Full Body 2',[slc(3,'8-9|10','LP'),bsq(3,'7-8|8-9'),cmr(3,'8-9|9-10','LP'),bcf(2,'8-9|10','F'),hab(3,'9|10','F'),ote(2,'8-9|10','DS')]],
+['Full Body 3',[sdr(3,'8-9|9-10','LP'),bip(3,'8-9|9-10'),srl(2,'8-9|9-10','QS'),hcl(3,'9|10','LP'),bcr(3,'9|10','F'),bpc(3,'9|10','F')]],
+['Full Body 4',[rdl(3,'6|6-7'),slp(3,'7-8|8-9'),nlp(3,'8-9|9-10','IP'),msp(3,'8-9|9-10'),had(3,'9|10','F'),rpd(3,'9|10','F')]],
+['Arms & Weak Points',[w1(3,'9|9-10'),w2(3,'9|9-10'),ecc(3,'9|10','F'),esc2(3,'9|10','F'),bic(2,'9|10','F'),tpb(2,'9|10','F'),rcl(3,'9|9-10')]]]},
+{from:6,to:6,days:[
+['Full Body 1',[wlp(2,'7|9'),sbp(2,'7|9'),hth(2,'7|8'),le(2,'7-8|9','','8-10'),mlr(3,'7-8|9','','12-15'),scr(3,'7-8|9','','12-15')]],
+['Full Body 2',[slc(2,'7-8|9','','10-12'),bhs(2,'7|8'),der(2,'7|9'),bpd(2,'7-8|9'),hab(2,'7-8|9','','10-12'),ote(2,'7-8|9','','10-12')]],
+['Full Body 3',[dpr(2,'7|9'),bip(2,'7|9','','8-10'),bss(2,'7|8'),hcl(3,'7-8|9','','10-12'),bcr(3,'7-8|9','','12-15'),rhc(2,'7-8|9')]],
+['Full Body 4',[drdl(2,'5|5-6'),bsq2(2,'7|8'),alp(2,'7|9','IP'),dsp(2,'7|9'),had(2,'7-8|9','','10-12'),rpd(2,'7-8|9')]],
+['Arms & Weak Points',[w1(2,'7-8|9'),w2(2,'7-8|9'),bmp(2,'7-8|9','F'),dvp(2,'7-8|9'),izc(2,'7-8|9'),cgp(2,'7-8|9'),abw(3,'7-8|9')]]]},
+{from:7,to:10,days:[
+['Full Body 1',[wlp(3,'8-9|9-10','LP'),sbp(3,'8-9|9-10','LP'),hth(3,'7-8|8-9'),le(3,'9|10','LP','8-10'),mlr(3,'9|10','F','12-15'),scr(4,'9|10','SH','12-15')]],
+['Full Body 2',[slc(3,'8-9|10','LP','10-12'),bhs(3,'7-8|8-9'),der(3,'8-9|9-10','LP'),bpd(2,'8-9|10','F'),hab(3,'9|10','F','10-12'),ote(2,'8-9|10','DS','10-12')]],
+['Full Body 3',[dpr(3,'8-9|9-10','LP'),bip(3,'8-9|9-10','','8-10'),bss(2,'8-9|9-10','QS'),hcl(3,'9|10','LP','10-12'),bcr(4,'9|10','F','12-15'),rhc(3,'9|10','LP')]],
+['Full Body 4',[drdl(3,'6|6-7'),bsq2(3,'7-8|8-9'),alp(3,'8-9|9-10','IP'),dsp(3,'8-9|9-10'),had(3,'9|10','F','10-12'),rpd(3,'9|10','F')]],
+['Arms & Weak Points',[w1(3,'9|9-10'),w2(3,'9|9-10'),bmp(3,'9|10','F'),dvp(3,'9|10','F'),izc(2,'9|10','F'),cgp(2,'9|10','F'),abw(3,'9|9-10')]]]}]});
+})();
+// Fundamentals Hypertrophy Program (Jeff Nippard): Full Body, Lower/Upper ve Body Part Split. Her biri 8 hafta;
+// 1-4. hafta "güç temeli", 5-8. hafta "değiştirilmiş güç temeli" (blok içindeki haftalar aynı). Isınma seti belirtilmemiş.
+(()=>{
+const N={
+'Back Squat':'Geriye ve aşağı otur, ayak uçları 15° dışa, dizleri dışa sür.',
+'Barbell Bench Press':'Dirsekler 45°, kürek kemiklerini sık, sehpada sabit kal.',
+'Lat Pulldown':'Dirsekleri doğrudan yanlara doğru çek, omuzun 1,5 katı tutuş.',
+'Romanian Deadlift':'Bel nötr, kalçayı geriye it, omurga yuvarlanmasın.',
+'Assisted Dip':'Dirsekler 45°, gövde 15° öne eğik.',
+'Standing Calf Raise':'Parmak uçlarına kadar it, altta baldırı esnet, zıplatma.',
+'Dumbbell Supinated Curl':'Serçe parmağını sapa işaret parmağından daha sert bastır.',
+'Deadlift':'Lat\'ları sık, göğüs dik, kalça yüksek; yerden kaldırmadan önce bardaki boşluğu al.',
+'Military Press':'Gövdeyi dik tutmak için kalçayı sık, başını yoldan çek, yukarı ve hafif geriye it.',
+'Chest-Supported T-Bar Row':'Kaldırırken kürek kemiklerini birleştir, indirirken aç.',
+'Leg Extension':'Ağırlığı quadriceps\'i sıkarak hareket ettir.',
+'Single-Leg Leg Extension':'Ağırlığı quadriceps\'i sıkarak hareket ettir.',
+'Cable Flye':'Kürek kemiklerini geride tut; ellerini değil dirseklerinin içini birleştir.',
+'Pec Deck':'Kürek kemiklerini geride tut; ellerini değil dirseklerinin içini birleştir.',
+'Crunch':'Omurganı bük, başını kollarınla çekme.',
+'Dumbbell Skull Crusher':'Dirsekler başının üst hizasında kalsın, üst kolu oynatma.',
+'Dumbbell Walking Lunge':'Orta boy adımlar, gövde hafif öne eğilebilir. Tekrarlar her bacak için adım sayısı.',
+'Dumbbell Incline Press':'Kürek kemiklerini geride ve aşağıda tut.',
+'Machine Incline Chest Press':'Kürek kemiklerini geride ve aşağıda tut.',
+'Reverse-Grip Lat Pulldown':'Dirsekleri yanlarına doğru aşağı çek, omuz genişliğinde tutuş.',
+'Barbell Hip Thrust':'Çene ve kaburgalar aşağıda, sadece kalçan hareket etsin; ped kullan.',
+'Seated Face Pull':'Kollarını geriye ve dışa çek.',
+'Dumbbell Lateral Raise':'Dambılı serçe parmağın önce kalkacak şekilde eğ.',
+'Lying Leg Curl':'Ağırlığı hamstringleri sıkarak hareket ettir.',
+'Single-Leg Lying Leg Curl':'Ağırlığı hamstringleri sıkarak hareket ettir.',
+'Seated Leg Curl':'Ağırlığı hamstringleri sıkarak hareket ettir.',
+'Leg Curl':'Ağırlığı hamstringleri sıkarak hareket ettir.',
+'Dumbbell Seated Shoulder Press':'Dambılları omuzlarına kadar indir, gövdeyi dik tut.',
+'Single-Arm Pulldown':'Baskın olmayan kolla başla, diğer kolda aynı tekrarı yap.',
+'Reverse Pec Deck':'Kürek kemiklerini aç, ağırlığı dışa ve geriye süpür.',
+'Cable Reverse Flye':'Kürek kemiklerini aç, ağırlığı dışa ve geriye süpür.',
+'Cable Lateral Raise':'Makineden uzağa yaslan, kollar düz şekilde yana.',
+'Close-Grip Bench Press':'Omuz genişliğinde tutuş, dirsekleri yanlarına yakın tut.',
+'Dumbbell Row':'Sehpaya destek al, dirseğini yanına doğru çek.',
+'Bicycle Crunch':'Omurganı bük ve döndür; sol dirsek sağ dize, sağ dirsek sol dize.',
+'Single-Arm Cable Curl':'Kullandığın kabloya sırtını dön, kolun gövdenin arkasında kalsın.',
+'Neutral-Grip Pulldown':'Avuçlar birbirine bakar; dirsekleri yanlarına doğru çek.',
+'Single-Arm Rope Triceps Extension':'Kolunu gövdenin arkasına çek, üst kolu oynatma.',
+'Machine Seated Hip Abduction':'Kalçanı koltukta tut, ağırlığı kalçayı sıkarak hareket ettir.',
+'Plank':'Kalçanı sık, kalçan aşağıda kalsın. Tekrar yerine saniye.',
+'Barbell Bent-Over Row':'Gövde 45° öne eğik, bel nötr, iki elle üstten tutuş.',
+'Hammer Curl':'Nötr tutuş, üst kolun hareket etmesin.',
+'Goblet Squat':'Dambılı doğrudan çenenin altında tut, geriye ve aşağı otur, dizleri dışa it.',
+'Dumbbell Single-Leg Hip Thrust':'Dambılı çalışan uyluğuna koy, çene ve kaburgalar aşağıda, sadece kalçan hareket etsin.',
+'Leg Press':'Ayaklar platformda orta genişlikte, belin yuvarlanmasın.',
+'EZ-Bar Curl':'Serçe parmağını bara işaret parmağından daha sert bastır.',
+'Hanging Leg Raise':'Belini bükmeye odaklan; captain\'s chair üzerinde yap.',
+'Cable Seated Row':'V-bar tutuş, indirirken kürek kemiklerinin açılmasına izin ver.',
+'Cable Triceps Kickback':'Dirsekler gövdenin arkasında, üst kolu oynatma.',
+'Dumbbell Bent-Over Lateral Raise':'Gövde yere paralel olacak kadar eğil, kolları doğrudan yanlara kaldır.',
+'Dumbbell Floor Press':'Dirsekleri yanlarına yakın tut.'};
+const alt={'Back Squat':['Leg Press + 15 Back Extension'],'Deadlift':['Barbell Hip Thrust + 15 Back Extension'],'Romanian Deadlift':['Glute-Ham Raise'],'Dumbbell Walking Lunge':['Single-Leg DB Hip Thrust'],
+'Barbell Hip Thrust':['Leg Extension Machine Hip Thrust'],'Standing Calf Raise':['Dumbbell Standing Calf Raise'],'Lying Leg Curl':['Dumbbell Leg Curl'],'Machine Seated Hip Abduction':['Standing Cable Hip Abduction','Plate-Loaded Hip Abduction'],
+'Barbell Bench Press':['Dumbbell Bench Press','Hammer Strength Machine Press'],'Dumbbell Incline Press':['Hammer Strength Machine Incline Press'],'Military Press':['Standing Dumbbell Shoulder Press'],'Cable Flye':['Dumbbell Flye','Pec Deck'],
+'Assisted Dip':['Decline Dumbbell Press','Decline Barbell Press','Hammer Strength Decline Press'],'Reverse-Grip Lat Pulldown':['Reverse-Grip Assisted Pull-Up'],'Cable Seated Row':['1-Arm Dumbbell Row'],'Chest-Supported T-Bar Row':['Chest-Supported Dumbbell Row']};
+const X=(n,sets,reps,rpe,rest)=>[n,'',sets,reps,String(rpe),rest,alt[n]||[],N[n]||''];
+const desc='Yeni başlayanlar ve orta seviye için 8 haftalık hipertrofi programı. 1-4. hafta güç temeli, 5-8. hafta değiştirilmiş güç temeli. Hareket yapamıyorsan alternatifini seç; set, tekrar ve dinlenme aynı kalsın.';
+PROGS.push({id:'fund-fb',name:'Fundamentals: Full Body',src:'Fundamentals Hypertrophy Program',weeks:8,int:'rpe',desc:desc+' Haftada 3 gün; tam vücut seansları arasına en az bir dinlenme günü koy.',
+sched:['Full Body 1','','Full Body 2','','Full Body 3','',''],alt,
+blocks:[{from:1,to:4,days:[
+['Full Body 1',[X('Back Squat',3,6,7,210),X('Barbell Bench Press',3,8,7,210),X('Lat Pulldown',3,10,8,150),X('Romanian Deadlift',3,10,7,150),X('Assisted Dip',3,8,7,90),X('Standing Calf Raise',3,10,8,90),X('Dumbbell Supinated Curl',3,10,8,90)]],
+['Full Body 2',[X('Deadlift',3,5,7,210),X('Military Press',3,8,8,210),X('Chest-Supported T-Bar Row',3,12,8,150),X('Leg Extension',3,12,8,90),X('Cable Flye',3,12,8,90),X('Crunch',3,12,7,90),X('Dumbbell Skull Crusher',3,12,8,90)]],
+['Full Body 3',[X('Dumbbell Walking Lunge',3,'10/bacak',8,150),X('Dumbbell Incline Press',3,8,7,150),X('Reverse-Grip Lat Pulldown',3,10,8,150),X('Barbell Hip Thrust',3,12,8,150),X('Seated Face Pull',3,12,8,90),X('Dumbbell Lateral Raise',3,10,8,90),X('Lying Leg Curl',3,10,8,90)]]]},
+{from:5,to:8,days:[
+['Full Body 1',[X('Back Squat',3,8,8,210),X('Dumbbell Seated Shoulder Press',3,10,8,210),X('Single-Arm Pulldown',3,12,9,150),X('Barbell Hip Thrust',3,8,9,150),X('Pec Deck',3,15,9,90),X('Reverse Pec Deck',3,15,9,90),X('Cable Lateral Raise',3,12,9,90)]],
+['Full Body 2',[X('Deadlift',3,3,8,210),X('Close-Grip Bench Press',3,5,7,210),X('Dumbbell Row',3,12,8,150),X('Dumbbell Walking Lunge',3,'12/bacak',8,90),X('Assisted Dip',3,12,8,90),X('Bicycle Crunch',3,10,7,90),X('Single-Arm Cable Curl',3,12,8,90)]],
+['Full Body 3',[X('Back Squat',3,5,8,150),X('Barbell Bench Press',3,10,8,150),X('Neutral-Grip Pulldown',3,15,8,150),X('Lying Leg Curl',3,12,8,150),X('Seated Face Pull',3,15,8,90),X('Single-Arm Rope Triceps Extension',3,12,8,90),X('Standing Calf Raise',3,10,8,90)]]]}]});
+PROGS.push({id:'fund-lu',name:'Fundamentals: Lower/Upper',src:'Fundamentals Hypertrophy Program',weeks:8,int:'rpe',desc:desc+' Haftada 4 gün.',
+sched:['Lower Body 1','Upper Body 1','','Lower Body 2','Upper Body 2','',''],alt,
+blocks:[{from:1,to:4,days:[
+['Lower Body 1',[X('Back Squat',3,6,7,210),X('Romanian Deadlift',3,10,7,150),X('Barbell Hip Thrust',3,12,8,150),X('Leg Extension',3,12,9,90),X('Lying Leg Curl',3,12,9,90),X('Machine Seated Hip Abduction',3,6,7,90),X('Crunch',3,12,7,90)]],
+['Upper Body 1',[X('Barbell Bench Press',3,5,7,210),X('Lat Pulldown',3,10,8,150),X('Military Press',3,10,7,210),X('Chest-Supported T-Bar Row',3,12,8,150),X('Cable Flye',3,12,8,90),X('Dumbbell Supinated Curl',3,10,8,90),X('Single-Arm Rope Triceps Extension',3,12,8,90)]],
+['Lower Body 2',[X('Deadlift',3,8,7,210),X('Dumbbell Walking Lunge',3,'10/bacak',8,150),X('Single-Leg Leg Extension',3,15,8,90),X('Single-Leg Lying Leg Curl',3,15,8,90),X('Machine Seated Hip Abduction',3,15,9,90),X('Standing Calf Raise',3,12,8,90),X('Plank',3,'20 sn',8,90)]],
+['Upper Body 2',[X('Dumbbell Incline Press',3,8,8,150),X('Reverse-Grip Lat Pulldown',3,8,8,150),X('Assisted Dip',3,10,7,150),X('Barbell Bent-Over Row',3,12,7,150),X('Dumbbell Lateral Raise',3,15,8,90),X('Seated Face Pull',3,15,8,90),X('Hammer Curl',3,8,9,90)]]]},
+{from:5,to:8,days:[
+['Lower Body 1',[X('Deadlift',3,5,8,210),X('Goblet Squat',3,12,8,150),X('Dumbbell Single-Leg Hip Thrust',3,10,9,150),X('Leg Press',3,12,8,90),X('Lying Leg Curl',3,15,9,90),X('Standing Calf Raise',3,8,8,90),X('Bicycle Crunch',3,12,8,90)]],
+['Upper Body 1',[X('Barbell Bench Press',3,8,8,210),X('Single-Arm Pulldown',3,8,8,150),X('Dumbbell Seated Shoulder Press',3,12,7,150),X('Dumbbell Row',3,12,8,150),X('Assisted Dip',3,6,8,90),X('Seated Face Pull',3,15,9,90),X('EZ-Bar Curl',3,12,9,90)]],
+['Lower Body 2',[X('Back Squat',3,8,8,210),X('Barbell Hip Thrust',3,8,8,150),X('Romanian Deadlift',3,12,8,150),X('Seated Leg Curl',3,8,9,90),X('Standing Calf Raise',3,6,9,90),X('Hanging Leg Raise',3,6,8,90),X('Machine Seated Hip Abduction',3,20,9,90)]],
+['Upper Body 2',[X('Military Press',3,6,8,210),X('Neutral-Grip Pulldown',3,6,8,210),X('Dumbbell Incline Press',3,8,8,150),X('Cable Seated Row',3,8,9,150),X('Cable Lateral Raise',3,12,8,90),X('Reverse Pec Deck',3,12,8,90),X('Single-Arm Cable Curl',3,15,9,90)]]]}]});
+PROGS.push({id:'fund-bps',name:'Fundamentals: Body Part Split',src:'Fundamentals Hypertrophy Program',weeks:8,int:'rpe',desc:desc+' Haftada 5 gün; istersen 5 gün üst üste yapıp hafta sonu dinlenebilirsin.',
+sched:['Chest & Triceps','Legs & Abs 1','Back & Biceps','','Legs & Abs 2','Shoulders & Arms',''],alt,
+blocks:[{from:1,to:4,days:[
+['Chest & Triceps',[X('Barbell Bench Press',3,6,7,210),X('Dumbbell Incline Press',3,8,8,150),X('Cable Flye',3,12,8,90),X('Assisted Dip',3,10,7,90),X('Dumbbell Skull Crusher',3,12,8,90)]],
+['Legs & Abs 1',[X('Back Squat',3,6,7,210),X('Romanian Deadlift',3,8,7,150),X('Barbell Hip Thrust',3,12,8,150),X('Leg Extension',3,12,8,90),X('Leg Curl',3,12,8,90),X('Standing Calf Raise',2,8,7,90),X('Crunch',2,12,7,90)]],
+['Back & Biceps',[X('Reverse-Grip Lat Pulldown',3,8,8,150),X('Cable Seated Row',3,10,8,150),X('Chest-Supported T-Bar Row',3,12,8,150),X('Seated Face Pull',3,15,8,90),X('Dumbbell Supinated Curl',3,12,8,90)]],
+['Legs & Abs 2',[X('Deadlift',3,5,7,210),X('Dumbbell Walking Lunge',3,'10/bacak',8,150),X('Single-Leg Leg Extension',2,15,8,90),X('Single-Leg Lying Leg Curl',2,15,8,90),X('Machine Seated Hip Abduction',3,15,7,90),X('Standing Calf Raise',2,12,8,90),X('Plank',3,'20 sn',8,90)]],
+['Shoulders & Arms',[X('Military Press',3,6,7,210),X('Dumbbell Lateral Raise',3,12,8,90),X('Cable Reverse Flye',3,15,8,90),X('Single-Arm Rope Triceps Extension',2,12,8,90),X('Single-Arm Cable Curl',2,12,8,90)]]]},
+{from:5,to:8,days:[
+['Chest & Triceps',[X('Barbell Bench Press',3,8,8,210),X('Machine Incline Chest Press',3,12,8,150),X('Pec Deck',3,12,8,90),X('Assisted Dip',3,6,8,90),X('Cable Triceps Kickback',3,15,8,90)]],
+['Legs & Abs 1',[X('Deadlift',3,5,8,210),X('Goblet Squat',3,12,8,150),X('Dumbbell Single-Leg Hip Thrust',3,10,9,150),X('Leg Press',3,12,8,90),X('Lying Leg Curl',3,15,9,90),X('Standing Calf Raise',3,8,8,90),X('Bicycle Crunch',3,12,8,90)]],
+['Back & Biceps',[X('Lat Pulldown',3,6,8,150),X('Dumbbell Row',3,12,8,150),X('Barbell Bent-Over Row',3,12,8,150),X('Reverse Pec Deck',3,15,8,90),X('EZ-Bar Curl',3,15,8,90)]],
+['Legs & Abs 2',[X('Back Squat',3,8,8,210),X('Barbell Hip Thrust',3,8,8,150),X('Romanian Deadlift',3,12,8,150),X('Seated Leg Curl',3,8,9,90),X('Standing Calf Raise',3,6,9,90),X('Hanging Leg Raise',3,6,8,90),X('Machine Seated Hip Abduction',3,20,9,90)]],
+['Shoulders & Arms',[X('Dumbbell Seated Shoulder Press',3,10,8,210),X('Cable Lateral Raise',3,10,8,90),X('Dumbbell Bent-Over Lateral Raise',3,12,8,90),X('Dumbbell Floor Press',2,15,8,90),X('Hammer Curl',2,8,8,90)]]]}]});
+})();
+// Powerbuilding 3.0 Phase 3 - 5x/hafta (Jeff Nippard). 10 hafta; ana kaldırışlar %1RM + RPE ile.
+// Satır W(ad, ısınma, set, tekrar, %1RM, RPE, dinlenme sn); notlar N'den ada göre gelir.
+(()=>{
+const SQ='Geriye ve aşağı otur, üst sırtını bara sıkıca yasla.',BP='Rahat bir kavis kur, göğüste kısa dur ve patlayarak it.',DL='Lat\'ları sık, göğüs dik, kaldırmadan önce bardaki boşluğu al.';
+const N={
+'Back Squat (Top Single)':'Üst set: tekniğe ve patlayıcı güce odaklan.','Back Squat':SQ,
+'Barbell Overhead Press':'Omuz stabilitesi ve denge için bilerek hafif; zorlama.',
+'Pin Good Morning':'Alternatif: 45° back extension. Pimleri yüksek ayarla, kısa hareket açıklığı, low bar pozisyonu; kalçayı geriye it, kaval kemikleri dik.',
+'Chest-Supported Row':'Makine ya da sehpaya dayanarak yapabilirsin; hileyi en aza indir.',
+'Strict Bench Press (Top Single)':'Göğüste 1 sn tam duraklama. Kurulumu ve tekrarı mükemmel yap; heyecana kapılma, odaklan.','Barbell Bench Press':BP,
+'Seated Leg Curl':'Ağırlığı hamstringleri sıkarak hareket ettir.',
+'Barbell Strict Curl':'EZ-bar da olur. Duvara yaslan; baş, kalça ve sırt duvara değsin, dirsekler yanlarda sabit, ağırlığı kontrol et.',
+'Seated Face Pull':'Ağır gitme, zihin-kas bağlantısına odaklan.','Standing Calf Raise':'Çok sert it, gerçek tükenişe git.',
+'Hanging Leg Raise':'Dizler göğse, kontrollü tekrarlar; zorlaştırmak için bacakları düzleştir.',
+'Anderson Squat':'Barın pimlerde başlayıp bittiği pin squat; altta paralelin hemen üstündesin. Sıkı dur.',
+'Close-Grip Bench Press':'Omuz genişliğinde tutuş, dirsekleri yanlara yakın tut.','Neutral-Grip Pulldown':'Dirsekleri yanlarına doğru aşağı çek.',
+'Dumbbell Skull Crusher':'Dambılları başının arkasına doğru yay çizerek indir; tricepste sürekli gerilim.',
+'Deadlift':DL,'Deadlift (Top Set)':DL,'Pause Deadlift':'Plakalar yerden kalktıktan hemen sonra 1 sn dur.',
+'Dumbbell Lateral Raise':'Ağırlığı omuzları kasarak hareket ettir; set sonuna doğru form bozulmasın.',
+'Band Pull-Apart':'Arka omuzla zihin-kas bağlantısı kur.',
+'Cable Pullover':'Kablo yoksa bant kullan. Lat\'larda sürekli gerilim; hafif öne eğilerek üstte büyük esneme al.',
+'Hammer Curl':'Dirsekleri sabit kilitle, dambıl sapını sert sık.',
+'Helms Row':'Bel yorgunluğuna dikkat; hafif kal, hileyi en aza indir.',
+'Hip Abduction':'Makine, bant ya da ağırlıkla; her tekrarın üstünde 1 sn sıkıp tut.'};
+const SQA=['Hack Squat','Smith Machine Squat','Leg Press + 15 Back Extension'],BPA=['Dumbbell Bench Press','Machine Chest Press','Smith Machine Bench Press'],DLA=['Sumo Deadlift','Trap Bar Deadlift'];
+const ALT={'Anderson Squat':['Pin Squat','Pause Barbell Box Squat'],'Back Squat':SQA,'Back Squat (Top Single)':SQA,'Band Pull-Apart':['Bent-Over Reverse DB Flye','Reverse Cable Crossover'],
+'Barbell Strict Curl':['DB Strict Curl','Barbell Curl'],'Barbell Bench Press':BPA,'Barbell Box Squat':['Front Squat','Goblet Squat'],'Barbell Overhead Press':['Seated Barbell Overhead Press'],
+'Barbell Pin Bench Press':['Spoto Bench Press','Pause Barbell Bench Press','Pause Dumbbell Bench Press'],'Cable Pullover':['Lying Dumbbell Pullover'],'Chest-Supported Row':['Cable Single-Arm Row','Chest-Supported T-Bar Row'],
+'Close-Grip Bench Press':['Close-Grip DB Bench Press','Dip','Machine Dip'],'Deadlift':DLA,'Deadlift (Top Set)':DLA,'Dumbbell Lateral Raise':['Machine Lateral Raise','Egyptian Lateral Raise'],
+'Dumbbell Skull Crusher':['EZ-Bar Skull Crusher','Floor Press','Pin Press','JM Press'],'Hammer Curl':['EZ-Bar Pronated Curl','Rope Hammer Curl'],'Hanging Leg Raise':['Captain\'s Chair Crunch','Reverse Crunch'],
+'Helms Row':['Humble Row','Chest-Supported T-Bar Row (üstten tutuş)'],'Hip Abduction':['Machine Hip Abduction','Banded Hip Abduction','Weighted Hip Abduction'],'Neutral-Grip Pulldown':['Neutral-Grip Pull-Up','Reverse-Grip Pulldown'],
+'Pause Deadlift':['Pause Sumo Deadlift','2" Deficit Deadlift'],'Pin Good Morning':['45° Back Extension','Barbell RDL'],'Seated Face Pull':['Cable Reverse Flye','Dumbbell Rear Delt Flye','Reverse Pec Deck'],
+'Seated Leg Curl':['Lying Leg Curl','Sliding Leg Curl'],'Standing Calf Raise':['Seated Calf Raise','Leg Press Calf Press'],'Strict Bench Press':BPA,'Strict Bench Press (Top Single)':BPA,'Touch-and-Go Deadlift':['Conventional Deadlift']};
+const W=(n,wu,sets,reps,pct,rpe,rest,note)=>[n,wu,sets,String(reps),String(rpe),rest,ALT[n]||[],note||N[n]||'','','',pct||''];
+const WEEKS=[];
+WEEKS[1]=[
+['Full Body 1',[W('Back Squat (Top Single)',4,1,1,'85-87,5','6-8',240),W('Back Squat',0,3,5,'75-77,5','7-8',240),W('Barbell Overhead Press',3,2,8,'70',6,150),W('Pin Good Morning',2,2,'8-10','',6,150),W('Chest-Supported Row',1,4,'8-10','',9,90)]],
+['Full Body 2',[W('Strict Bench Press (Top Single)',4,1,1,'87,5-90','7-8',240),W('Barbell Bench Press',0,3,3,'82,5','7-8',240),W('Seated Leg Curl',1,3,'10-12','',8,90),W('Barbell Strict Curl',1,4,'6-8','',10,90),W('Seated Face Pull',0,3,'15-20','',9,90),W('Standing Calf Raise',1,3,'10-12','',10,90),W('Hanging Leg Raise',0,3,'6-8','',8,90)]],
+['Full Body 3',[W('Anderson Squat',3,3,8,'',6,180),W('Close-Grip Bench Press',3,3,8,'',6,180),W('Neutral-Grip Pulldown',1,4,'6-8','',9,150),W('Dumbbell Skull Crusher',1,3,'8-10','',10,90)]],
+['Full Body 4',[W('Deadlift (Top Set)',4,1,4,'85','8-9',240),W('Pause Deadlift',0,2,4,'67,5',7,180),W('Dumbbell Lateral Raise',0,4,'15-20','',9,90),W('Band Pull-Apart',1,4,'15-20','',9,90),W('Cable Pullover',1,3,'15-20','',7,90),W('Hammer Curl',1,4,'8-10','',9,90)]],
+['Full Body 5',[W('Back Squat',4,4,6,'70','7-8',240),W('Barbell Bench Press',4,4,6,'72,5','7-8',240),W('Helms Row',1,3,'10-12','',8,150),W('Hip Abduction',0,3,'12-15','',8,90)]]];
+Object.assign(N,{'Barbell Box Squat':'Kutuya tamamen otur, uyluklardaki gerilimi bırak, otururken sallanmayı en aza indir.',
+'Barbell Pin Bench Press':'Pimleri göğüs hizasının hemen üstüne ayarla; bar pimlerdeyken gerilimi bırak, sonra patlayarak it. Ağırlığı kontrol et.',
+'Touch-and-Go Deadlift':'Plakaları yerden sektirme, sadece hafifçe dokundur. Biraz momentum kullanıp ritim yakala; üstte nefes al ve sıkılaş.'});
+const FB1=(t1,t1r,bs,bsr,bsp)=>['Full Body 1',[W('Back Squat (Top Single)',4,1,1,t1,t1r,240),W('Back Squat',0,bs,bsr,bsp,'7-8',240),W('Barbell Overhead Press',3,2,8,'70',6,150),W('Pin Good Morning',2,2,'8-10','',6,150),W('Chest-Supported Row',1,4,'8-10','',9,90)]];
+const FB2=(t,tr,br,bp,cr)=>['Full Body 2',[W('Strict Bench Press (Top Single)',4,1,1,t,tr,240),W('Barbell Bench Press',0,3,br,bp,'7-8',240),W('Seated Leg Curl',1,3,'10-12','',8,90),W('Barbell Strict Curl',1,4,'6-8','',10,90),W('Seated Face Pull',0,3,'15-20','',9,90),W('Standing Calf Raise',1,3,'10-12','',cr,90),W('Hanging Leg Raise',0,3,'6-8','',8,90)]];
+const ACC4=[W('Dumbbell Lateral Raise',0,4,'15-20','',9,90),W('Band Pull-Apart',1,4,'15-20','',9,90),W('Cable Pullover',1,3,'15-20','',7,90),W('Hammer Curl',1,4,'8-10','',9,90)];
+const FB5=(ss,sp,bs,bp)=>['Full Body 5',[W('Back Squat',4,ss,6,sp,'7-8',240),W('Barbell Bench Press',4,bs,6,bp,'7-8',240),W('Helms Row',1,3,'10-12','',8,150),W('Hip Abduction',0,3,'12-15','',8,90)]];
+WEEKS[2]=[FB1('85-87,5','6-8',3,5,'75-77,5'),FB2('87,5-90','7-8',3,'82,5-85',9),
+['Full Body 3',[W('Barbell Box Squat',3,3,8,'',6,180),W('Barbell Pin Bench Press',3,3,8,'70-75',6,180),W('Neutral-Grip Pulldown',1,4,'6-8','',9,150),W('Dumbbell Skull Crusher',1,3,'8-10','',10,90)]],
+['Full Body 4',[W('Deadlift (Top Set)',4,1,2,'90','8-9',240),W('Touch-and-Go Deadlift',0,2,8,'65-70',7,180),...ACC4]],FB5(3,'72,5',3,'75')];
+WEEKS[3]=[FB1('87,5-90','7-9',2,4,'77,5-80'),FB2('90-92,5','7-9',2,'85-87,5',9),
+['Full Body 3',[W('Anderson Squat',3,3,8,'',6,180),W('Close-Grip Bench Press',3,3,8,'',6,180),W('Neutral-Grip Pulldown',1,4,'6-8','',9,150),W('Dumbbell Skull Crusher',1,3,'8-10','',10,90)]],
+['Full Body 4',[W('Deadlift (Top Set)',4,1,'2-4','90','8-9',240),W('Pause Deadlift',0,2,4,'70',7,180),...ACC4]],FB5(2,'75',3,'77,5')];
+const BOX3=['Full Body 3',[W('Barbell Box Squat',3,3,8,'',6,180),W('Barbell Pin Bench Press',3,3,8,'70-75',6,180),W('Neutral-Grip Pulldown',1,4,'6-8','',9,150),W('Dumbbell Skull Crusher',1,3,'8-10','',10,90)]];
+WEEKS[4]=[FB1('87,5-90','7-9',3,4,'77,5-80'),FB2('90-95','7-9',2,'85-90',9),BOX3,
+['Full Body 4',[W('Deadlift (Top Set)',4,1,1,'92,5-95','8-9',240),W('Touch-and-Go Deadlift',0,2,8,'65-75',7,180),...ACC4]],FB5(2,'77,5',1,'80')];
+WEEKS[5]=[
+['Full Body 1',[W('Back Squat',4,2,5,'75-77,5','5-7',240),W('Barbell Overhead Press',3,2,8,'70',6,150),W('Pin Good Morning',2,2,'8-10','',6,150),W('Chest-Supported Row',1,3,'8-10','',9,90)]],
+['Full Body 2',[W('Barbell Bench Press',4,3,3,'85','7-8',240),W('Seated Leg Curl',1,3,'10-12','',8,90),W('Barbell Strict Curl',1,3,'6-8','',9,90),W('Seated Face Pull',0,3,'15-20','',9,90),W('Standing Calf Raise',1,3,'10-12','',9,90),W('Hanging Leg Raise',0,3,'6-8','',8,90)]],
+['Full Body 3',[W('Anderson Squat',3,2,6,'',6,180),W('Close-Grip Bench Press',3,2,8,'',6,180),W('Neutral-Grip Pulldown',1,3,'6-8','',9,150),W('Dumbbell Skull Crusher',1,3,'8-10','',9,150)]],
+['Full Body 4',[W('Deadlift',4,1,3,'85','7-8',240),W('Pause Deadlift',0,2,4,'67,5',7,180),W('Dumbbell Lateral Raise',0,3,'15-20','',9,90),W('Band Pull-Apart',1,3,'15-20','',9,90),W('Cable Pullover',1,3,'15-20','',7,90),W('Hammer Curl',1,3,'8-10','',9,90)]],FB5(2,'70',2,'72,5')];
+// 6. haftadan sonra yardımcı hareketlerin set sayıları da değiştiği için günler parametreli.
+const D1=(tp,tr,bs,br,bp,gm)=>['Full Body 1',[W('Back Squat (Top Single)',4,1,1,tp,tr,240),W('Back Squat',0,bs,br,bp,'8-9',240),W('Barbell Overhead Press',3,2,8,'70',6,150),W('Pin Good Morning',2,gm,'8-10','',6,150),W('Chest-Supported Row',1,3,'8-10','',9,90)]];
+const D2=(tp,tr,bs,br,bp,brpe,cu)=>['Full Body 2',[W('Strict Bench Press (Top Single)',4,1,1,tp,tr,240),W('Barbell Bench Press',0,bs,br,bp,brpe,240),W('Seated Leg Curl',1,2,'10-12','',8,90),W('Barbell Strict Curl',1,cu,'6-8','',10,90),W('Seated Face Pull',0,2,'15-20','',9,90),W('Standing Calf Raise',1,2,'10-12','',9,90),W('Hanging Leg Raise',0,2,'6-8','',8,90)]];
+const D3box=(s,pp)=>['Full Body 3',[W('Barbell Box Squat',3,s,8,'',6,180),W('Barbell Pin Bench Press',3,s,8,pp,6,180),W('Neutral-Grip Pulldown',1,3,'6-8','',9,150),W('Dumbbell Skull Crusher',1,2,'8-10','',10,90)]];
+const D3and=['Full Body 3',[W('Anderson Squat',3,2,8,'',6,180),W('Close-Grip Bench Press',3,2,8,'',6,180),W('Neutral-Grip Pulldown',1,3,'6-8','',9,150),W('Dumbbell Skull Crusher',1,2,'8-10','',10,90)]];
+const ACC3=[W('Dumbbell Lateral Raise',0,3,'15-20','',9,90),W('Band Pull-Apart',1,3,'15-20','',9,90),W('Cable Pullover',1,2,'15-20','',7,90),W('Hammer Curl',1,3,'8-10','',9,90)];
+const D4=(r,p,rpe,sec)=>['Full Body 4',[W('Deadlift (Top Set)',4,1,r,p,rpe,240),sec,...ACC3]];
+const D5=(ss,sp,bs,bp,sr)=>['Full Body 5',[W('Back Squat',4,ss,4,sp,'7-8',240),W('Barbell Bench Press',4,bs,sr||5,bp,'7-8',240),W('Helms Row',1,2,'10-12','',8,150),W('Hip Abduction',0,2,'12-15','',8,90)]];
+const TNG=W('Touch-and-Go Deadlift',0,2,8,'65-75',7,180);
+WEEKS[6]=[D1('87,5-90','7-9',3,3,'80-85',2),
+['Full Body 2',[W('Strict Bench Press (Top Single)',4,1,1,'90-95','7-9',240),W('Barbell Bench Press',0,3,2,'87,5-90','8-9',240),W('Seated Leg Curl',1,2,'10-12','',8,90),W('Barbell Strict Curl',1,4,'6-8','',10,90),W('Seated Face Pull',0,2,'15-20','',9,90),W('Standing Calf Raise',1,2,'10-12','',9,90),W('Hanging Leg Raise',0,2,'6-8','',8,90)]],
+['Full Body 3',[W('Barbell Box Squat',3,2,8,'',6,180),W('Barbell Pin Bench Press',3,2,8,'70-80',6,180),W('Neutral-Grip Pulldown',1,3,'6-8','',9,150),W('Dumbbell Skull Crusher',1,2,'8-10','',10,90)]],
+D4(2,'92,5-95','8-9',TNG),['Full Body 5',[W('Back Squat',4,3,4,'77,5','7-8',240),W('Barbell Bench Press',4,3,5,'77,5','7-8',240),W('Helms Row',1,2,'10-12','',8,150),W('Hip Abduction',0,2,'12-15','',8,90)]]];
+WEEKS[7]=[D1('90-92,5','8-9',2,3,'82,5-87,5',1),D2('92,5-97,5','8-9',3,1,'90-95','8-9',3),D3and,D4(3,'90-92,5','9',W('Pause Deadlift',0,2,4,'72,5',7,180)),D5(2,'80',2,'80')];
+WEEKS[8]=[D1('90-95','8-9',1,3,'85-90',1),D2('92,5-97,5','9',1,2,'95','9',3),D3box(3,'70-80'),D4(1,'95-97,5','9',TNG),D5(2,'82,5',1,'82,5')];
+const EXP='Pozitifte barı olabildiğince patlayıcı kaldır. Kendinden emin yaklaş, teknik oturmuş; heyecana kapılma.';
+const W9=[
+['Full Body 1',[W('Back Squat (Top Single)',4,1,1,'90','7-8',240,EXP),W('Strict Bench Press',4,1,4,'75','5-6',240,'Her tekrar tıpatıp aynı görünsün; her tekrarda 1 sn duraklama.'),W('Reset Deadlift',4,2,3,'65','4-5',240,'Her tekrar arasında doğrulup yeniden kurul; her seti 3 ayrı tekli gibi düşün.'),W('Chest-Supported Row',1,4,'6-8','',8,90)]],
+['Full Body 2',[W('Deadlift (Top Set)',4,1,1,'90','7-8',240,EXP),W('Barbell Overhead Press',3,2,8,'70',6,150),W('Anderson Squat',3,2,5,'',5,180),W('Barbell Strict Curl',1,4,'6-8','',6,90)]],
+['Full Body 3',[W('Strict Bench Press (Top Single)',4,1,1,'92,5','8-9',240,EXP),W('Back Squat',4,2,5,'75','5-6',240),W('Seated Leg Curl',1,4,'6-8','',10,90),W('Seated Face Pull',0,4,'12-15','',10,90)]]];
+const MAX='Yeni PR hedefle: %100 ile başla, RPE 9,5-10\'a ulaşana kadar her denemede ~%2,5 artır. Mutlaka spotter ve iyi form. Tükenişe kadar zorlama; iyi formla bir tekrar daha yapamayacağın noktada dur.';
+const AMR='Olabildiğince çok tekrar (3-5 tekrar hedefle). Mutlaka spotter ve iyi form; iyi formla bir tekrar daha yapamayacağın noktada dur.';
+const T10=(b,s,r,p,note)=>[
+['Squat Test',[W('Back Squat ('+b+')',5,s,r,p,'9,5-10',300,note),W('Leg Curl',1,2,10,'',7,90,'Oturarak ya da yatarak; ağırlığı hamstringleri sıkarak hareket ettir.'),W('Dumbbell Lateral Raise',1,2,'15-20','',7,90)]],
+['Bench Test',[W('Barbell Bench Press ('+b+')',5,s,r,p,'9,5-10',300,note),W('Barbell Strict Curl',3,1,3,'',10,90),W('Barbell Overhead Press',1,2,5,'',7,150,'Yukarı ve geriye doğru it.')]],
+['Deadlift Test',[W('Deadlift ('+b+')',5,s,r,p,'9,5-10',300,note),W('Chest-Supported Row',1,3,'10-12','',7,90),W('Dumbbell Skull Crusher',1,2,'12-15','',7,90)]]];
+WEEKS[9]=W9;WEEKS[10]=T10('AMRAP',1,'AMRAP','90',AMR);WEEKS[11]=T10('Max',1,1,'100-105',MAX);
+//@@WEEKS
+const SCH={9:['Full Body 1','','Full Body 2','','Full Body 3','',''],10:['Squat Test','','Bench Test','','Deadlift Test','',''],11:['Squat Test','','Bench Test','','Deadlift Test','','']};
+PROGS.push({id:'pb3',name:'Powerbuilding 3.0 (haftada 5 gün)',src:'Powerbuilding Phase 3.0',weeks:11,int:'pb',
+desc:'Güç ve kas kütlesini birlikte hedefleyen 10 haftalık powerbuilding programı. Squat, bench press ve deadlift 1RM yüzdesiyle, diğer hareketler RPE ile programlanır. Yüzdeleri kullanmak için bu üç hareketin güncel 1RM\'ini bilmen gerekir. 10. hafta için iki seçenek var: 10B (vücut geliştirme ve genel güç hedefi) ya da 10A (yarışma hedefli max testi); ikisinden yalnızca birini yap.',
+wlabels:{10:'Hafta 10B: AMRAP testi',11:'Hafta 10A: max testi'},
+wnotes:{5:'Yarı deload haftası: tükenişe gitme, toparlanmak ve sonraki 5 haftaya hazırlanmak için hafif çalış.',9:'Azaltma (taper) haftası: tekniği oturt, düşük hacimle toparlanmaya öncelik ver. Bu hafta 3 antrenman var.',
+ 10:'10B: Vücut geliştirme ve genel güç hedefin varsa bunu yap, 10A\'yı yapma. 9. haftadan sonra toparlanmış hissetmiyorsan (eklem ağrısı, kötü uyku, düşük enerji) önce bir-iki gün ekstra dinlen. Squat ve bench\'te güvenlik barı kullan.',
+ 11:'10A: Sadece güç yarışması hedefin varsa yap; 10B\'yi yapma. Eklem ağrın varsa, toparlanmadıysan ya da iyi bir spotter\'ın yoksa max deneme. Squat ve bench\'te güvenlik barı kullan.'},
+sched:['Full Body 1','Full Body 2','Full Body 3','','Full Body 4','Full Body 5',''],
+blocks:WEEKS.map((d,i)=>d&&{from:i,to:i,days:d,sched:SCH[i]}).filter(Boolean)});
+})();
+// The Muscle Ladder (Jeff Nippard) kitabındaki 20 program. Her biri tek haftalık şablon, haftalar tekrarlanır.
+// M(ad, ısınma, set, tekrar, erkenRPE, sonRPE, dinlenme sn, alt1, alt2, işaret, son set tekniği)
+// işaret 'ss': sonraki hareketle süperset.
+(()=>{
+const M=(n,wu,sets,reps,e,l,rest,a1,a2,flag,tech)=>[n,String(wu),sets,String(reps),e+'|'+l,rest,[a1,a2].filter(Boolean),'',flag||'',tech||''];
+const WU='Genel ısınma: 5 dk hafif kardiyo ve dinamik esneme.';
+const ML=(id,name,level,goal,time,sched,days,extra)=>PROGS.push(Object.assign({id:'ml'+id,name:'Muscle Ladder '+id+': '+name,src:'The Muscle Ladder',weeks:1,int:'rpe2',
+ desc:`Seviye: ${level}. Hedef: ${goal}. Süre: ${time}. Tek haftalık şablon; ilerleme kaydettikçe her hafta tekrarla. ${WU}`,sched,days:days.map(d=>[d[0],d[1]])},extra||{}));
+//@@ML
+ML(19,'Push/Pull/Legs 6 gün','Orta/ileri','Kas ve güç kazanmak','60-90 dk',['Push 1','Pull 1','Legs 1','Push 2','Pull 2','Legs 2',''],[
+['Push 1',[M('Bench Press','2-3',3,'3-5','7-8','9',210,'Machine Chest Press','Flat Dumbbell Press'),M('Seated Dumbbell Shoulder Press','1-2',3,'8-10','7-8','9',150,'Overhead Barbell Press','Barbell Upright Row'),
+ M('Pec Deck','0-1',2,'8-10','9','10',90,'Dumbbell Fly','Push-Up','','DS'),M('Dumbbell Lateral Raise','0-1',2,'8-10','9','10',90,'Cable Lateral Raise','Machine Lateral Raise','','LP'),
+ M('EZ-Bar Skullcrusher','0-1',3,'8-10','9','10',90,'Dumbbell Skullcrusher','Overhead Triceps Extension'),M('Triceps Pressdown','0-1',3,'8-10','9','10',90,'Cable Triceps Kickback','EZ-Bar Skullcrusher')]],
+['Pull 1',[M('Barbell Row','2-3',3,'8-10','7-8','9',150,'Pendlay Row','Dumbbell Row'),M('Pull-Up','1-2',3,'8-10','7-8','9',150,'Lat Pulldown','Chin-Up'),
+ M('Rope Face Pull','0-1',3,'8-10','9','10',90,'Reverse Pec Deck','Reverse Cable Fly'),M('Cable Lat Pullover','0-1',2,'8-10','9','10',90,'Dumbbell Lat Pullover','Cable Lat Pull-In','','LP'),
+ M('Preacher Curl','0-1',3,'8-10','9','10',90,'EZ-Bar Biceps Curl','Dumbbell Biceps Curl'),M('EZ-Bar Biceps Curl','0-1',3,'8-10','9','10',90,'Standing Barbell Curl','Dumbbell Biceps Curl')]],
+['Legs 1',[M('Deadlift','2-3',3,'3-5','7','8',240,'Romanian Deadlift','Hip Thrust'),M('Leg Press','2-3',3,'6-8','7','8',210,'Barbell Front Squat','Dumbbell Lunge'),
+ M('Glute-Ham Raise','1-2',3,'8-10','7','8',150,'45° Back Extension','Lying Leg Curl'),M('Seated Calf Raise','0-1',3,'8-10','9','10',90,'Standing Calf Raise','Leg Press Calf Press'),
+ M('Cable Crunch','0-1',3,'10-12','9','10',90,'Plate-Weighted Decline Sit-Up','Hanging Leg Raise')]],
+['Push 2',[M('Overhead Barbell Press','2-3',3,'6-8','7-8','9',210,'Standing Dumbbell Shoulder Press','Seated Dumbbell Shoulder Press'),M('Flat Dumbbell Press','1-2',3,'10-12','7-8','9',150,'Dip','Bench Press'),
+ M('Cable Lateral Raise','0-1',3,'12-15','9','10',90,'Machine Lateral Raise','Dumbbell Lateral Raise'),M('Cable Fly','0-1',2,'15-20','9','10',90,'Dumbbell Fly','Pec Deck','','MY'),
+ M('Cable Triceps Kickback','0-1',3,'12-15','9','10',90,'EZ-Bar Skullcrusher','Triceps Pressdown'),M('Overhead Triceps Extension','0-1',3,'12-15','9','10',90,'EZ-Bar Skullcrusher','Dumbbell Skullcrusher')]],
+['Pull 2',[M('Lat Pulldown','1-2',3,'10-12','7-8','9',150,'Pull-Up (destekli)','Chin-Up'),M('Dumbbell Row','1-2',3,'10-12','7-8','9',150,'Chest-Supported T-Bar Row','Barbell Row'),
+ M('Cable Lat Pull-In','0-1',3,'10-12','9','10',90,'Cable Lat Pullover','Dumbbell Lat Pullover'),M('Reverse Pec Deck','0-1',3,'15-20','9','10',90,'Rope Face Pull','Reverse Cable Fly'),
+ M('Barbell Shrug','0-1',2,'12-15','9','10',90,'Dumbbell Shrug','Trap Bar Shrug','','CR'),M('Hammer Curl','0-1',3,'12-15','9','10',90,'Dumbbell Biceps Curl','EZ-Bar Biceps Curl'),
+ M('Bayesian Cable Curl','0-1',3,'12-15','9','10',90,'Incline Dumbbell Curl','Preacher Curl')]],
+['Legs 2',[M('Barbell Back Squat','2-3',3,'3-5','7','8',210,'Leg Press','Dumbbell Lunge'),M('45° Back Extension','1-2',3,'10-12','7-8','9',150,'Good Morning','Glute-Ham Raise'),
+ M('Leg Extension','1-2',2,'12-15','9','10',150,'Goblet Squat','Dumbbell Lunge','','LP'),M('Seated Leg Curl','1-2',2,'12-15','9','10',150,'Lying Leg Curl','Nordic Ham Curl','','LP'),
+ M('Standing Calf Raise','0-1',3,'15-20','9','10',90,'Seated Calf Raise','Leg Press Calf Press'),M('Roman Chair Leg Raise','0-1',3,'10-20','9','10',90,'Hanging Leg Raise','Bent-Knee Leg Raise')]]]);
+ML(20,'Push/Pull/Legs 6 gün (kısa)','Her seviye','Kısıtlı zamanda kas ve güç','45-60 dk',['Push 1','Pull 1','Legs 1','Push 2','Pull 2','Legs 2',''],[
+['Push 1',[M('Machine Chest Press','1-2',2,'6-8','7-8','9',150,'Flat Dumbbell Press','Bench Press','','MY'),M('Seated Dumbbell Shoulder Press','1-2',3,'8-10','7-8','9',90,'Standing Dumbbell Shoulder Press','Cable Upright Row'),
+ M('Pec Deck','0-1',2,'8-10','9','10',90,'Dumbbell Fly','Push-Up','','DS'),M('Dumbbell Lateral Raise','0-1',2,'8-10','9','10',0,'Cable Lateral Raise','Machine Lateral Raise','ss','LP'),
+ M('Triceps Pressdown','0-1',2,'8-10','9','10',30,'Cable Triceps Kickback','EZ-Bar Skullcrusher')]],
+['Pull 1',[M('Chest-Supported T-Bar Row','1-2',2,'8-10','7-8','9',150,'Pendlay Row','Dumbbell Row','','LP'),M('Lat Pulldown','1-2',3,'8-10','7-8','9',90,'Pull-Up (destekli)','Chin-Up'),
+ M('Rope Face Pull','0-1',3,'8-10','9','10',90,'Reverse Pec Deck','Reverse Cable Fly'),M('Cable Lat Pullover','0-1',2,'8-10','9','10',0,'Dumbbell Lat Pullover','Cable Lat Pull-In','ss','LP'),
+ M('Preacher Curl','0-1',3,'8-10','9','10',30,'EZ-Bar Biceps Curl','Dumbbell Biceps Curl')]],
+['Legs 1',[M('Barbell Romanian Deadlift','2-3',3,'8-10','7','8',150,'Dumbbell Romanian Deadlift','Hip Thrust'),M('Leg Press','2-3',3,'6-8','7','8',150,'Dumbbell Lunge','Front Squat'),
+ M('Glute-Ham Raise','1-2',2,'8-10','7','8',90,'45° Back Extension','Lying Leg Curl'),M('Seated Calf Raise','0-1',3,'8-10','9','10',0,'Standing Calf Raise','Leg Press Calf Press','ss'),
+ M('Cable Crunch','0-1',3,'10-12','9','10',30,'Plate-Weighted Decline Sit-Up','Hanging Leg Raise')]],
+['Push 2',[M('Cable Upright Row','1-2',3,'10-12','7-8','9',90,'Dumbbell Lateral Raise','Standing Dumbbell Shoulder Press'),M('Flat Dumbbell Press','1-2',3,'10-12','7-8','9',150,'Dip','Bench Press'),
+ M('Cable Lateral Raise','0-1',3,'12-15','9','10',90,'Machine Lateral Raise','Dumbbell Lateral Raise'),M('Cable Fly','0-1',2,'15-20','9','10',90,'Dumbbell Fly','Pec Deck','','MY'),
+ M('Overhead Triceps Extension','0-1',3,'12-15','9','10',90,'EZ-Bar Skullcrusher','Dumbbell Skullcrusher')]],
+['Pull 2',[M('Lat Pulldown','1-2',2,'10-12','7-8','9',150,'Pull-Up (destekli)','Chin-Up','','LP'),M('Dumbbell Row','1-2',3,'10-12','7-8','9',150,'Chest-Supported T-Bar Row','Barbell Row'),
+ M('Cable Lat Pull-In','0-1',3,'12-15','9','10',90,'Cable Lat Pullover','Dumbbell Lat Pullover'),M('Reverse Pec Deck','0-1',3,'15-20','9','10',90,'Rope Face Pull','Reverse Cable Fly'),
+ M('Bayesian Cable Curl','0-1',3,'12-15','9','10',90,'Incline Dumbbell Curl','Preacher Curl')]],
+['Legs 2',[M('Hack Squat','2-3',3,'6-8','7','8',150,'Leg Press','Dumbbell Lunge'),M('45° Back Extension','1-2',3,'10-12','7-8','9',150,'Good Morning','Glute-Ham Raise'),
+ M('Leg Extension','1-2',2,'12-15','9','10',90,'Goblet Squat','Dumbbell Lunge','','LP'),M('Seated Leg Curl','1-2',2,'12-15','9','10',90,'Lying Leg Curl','Nordic Ham Curl','','LP'),
+ M('Standing Calf Raise','0-1',2,'15-20','9','10',0,'Seated Calf Raise','Leg Press Calf Press','ss'),M('Roman Chair Leg Raise','0-1',2,'10-20','9','10',30,'Hanging Leg Raise','Bent-Knee Leg Raise')]]]);
+ML(18,'Push/Pull/Legs 6 gün','Başlangıç','Kas ve güç kazanmak','60-90 dk',['Push 1','Pull 1','Legs 1','Push 2','Pull 2','Legs 2',''],[
+['Push 1',[M('Machine Chest Press','2-3',3,'6-8','7-8','9',150,'Bench Press','Flat Dumbbell Press'),M('Seated Dumbbell Shoulder Press','1-2',3,'8-10','7-8','9',150,'Overhead Barbell Press','Barbell Upright Row'),
+ M('Pec Deck','0-1',3,'8-10','9','10',90,'Dumbbell Fly','Push-Up'),M('Dumbbell Lateral Raise','0-1',3,'8-10','9','10',90,'Cable Lateral Raise','Machine Lateral Raise'),
+ M('EZ-Bar Skullcrusher','0-1',2,'8-10','9','10',90,'Dumbbell Skullcrusher','Overhead Triceps Extension'),M('Triceps Pressdown','0-1',2,'8-10','9','10',90,'Cable Triceps Kickback','EZ-Bar Skullcrusher')]],
+['Pull 1',[M('Chest-Supported T-Bar Row','2-3',3,'8-10','7-8','9',150,'Pendlay Row','Dumbbell Row'),M('Lat Pulldown','1-2',3,'8-10','7-8','9',150,'Pull-Up (destekli)','Chin-Up'),
+ M('Rope Face Pull','0-1',3,'8-10','9','10',90,'Reverse Pec Deck','Reverse Cable Fly'),M('Cable Lat Pullover','0-1',3,'8-10','9','10',90,'Dumbbell Lat Pullover','Cable Lat Pull-In'),
+ M('Preacher Curl','0-1',2,'8-10','9','10',90,'EZ-Bar Biceps Curl','Dumbbell Biceps Curl'),M('EZ-Bar Biceps Curl','0-1',2,'8-10','9','10',90,'Standing Barbell Curl','Dumbbell Biceps Curl')]],
+['Legs 1',[M('Romanian Deadlift','2-3',3,'8-10','6','7',150,'Deadlift','Hip Thrust'),M('Leg Press','2-3',3,'6-8','7','8',210,'Barbell Front Squat','Dumbbell Lunge'),
+ M('Glute-Ham Raise','1-2',2,'8-10','7','8',150,'45° Back Extension','Lying Leg Curl'),M('Seated Calf Raise','0-1',3,'8-10','9','10',90,'Standing Calf Raise','Leg Press Calf Press'),
+ M('Cable Crunch','0-1',3,'10-12','9','10',90,'Plate-Weighted Decline Sit-Up','Hanging Leg Raise')]],
+['Push 2',[M('Seated Dumbbell Shoulder Press','2-3',3,'10-12','7-8','9',150,'Standing Dumbbell Shoulder Press','Overhead Barbell Press'),M('Flat Dumbbell Press','1-2',3,'10-12','7-8','9',150,'Dip','Bench Press'),
+ M('Cable Lateral Raise','0-1',3,'12-15','9','10',90,'Machine Lateral Raise','Dumbbell Lateral Raise'),M('Cable Fly','0-1',3,'15-20','9','10',90,'Dumbbell Fly','Pec Deck'),
+ M('Cable Triceps Kickback','0-1',2,'12-15','9','10',90,'EZ-Bar Skullcrusher','Triceps Pressdown'),M('Overhead Triceps Extension','0-1',2,'12-15','9','10',90,'EZ-Bar Skullcrusher','Dumbbell Skullcrusher')]],
+['Pull 2',[M('Lat Pulldown','1-2',3,'10-12','7-8','9',150,'Pull-Up (destekli)','Chin-Up'),M('Dumbbell Row','1-2',3,'10-12','7-8','9',150,'Chest-Supported T-Bar Row','Barbell Row'),
+ M('Cable Lat Pull-In','0-1',3,'10-12','9','10',90,'Cable Lat Pullover','Dumbbell Lat Pullover'),M('Reverse Pec Deck','0-1',2,'15-20','9','10',90,'Rope Face Pull','Reverse Cable Fly'),
+ M('Barbell Shrug','0-1',2,'12-15','9','10',90,'Dumbbell Shrug','Trap Bar Shrug'),M('Hammer Curl','0-1',2,'12-15','9','10',90,'Dumbbell Biceps Curl','EZ-Bar Biceps Curl'),
+ M('Bayesian Cable Curl','0-1',2,'12-15','9','10',90,'Incline Dumbbell Curl','Preacher Curl')]],
+['Legs 2',[M('Leg Press','2-3',3,'8-10','7','8',210,'Barbell Back Squat','Dumbbell Lunge'),M('45° Back Extension','1-2',3,'10-12','7-8','9',150,'Good Morning','Glute-Ham Raise'),
+ M('Leg Extension','1-2',2,'12-15','9','10',150,'Goblet Squat','Dumbbell Lunge'),M('Seated Leg Curl','1-2',2,'12-15','9','10',150,'Lying Leg Curl','Nordic Ham Curl'),
+ M('Standing Calf Raise','0-1',3,'15-20','9','10',90,'Seated Calf Raise','Leg Press Calf Press'),M('Roman Chair Leg Raise','0-1',3,'10-20','9','10',90,'Hanging Leg Raise','Bent-Knee Leg Raise')]]]);
+ML(17,'Upper/Lower 6 gün (kısa)','Her seviye','Kısıtlı zamanda kas ve güç','45-60 dk',['Upper 1','Lower 1','Upper 2','Lower 2','Upper 3','Lower 3',''],[
+['Upper 1',[M('Machine Chest Press','1-2',2,'6-8','7-8','9',150,'Flat Dumbbell Press','Bench Press','','MY'),M('Lat Pulldown','1-2',3,'8-10','7-8','9',150,'Pull-Up (destekli)','Chin-Up'),
+ M('Dumbbell Lateral Raise','0-1',2,'8-10','9','10',0,'Cable Lateral Raise','Machine Lateral Raise','ss','LP'),M('Rope Face Pull','0-1',2,'8-10','9','10',30,'Reverse Pec Deck','Reverse Cable Fly'),
+ M('EZ-Bar Skullcrusher','0-1',3,'8-10','9','10',0,'Dumbbell Skullcrusher','Overhead Triceps Extension','ss'),M('Preacher Curl','0-1',3,'8-10','9','10',30,'EZ-Bar Biceps Curl','Dumbbell Biceps Curl')]],
+['Lower 1',[M('Barbell Romanian Deadlift','2-3',3,'8-10','7','8',150,'Dumbbell Romanian Deadlift','Hip Thrust'),M('Leg Press','2-3',3,'6-8','7','8',150,'Dumbbell Lunge','Front Squat'),
+ M('Glute-Ham Raise','1-2',2,'8-10','7','8',90,'45° Back Extension','Lying Leg Curl'),M('Seated Calf Raise','0-1',3,'8-10','9','10',0,'Standing Calf Raise','Leg Press Calf Press','ss'),
+ M('Cable Crunch','0-1',3,'10-12','9','10',30,'Plate-Weighted Decline Sit-Up','Hanging Leg Raise')]],
+['Upper 2',[M('Chest-Supported T-Bar Row','2-3',2,'8-10','7-8','9',150,'Pendlay Row','Dumbbell Row','','LP'),M('Seated Dumbbell Shoulder Press','1-2',3,'10-12','7-8','9',90,'Standing Dumbbell Shoulder Press','Cable Upright Row'),
+ M('Cable Lat Pullover','0-1',2,'10-12','9','10',90,'Dumbbell Lat Pullover','Cable Lat Pull-In','','LP'),M('Cable Fly','0-1',2,'10-12','9','10',90,'Dumbbell Fly','Pec Deck','','MY'),
+ M('Hammer Curl','0-1',3,'12-15','9','10',0,'Dumbbell Biceps Curl','EZ-Bar Biceps Curl','ss'),M('Triceps Pressdown','0-1',3,'12-15','9','10',30,'EZ-Bar Skullcrusher','Cable Triceps Kickback')]],
+['Lower 2',[M('Hack Squat','2-3',3,'6-8','7','8',150,'Leg Press','Dumbbell Lunge'),M('45° Back Extension','1-2',3,'10-12','7-8','9',150,'Good Morning','Glute-Ham Raise'),
+ M('Leg Extension','1-2',2,'10-12','9','10',90,'Goblet Squat','Dumbbell Lunge','','LP'),M('Seated Leg Curl','1-2',2,'10-12','9','10',90,'Lying Leg Curl','Nordic Ham Curl','','LP'),
+ M('Standing Calf Raise','0-1',3,'12-15','9','10',0,'Seated Calf Raise','Leg Press Calf Press','ss'),M('Plate-Weighted Decline Sit-Up','0-1',3,'10-12','9','10',30,'Cable Crunch','Plank')]],
+['Upper 3',[M('Flat Dumbbell Press','1-2',3,'10-12','7-8','9',150,'Dip','Bench Press'),M('Lat Pulldown','1-2',2,'10-12','7-8','9',150,'Pull-Up (destekli)','Chin-Up','','LP'),
+ M('Cable Lateral Raise','0-1',3,'12-15','9','10',90,'Machine Lateral Raise','Dumbbell Lateral Raise'),M('Dumbbell Row','1-2',3,'12-15','7-8','9',150,'Chest-Supported T-Bar Row','Barbell Row'),
+ M('Overhead Triceps Extension','0-1',3,'15-20','9','10',0,'EZ-Bar Skullcrusher','Dumbbell Skullcrusher','ss'),M('Bayesian Cable Curl','0-1',3,'15-20','9','10',30,'Incline Dumbbell Curl','Preacher Curl')]],
+['Lower 3',[M('Dumbbell Lunge','1-2',2,'8-10','7','8',150,'Barbell Lunge','Leg Press'),M('Good Morning','1-2',3,'10-12','7-8','9',150,'45° Back Extension','Glute-Ham Raise'),
+ M('Goblet Squat','1-2',2,'12-15','9','10',90,'Leg Extension','Leg Press'),M('Cable Hip Abduction','0-1',2,'12-15','9','10',90,'Machine Hip Abduction','Weighted Hip Abduction'),
+ M('Standing Calf Raise','0-1',2,'15-20','9','10',0,'Seated Calf Raise','Leg Press Calf Press','ss'),M('Roman Chair Leg Raise','0-1',2,'10-20','9','10',30,'Hanging Leg Raise','Bent-Knee Leg Raise')]]]);
+ML(16,'Upper/Lower 6 gün','Orta/ileri','Kas ve güç kazanmak','60-90 dk',['Upper 1','Lower 1','Upper 2','Lower 2','Upper 3','Lower 3',''],[
+['Upper 1',[M('Bench Press','2-3',3,'3-5','7-8','9',210,'Machine Chest Press','Flat Dumbbell Press'),M('Pull-Up','1-2',3,'8-10','7-8','9',150,'Lat Pulldown','Chin-Up'),
+ M('Dumbbell Lateral Raise','0-1',2,'8-10','9','10',90,'Cable Lateral Raise','Machine Lateral Raise','','LP'),M('Rope Face Pull','0-1',3,'8-10','9','10',90,'Reverse Pec Deck','Reverse Cable Fly'),
+ M('EZ-Bar Skullcrusher','0-1',3,'8-10','9','10',90,'Dumbbell Skullcrusher','Overhead Triceps Extension'),M('Preacher Curl','0-1',3,'8-10','9','10',90,'EZ-Bar Biceps Curl','Dumbbell Biceps Curl')]],
+['Lower 1',[M('Deadlift','2-3',3,'3-5','7','8',240,'Romanian Deadlift','Hip Thrust'),M('Leg Press','2-3',3,'6-8','7','8',210,'Barbell Front Squat','Dumbbell Lunge'),
+ M('Glute-Ham Raise','1-2',3,'8-10','7','8',150,'45° Back Extension','Lying Leg Curl'),M('Seated Calf Raise','0-1',3,'8-10','9','10',90,'Standing Calf Raise','Leg Press Calf Press'),
+ M('Cable Crunch','0-1',3,'10-12','9','10',90,'Plate-Weighted Decline Sit-Up','Hanging Leg Raise')]],
+['Upper 2',[M('Barbell Row','2-3',3,'8-10','7-8','9',150,'Pendlay Row','Dumbbell Row'),M('Overhead Barbell Press','2-3',3,'6-8','7-8','9',210,'Standing Dumbbell Shoulder Press','Seated Dumbbell Shoulder Press'),
+ M('Cable Lat Pullover','0-1',2,'10-12','9','10',90,'Dumbbell Lat Pullover','Cable Lat Pull-In','','LP'),M('Cable Fly','0-1',2,'10-12','9','10',90,'Dumbbell Fly','Pec Deck','','MY'),
+ M('Hammer Curl','0-1',3,'12-15','9','10',90,'Dumbbell Biceps Curl','EZ-Bar Biceps Curl'),M('Cable Triceps Kickback','0-1',3,'12-15','9','10',90,'EZ-Bar Skullcrusher','Triceps Pressdown')]],
+['Lower 2',[M('Barbell Back Squat','2-3',3,'3-5','7','8',210,'Leg Press','Dumbbell Lunge'),M('45° Back Extension','1-2',3,'8-10','7-8','9',150,'Good Morning','Glute-Ham Raise'),
+ M('Leg Extension','1-2',3,'10-12','9','10',150,'Goblet Squat','Barbell Lunge'),M('Seated Leg Curl','1-2',2,'10-12','9','10',150,'Lying Leg Curl','Nordic Ham Curl','','LP'),
+ M('Standing Calf Raise','0-1',3,'12-15','9','10',90,'Seated Calf Raise','Leg Press Calf Press'),M('Roman Chair Leg Raise','0-1',3,'10-20','9','10',30,'Hanging Leg Raise','Bent-Knee Leg Raise')]],
+['Upper 3',[M('Flat Dumbbell Press','1-2',3,'10-12','7-8','9',150,'Dip','Bench Press'),M('Lat Pulldown','1-2',3,'10-12','7-8','9',150,'Pull-Up (destekli)','Chin-Up'),
+ M('Cable Lateral Raise','0-1',3,'12-15','9','10',90,'Machine Lateral Raise','Dumbbell Lateral Raise'),M('Dumbbell Row','1-2',3,'12-15','7-8','9',150,'Chest-Supported T-Bar Row','Barbell Row'),
+ M('Overhead Triceps Extension','0-1',3,'15-20','9','10',90,'EZ-Bar Skullcrusher','Dumbbell Skullcrusher'),M('Bayesian Cable Curl','0-1',3,'15-20','9','10',90,'Incline Dumbbell Curl','Preacher Curl')]],
+['Lower 3',[M('Barbell Lunge','2-3',3,'6-8','7','8',150,'Dumbbell Lunge','Leg Press'),M('Good Morning','1-2',3,'10-12','7-8','9',150,'45° Back Extension','Glute-Ham Raise'),
+ M('Goblet Squat','1-2',3,'12-15','9','10',150,'Leg Extension','Front Squat'),M('Cable Hip Abduction','0-1',3,'12-15','9','10',90,'Machine Hip Abduction','Weighted Hip Abduction'),
+ M('Standing Calf Raise','0-1',3,'15-20','9','10',90,'Seated Calf Raise','Leg Press Calf Press'),M('Plank','0-1',3,'30-60 sn','9','10',90,'LLPT Plank','Cable Crunch')]]]);
+ML(15,'Upper/Lower/Push/Pull/Legs 5 gün (kısa)','Her seviye','Kısıtlı zamanda kas ve güç','45-60 dk',['Upper','Lower','','Push','Pull','Legs',''],[
+['Upper',[M('Machine Chest Press','2-3',2,'6-8','9','10',150,'Bench Press','Flat Dumbbell Press','','MY'),M('Chest-Supported T-Bar Row','2-3',2,'6-8','7-8','9',150,'Barbell Row','Dumbbell Row'),
+ M('Dumbbell Lateral Raise','0-1',2,'8-10','9','10',0,'Cable Lateral Raise','Machine Lateral Raise','ss','LP'),M('Lat Pulldown','1-2',2,'8-10','7-8','9',30,'Pull-Up (destekli)','Chin-Up'),
+ M('Pec Deck','0-1',2,'8-10','9','10',90,'Dumbbell Fly','Push-Up','','DS'),M('Preacher Curl','0-1',2,'8-10','9','10',0,'EZ-Bar Biceps Curl','Dumbbell Biceps Curl','ss'),
+ M('EZ-Bar Skullcrusher','0-1',2,'8-10','9','10',30,'Dumbbell Skullcrusher','Overhead Triceps Extension')]],
+['Lower',[M('Barbell Romanian Deadlift','2-3',3,'8-10','6','7',150,'Dumbbell Romanian Deadlift','Hip Thrust'),M('Leg Press','2-3',3,'6-8','7','8',150,'Barbell Front Squat','Dumbbell Lunge'),
+ M('Glute-Ham Raise','1-2',2,'8-10','7','8',150,'45° Back Extension','Lying Leg Curl'),M('Seated Calf Raise','0-1',3,'8-10','9','10',0,'Standing Calf Raise','Leg Press Calf Press','ss'),
+ M('Cable Crunch','0-1',3,'10-12','9','10',30,'Plate-Weighted Decline Sit-Up','Hanging Leg Raise')]],
+['Push',[M('Cable Upright Row','2-3',3,'8-10','7-8','9',90,'Dumbbell Lateral Raise','Standing Dumbbell Shoulder Press'),M('Flat Dumbbell Press','1-2',3,'10-12','7-8','9',150,'Dip','Bench Press'),
+ M('Cable Lateral Raise','0-1',3,'12-15','9','10',90,'Machine Lateral Raise','Dumbbell Lateral Raise'),M('Cable Fly','0-1',2,'12-15','9','10',90,'Dumbbell Fly','Pec Deck','','MY'),
+ M('Overhead Triceps Extension','0-1',3,'15-20','9','10',90,'EZ-Bar Skullcrusher','Dumbbell Skullcrusher')]],
+['Pull',[M('Lat Pulldown','1-2',3,'10-12','9','10',150,'Pull-Up (destekli)','Chin-Up','','LP'),M('Dumbbell Row','1-2',3,'10-12','7-8','9',150,'Chest-Supported T-Bar Row','Barbell Row'),
+ M('Cable Lat Pull-In','0-1',3,'12-15','9','10',90,'Cable Lat Pullover','Dumbbell Lat Pullover'),M('Reverse Pec Deck','0-1',3,'12-15','9','10',90,'Rope Face Pull','Reverse Cable Fly'),
+ M('Bayesian Cable Curl','0-1',3,'15-20','9','10',90,'Incline Dumbbell Curl','Preacher Curl')]],
+['Legs',[M('Hack Squat','2-3',3,'8-10','7','8',150,'Leg Press','Dumbbell Lunge'),M('45° Back Extension','1-2',3,'10-12','7-8','9',150,'Good Morning','Glute-Ham Raise'),
+ M('Leg Extension','1-2',2,'12-15','9','10',90,'Goblet Squat','Dumbbell Lunge','','LP'),M('Seated Leg Curl','1-2',2,'12-15','9','10',90,'Lying Leg Curl','Nordic Ham Curl','','LP'),
+ M('Standing Calf Raise','0-1',2,'15-20','9','10',0,'Seated Calf Raise','Leg Press Calf Press','ss'),M('Roman Chair Leg Raise','0-1',2,'10-20','9','10',30,'Hanging Leg Raise','Bent-Knee Leg Raise')]]]);
+ML(14,'Upper/Lower/Push/Pull/Legs 5 gün','Orta/ileri','Kas ve güç kazanmak','60-90 dk',['Upper','Lower','','Push','Pull','Legs',''],[
+['Upper',[M('Bench Press','2-3',3,'3-5','7-8','9',210,'Machine Chest Press','Flat Dumbbell Press'),M('Barbell Row','2-3',3,'6-8','7-8','9',150,'Pendlay Row','Dumbbell Row'),
+ M('Dumbbell Lateral Raise','0-1',2,'8-10','9','10',90,'Cable Lateral Raise','Machine Lateral Raise','','LP'),M('Pull-Up','1-2',3,'8-10','7-8','9',150,'Lat Pulldown','Chin-Up'),
+ M('Pec Deck','0-1',2,'8-10','9','10',90,'Dumbbell Fly','Push-Up','','DS'),M('Preacher Curl','0-1',3,'8-10','9','10',0,'EZ-Bar Biceps Curl','Dumbbell Biceps Curl','ss'),
+ M('EZ-Bar Skullcrusher','0-1',3,'8-10','9','10',30,'Dumbbell Skullcrusher','Overhead Triceps Extension')]],
+['Lower',[M('Deadlift','2-3',3,'3-5','6','7',240,'Romanian Deadlift','Hip Thrust'),M('Leg Press','2-3',3,'6-8','7','8',210,'Barbell Front Squat','Dumbbell Lunge'),
+ M('Glute-Ham Raise','1-2',3,'8-10','7','8',150,'45° Back Extension','Lying Leg Curl'),M('Seated Calf Raise','0-1',3,'8-10','9','10',90,'Standing Calf Raise','Leg Press Calf Press'),
+ M('Cable Crunch','0-1',3,'10-12','9','10',90,'Plate-Weighted Decline Sit-Up','Hanging Leg Raise')]],
+['Push',[M('Overhead Barbell Press','2-3',3,'8-10','7-8','9',210,'Standing Dumbbell Shoulder Press','Seated Dumbbell Shoulder Press'),M('Flat Dumbbell Press','1-2',3,'10-12','7-8','9',150,'Dip','Bench Press'),
+ M('Cable Lateral Raise','0-1',3,'12-15','9','10',90,'Machine Lateral Raise','Dumbbell Lateral Raise'),M('Cable Fly','0-1',2,'12-15','9','10',90,'Dumbbell Fly','Pec Deck','','MY'),
+ M('Cable Triceps Kickback','0-1',3,'12-15','9','10',90,'EZ-Bar Skullcrusher','Triceps Pressdown'),M('Overhead Triceps Extension','0-1',3,'15-20','9','10',90,'EZ-Bar Skullcrusher','Dumbbell Skullcrusher')]],
+['Pull',[M('Lat Pulldown','1-2',3,'10-12','7-8','9',150,'Pull-Up (destekli)','Chin-Up'),M('Dumbbell Row','1-2',3,'10-12','7-8','9',150,'Chest-Supported T-Bar Row','Barbell Row'),
+ M('Cable Lat Pull-In','0-1',3,'12-15','9','10',90,'Cable Lat Pullover','Dumbbell Lat Pullover'),M('Reverse Pec Deck','0-1',3,'12-15','9','10',90,'Rope Face Pull','Reverse Cable Fly'),
+ M('Barbell Shrug','0-1',2,'12-15','9','10',90,'Dumbbell Shrug','Trap Bar Shrug','','CR'),M('Hammer Curl','0-1',3,'12-15','9','10',90,'Dumbbell Biceps Curl','EZ-Bar Biceps Curl'),
+ M('Bayesian Cable Curl','0-1',3,'15-20','9','10',90,'Incline Dumbbell Curl','Preacher Curl')]],
+['Legs',[M('Barbell Back Squat','2-3',3,'3-5','7','8',210,'Leg Press','Dumbbell Lunge'),M('45° Back Extension','1-2',3,'10-12','7-8','9',150,'Good Morning','Glute-Ham Raise'),
+ M('Leg Extension','1-2',2,'12-15','9','10',150,'Goblet Squat','Dumbbell Lunge','','LP'),M('Seated Leg Curl','1-2',2,'12-15','9','10',150,'Lying Leg Curl','Nordic Ham Curl','','LP'),
+ M('Standing Calf Raise','0-1',3,'15-20','9','10',90,'Seated Calf Raise','Leg Press Calf Press'),M('Roman Chair Leg Raise','0-1',3,'10-20','9','10',30,'Hanging Leg Raise','Bent-Knee Leg Raise')]]]);
+ML(13,'Full Body 5 gün (kısa)','İleri','Kısıtlı zamanda kas ve güç','45-60 dk',['Full Body 1','Full Body 2','Full Body 3','','Full Body 4','Full Body 5',''],[
+['Full Body 1',[M('Machine Chest Press','1-2',2,'6-8','9','10',150,'Flat Dumbbell Press','Bench Press','','MY'),M('Leg Press','2-3',3,'6-8','7','8',0,'Barbell Front Squat','Dumbbell Lunge','ss'),
+ M('Dumbbell Lateral Raise','0-1',2,'12-15','9','10',45,'Cable Lateral Raise','Machine Lateral Raise','','LP'),M('Lat Pulldown','1-2',3,'8-10','7-8','9',150,'Pull-Up (destekli)','Chin-Up'),
+ M('Preacher Curl','0-1',3,'12-15','9','10',0,'EZ-Bar Biceps Curl','Dumbbell Biceps Curl','ss'),M('Seated Calf Raise','0-1',3,'10-12','9','10',30,'Standing Calf Raise','Leg Press Calf Press')]],
+['Full Body 2',[M('Barbell Romanian Deadlift','2-3',3,'8-10','7','8',150,'Dumbbell Romanian Deadlift','Hip Thrust'),M('Seated Dumbbell Shoulder Press','1-2',3,'8-10','7-8','9',150,'Overhead Barbell Press','Barbell Upright Row'),
+ M('Cable Lat Pullover','0-1',2,'12-15','9','10',0,'Dumbbell Lat Pullover','Cable Lat Pull-In','ss','LP'),M('Pec Deck','0-1',2,'12-15','9','10',30,'Dumbbell Fly','Push-Up','','DS'),
+ M('Cable Crunch','0-1',3,'10-12','9','10',0,'Plate-Weighted Decline Sit-Up','Hanging Leg Raise','ss'),M('EZ-Bar Skullcrusher','0-1',3,'12-15','9','10',30,'Dumbbell Skullcrusher','Overhead Triceps Extension')]],
+['Full Body 3',[M('Chest-Supported T-Bar Row','1-2',3,'8-10','7-8','9',150,'Pendlay Row','Dumbbell Row'),M('Glute-Ham Raise','1-2',3,'8-10','7','8',150,'45° Back Extension','Lying Leg Curl'),
+ M('Barbell Shrug','0-1',2,'10-12','9','10',90,'Dumbbell Shrug','Trap Bar Shrug','','CR'),M('Reverse Pec Deck','0-1',3,'10-12','9','10',0,'Rope Face Pull','Reverse Cable Fly','ss'),
+ M('Triceps Pressdown','0-1',3,'12-15','9','10',30,'Cable Triceps Kickback','EZ-Bar Skullcrusher'),M('Dumbbell Biceps Curl','0-1',3,'12-15','9','10',0,'EZ-Bar Biceps Curl','Standing Barbell Curl','ss'),
+ M('Roman Chair Leg Raise','0-1',3,'10-20','9','10',30,'Hanging Leg Raise','Bent-Knee Leg Raise')]],
+['Full Body 4',[M('Hack Squat','2-3',3,'6-8','7','8',150,'Leg Press','Dumbbell Lunge'),M('Flat Dumbbell Press','1-2',3,'8-10','7-8','9',150,'Dip','Bench Press'),
+ M('Lat Pulldown','1-2',2,'10-12','9','10',150,'Pull-Up (destekli)','Chin-Up','','LP'),M('Cable Lateral Raise','0-1',3,'10-12','9','10',0,'Machine Lateral Raise','Dumbbell Lateral Raise','ss'),
+ M('Cable Seated Row','0-1',3,'10-12','9','10',30,'Dumbbell Row','Chest-Supported T-Bar Row'),M('Overhead Triceps Extension','0-1',3,'10-12','9','10',30,'EZ-Bar Skullcrusher','Dumbbell Skullcrusher')]],
+['Full Body 5',[M('Cable Upright Row','1-2',3,'6-8','7-8','9',90,'Dumbbell Lateral Raise','Standing Dumbbell Shoulder Press'),M('Dumbbell Row','1-2',3,'10-12','7-8','9',150,'Chest-Supported T-Bar Row','Barbell Row'),
+ M('Leg Extension','1-2',2,'10-12','9','10',0,'Goblet Squat','Dumbbell Lunge','ss','LP'),M('Seated Leg Curl','1-2',2,'10-12','9','10',30,'Lying Leg Curl','Nordic Ham Curl','','LP'),
+ M('Cable Fly','0-1',2,'10-12','9','10',0,'Dumbbell Fly','Pec Deck','ss','MY'),M('Bayesian Cable Curl','0-1',2,'10-12','9','10',30,'Incline Dumbbell Curl','Preacher Curl')]]]);
+ML(12,'Full Body 5 gün','İleri','Kas ve güç kazanmak','60-90 dk',['Full Body 1','Full Body 2','Full Body 3','','Full Body 4','Full Body 5',''],[
+['Full Body 1',[M('Bench Press','2-3',3,'3-5','7-8','9',210,'Machine Chest Press','Flat Dumbbell Press'),M('Leg Press','2-3',3,'6-8','7','8',210,'Barbell Front Squat','Dumbbell Lunge'),
+ M('Lat Pulldown','1-2',3,'8-10','7-8','9',150,'Pull-Up (destekli)','Chin-Up'),M('Dumbbell Lateral Raise','0-1',2,'12-15','9','10',90,'Cable Lateral Raise','Machine Lateral Raise','','LP'),
+ M('Preacher Curl','0-1',3,'12-15','9','10',90,'EZ-Bar Biceps Curl','Dumbbell Biceps Curl'),M('Seated Calf Raise','0-1',3,'10-12','9','10',90,'Standing Calf Raise','Leg Press Calf Press')]],
+['Full Body 2',[M('Deadlift','2-3',3,'3-5','7','8',240,'Romanian Deadlift','Hip Thrust'),M('Overhead Barbell Press','1-2',3,'8-10','7-8','9',150,'Seated Dumbbell Shoulder Press','Barbell Upright Row'),
+ M('Cable Lat Pullover','0-1',2,'12-15','9','10',90,'Dumbbell Lat Pullover','Cable Lat Pull-In','','LP'),M('Pec Deck','0-1',2,'12-15','9','10',90,'Dumbbell Fly','Push-Up','','DS'),
+ M('Cable Crunch','0-1',3,'10-12','9','10',90,'Plate-Weighted Decline Sit-Up','Hanging Leg Raise'),M('EZ-Bar Skullcrusher','0-1',3,'12-15','9','10',90,'Dumbbell Skullcrusher','Overhead Triceps Extension')]],
+['Full Body 3',[M('Barbell Row','2-3',3,'8-10','7-8','9',150,'Pendlay Row','Dumbbell Row'),M('Glute-Ham Raise','1-2',3,'8-10','7','8',150,'45° Back Extension','Lying Leg Curl'),
+ M('Barbell Shrug','0-1',2,'10-12','9','10',90,'Dumbbell Shrug','Trap Bar Shrug','','CR'),M('Reverse Pec Deck','0-1',3,'10-12','9','10',90,'Rope Face Pull','Reverse Cable Fly'),
+ M('Triceps Pressdown','0-1',3,'12-15','9','10',90,'Cable Triceps Kickback','EZ-Bar Skullcrusher'),M('Dumbbell Biceps Curl','0-1',3,'12-15','9','10',90,'EZ-Bar Biceps Curl','Standing Barbell Curl'),
+ M('Roman Chair Leg Raise','0-1',3,'10-20','9','10',30,'Hanging Leg Raise','Bent-Knee Leg Raise')]],
+['Full Body 4',[M('Barbell Back Squat','2-3',3,'3-5','7','8',210,'Leg Press','Dumbbell Lunge'),M('Flat Dumbbell Press','1-2',3,'8-10','7-8','9',150,'Dip','Bench Press'),
+ M('Lat Pulldown','1-2',3,'10-12','7-8','9',150,'Pull-Up (destekli)','Chin-Up'),M('Cable Lateral Raise','0-1',3,'10-12','9','10',90,'Machine Lateral Raise','Dumbbell Lateral Raise'),
+ M('Cable Lat Pull-In','0-1',3,'10-12','9','10',90,'Cable Lat Pullover','Dumbbell Lat Pullover'),M('Overhead Triceps Extension','0-1',3,'10-12','9','10',90,'EZ-Bar Skullcrusher','Dumbbell Skullcrusher')]],
+['Full Body 5',[M('Overhead Barbell Press','2-3',3,'6-8','7-8','9',210,'Standing Dumbbell Shoulder Press','Seated Dumbbell Shoulder Press'),M('Dumbbell Row','1-2',3,'10-12','7-8','9',150,'Chest-Supported T-Bar Row','Barbell Row'),
+ M('Leg Extension','1-2',2,'15-20','9','10',150,'Goblet Squat','Dumbbell Lunge','','LP'),M('Seated Leg Curl','1-2',2,'10-12','9','10',150,'Lying Leg Curl','Nordic Ham Curl','','LP'),
+ M('Cable Fly','0-1',2,'10-12','9','10',90,'Dumbbell Fly','Pec Deck','','MY'),M('Bayesian Cable Curl','0-1',3,'10-12','9','10',90,'Incline Dumbbell Curl','Preacher Curl')]]]);
+ML(11,'Full Body 4 gün (kısa)','Her seviye','Kısıtlı zamanda kas ve güç','45-60 dk',['Full Body 1','Full Body 2','','Full Body 3','Full Body 4','',''],[
+['Full Body 1',[M('Machine Chest Press','2-3',2,'6-8','9','10',150,'Bench Press','Flat Dumbbell Press','','MY'),M('Leg Press','2-3',3,'6-8','7','8',0,'Barbell Front Squat','Dumbbell Lunge','ss'),
+ M('Dumbbell Lateral Raise','0-1',3,'12-15','9','10',45,'Cable Lateral Raise','Machine Lateral Raise'),M('Chest-Supported T-Bar Row','2-3',2,'8-10','9','10',90,'Pendlay Row','Barbell Row','','LP'),
+ M('Preacher Curl','0-1',2,'12-15','9','10',0,'EZ-Bar Biceps Curl','Dumbbell Biceps Curl','ss'),M('Seated Calf Raise','0-1',2,'10-12','9','10',30,'Standing Calf Raise','Leg Press Calf Press')]],
+['Full Body 2',[M('Barbell Romanian Deadlift','2-3',3,'8-10','7','8',150,'Dumbbell Romanian Deadlift','Hip Thrust'),M('Lat Pulldown','1-2',3,'8-10','7-8','9',150,'Pull-Up (destekli)','Chin-Up'),
+ M('Glute-Ham Raise','1-2',2,'8-10','7','8',90,'45° Back Extension','Lying Leg Curl'),M('Pec Deck','0-1',2,'15-20','9','10',90,'Dumbbell Fly','Push-Up','','LP'),
+ M('EZ-Bar Skullcrusher','0-1',2,'12-15','9','10',0,'Dumbbell Skullcrusher','Overhead Triceps Extension','ss'),M('Cable Crunch','0-1',2,'10-12','9','10',30,'Plate-Weighted Decline Sit-Up','Hanging Leg Raise')]],
+['Full Body 3',[M('Incline Dumbbell Press','2-3',2,'8-10','9','10',210,'Incline Machine Chest Press','Incline Barbell Bench Press'),M('45° Back Extension','1-2',3,'8-10','7-8','9',150,'Good Morning','Glute-Ham Raise'),
+ M('Dumbbell Row','1-2',2,'10-12','9','10',150,'Chest-Supported T-Bar Row','Barbell Row','','LP'),M('Leg Extension','1-2',2,'15-20','9','10',90,'Goblet Squat','Dumbbell Lunge'),
+ M('Bayesian Cable Curl','0-1',2,'10-12','9','10',0,'Incline Dumbbell Curl','Preacher Curl','ss'),M('Standing Calf Raise','0-1',2,'12-15','9','10',90,'Seated Calf Raise','Leg Press Calf Press')]],
+['Full Body 4',[M('Hack Squat','2-3',3,'6-8','7','8',150,'Leg Press','Dumbbell Lunge'),M('Lat Pulldown','1-2',2,'10-12','9','10',150,'Pull-Up (destekli)','Chin-Up','','LP'),
+ M('Seated Leg Curl','1-2',2,'10-12','9','10',90,'Lying Leg Curl','Nordic Ham Curl','','LP'),M('Reverse Pec Deck','0-1',2,'10-12','9','10',90,'Rope Face Pull','Reverse Cable Fly'),
+ M('Triceps Pressdown','0-1',2,'10-12','9','10',0,'EZ-Bar Skullcrusher','Cable Triceps Kickback','ss'),M('Roman Chair Leg Raise','0-1',2,'10-20','9','10',30,'Hanging Leg Raise','Bent-Knee Leg Raise')]]]);
+ML(10,'Full Body 4 gün','Orta/ileri','Kas ve güç kazanmak','60-90 dk',['Full Body 1','Full Body 2','','Full Body 3','Full Body 4','',''],[
+['Full Body 1',[M('Bench Press','2-3',3,'3-5','7-8','9',210,'Machine Chest Press','Flat Dumbbell Press'),M('Leg Press','2-3',3,'6-8','7','8',210,'Barbell Front Squat','Dumbbell Lunge'),
+ M('Barbell Row','2-3',3,'8-10','7-8','9',150,'Pendlay Row','Dumbbell Row'),M('Dumbbell Lateral Raise','0-1',2,'12-15','9','10',90,'Cable Lateral Raise','Machine Lateral Raise','','LP'),
+ M('Preacher Curl','0-1',3,'12-15','9','10',0,'EZ-Bar Biceps Curl','Dumbbell Biceps Curl','ss'),M('Seated Calf Raise','0-1',3,'10-12','9','10',30,'Standing Calf Raise','Leg Press Calf Press')]],
+['Full Body 2',[M('Deadlift','2-3',3,'3-5','6','7',240,'Romanian Deadlift','Hip Thrust'),M('Pull-Up','1-2',3,'8-10','7-8','9',150,'Lat Pulldown','Chin-Up'),
+ M('Glute-Ham Raise','1-2',3,'8-10','7','8',150,'45° Back Extension','Lying Leg Curl'),M('Pec Deck','0-1',2,'15-20','9','10',90,'Dumbbell Fly','Push-Up','','DS'),
+ M('EZ-Bar Skullcrusher','0-1',3,'12-15','9','10',90,'Dumbbell Skullcrusher','Overhead Triceps Extension'),M('Cable Crunch','0-1',3,'10-12','9','10',90,'Plate-Weighted Decline Sit-Up','Hanging Leg Raise')]],
+['Full Body 3',[M('Overhead Barbell Press','2-3',3,'6-8','7-8','9',210,'Standing Dumbbell Shoulder Press','Seated Dumbbell Shoulder Press'),M('45° Back Extension','1-2',3,'8-10','7-8','9',150,'Good Morning','Glute-Ham Raise'),
+ M('Dumbbell Row','1-2',3,'10-12','7-8','9',150,'Chest-Supported T-Bar Row','Barbell Row'),M('Leg Extension','1-2',2,'15-20','9','10',90,'Goblet Squat','Dumbbell Lunge','','LP'),
+ M('Triceps Pressdown','0-1',3,'10-12','9','10',0,'EZ-Bar Skullcrusher','Cable Triceps Kickback','ss'),M('Bayesian Cable Curl','0-1',3,'10-12','9','10',30,'Incline Dumbbell Curl','Preacher Curl'),
+ M('Standing Calf Raise','0-1',3,'12-15','9','10',90,'Seated Calf Raise','Leg Press Calf Press')]],
+['Full Body 4',[M('Barbell Back Squat','2-3',3,'3-5','7','8',210,'Leg Press','Dumbbell Lunge'),M('Flat Dumbbell Press','1-2',3,'8-10','7-8','9',150,'Dip','Bench Press'),
+ M('Lat Pulldown','1-2',3,'10-12','7-8','9',150,'Pull-Up (destekli)','Chin-Up'),M('Seated Leg Curl','1-2',2,'10-12','9','10',90,'Lying Leg Curl','Nordic Ham Curl','','LP'),
+ M('Reverse Pec Deck','0-1',3,'10-12','9','10',90,'Rope Face Pull','Reverse Cable Fly'),M('Roman Chair Leg Raise','0-1',3,'10-20','9','10',30,'Hanging Leg Raise','Bent-Knee Leg Raise')]]]);
+ML(9,'Full Body 4 gün','Başlangıç','Kas ve güç kazanmak','60-90 dk',['Full Body 1','Full Body 2','','Full Body 3','Full Body 4','',''],[
+['Full Body 1',[M('Machine Chest Press','2-3',3,'6-8','7-8','9',150,'Bench Press','Flat Dumbbell Press'),M('Leg Press','2-3',3,'6-8','7','8',210,'Barbell Front Squat','Dumbbell Lunge'),
+ M('Barbell Row','2-3',3,'8-10','7-8','9',150,'Pendlay Row','Dumbbell Row'),M('Dumbbell Lateral Raise','0-1',3,'12-15','9','10',90,'Cable Lateral Raise','Machine Lateral Raise'),
+ M('Preacher Curl','0-1',2,'12-15','9','10',0,'EZ-Bar Biceps Curl','Dumbbell Biceps Curl','ss'),M('Seated Calf Raise','0-1',2,'10-12','9','10',30,'Standing Calf Raise','Leg Press Calf Press')]],
+['Full Body 2',[M('Romanian Deadlift','2-3',3,'8-10','6','7',150,'Deadlift','Hip Thrust'),M('Lat Pulldown','1-2',3,'8-10','7-8','9',150,'Pull-Up (destekli)','Chin-Up'),
+ M('Glute-Ham Raise','1-2',2,'8-10','7','8',150,'45° Back Extension','Lying Leg Curl'),M('Pec Deck','0-1',2,'15-20','9','10',90,'Dumbbell Fly','Push-Up'),
+ M('EZ-Bar Skullcrusher','0-1',2,'12-15','9','10',90,'Dumbbell Skullcrusher','Overhead Triceps Extension'),M('Cable Crunch','0-1',3,'10-12','9','10',90,'Plate-Weighted Decline Sit-Up','Hanging Leg Raise')]],
+['Full Body 3',[M('Seated Dumbbell Shoulder Press','2-3',3,'6-8','7-8','9',150,'Standing Dumbbell Shoulder Press','Overhead Barbell Press'),M('45° Back Extension','1-2',3,'8-10','7-8','9',150,'Good Morning','Glute-Ham Raise'),
+ M('Dumbbell Row','1-2',3,'10-12','7-8','9',150,'Chest-Supported T-Bar Row','Barbell Row'),M('Leg Extension','1-2',2,'15-20','9','10',90,'Goblet Squat','Dumbbell Lunge'),
+ M('Cable Triceps Kickback','0-1',2,'10-12','9','10',0,'EZ-Bar Skullcrusher','Triceps Pressdown','ss'),M('Bayesian Cable Curl','0-1',2,'10-12','9','10',30,'Incline Dumbbell Curl','Preacher Curl'),
+ M('Standing Calf Raise','0-1',3,'12-15','9','10',90,'Seated Calf Raise','Leg Press Calf Press')]],
+['Full Body 4',[M('Leg Press','2-3',3,'6-8','7','8',210,'Barbell Back Squat','Dumbbell Lunge'),M('Flat Dumbbell Press','1-2',3,'8-10','7-8','9',150,'Dip','Bench Press'),
+ M('Lat Pulldown','1-2',3,'10-12','7-8','9',150,'Pull-Up (destekli)','Chin-Up'),M('Seated Leg Curl','1-2',2,'10-12','9','10',90,'Lying Leg Curl','Nordic Ham Curl'),
+ M('Reverse Pec Deck','0-1',2,'10-12','9','10',90,'Rope Face Pull','Reverse Cable Fly'),M('Roman Chair Leg Raise','0-1',3,'10-20','9','10',30,'Hanging Leg Raise','Bent-Knee Leg Raise')]]]);
+ML(8,'Upper/Lower 4 gün (kısa)','Her seviye','Kısıtlı zamanda kas ve güç','45-60 dk',['Upper 1','Lower 1','','Upper 2','Lower 2','',''],[
+['Upper 1',[M('Machine Chest Press','2-3',2,'6-8','7-8','10',150,'Bench Press','Flat Dumbbell Press','','MY'),M('Dumbbell Row','2-3',3,'8-10','7-8','9',90,'Pendlay Row','Barbell Row'),
+ M('Dumbbell Lateral Raise','0-1',3,'12-15','9','10',0,'Cable Lateral Raise','Machine Lateral Raise','ss'),M('Lat Pulldown','1-2',3,'8-10','7-8','9',30,'Pull-Up (destekli)','Chin-Up'),
+ M('Pec Deck','0-1',3,'15-20','9','10',90,'Dumbbell Fly','Push-Up'),M('Preacher Curl','0-1',3,'12-15','9','10',0,'EZ-Bar Biceps Curl','Dumbbell Biceps Curl','ss'),
+ M('EZ-Bar Skullcrusher','0-1',3,'12-15','9','10',30,'Dumbbell Skullcrusher','Overhead Triceps Extension')]],
+['Lower 1',[M('Barbell Romanian Deadlift','2-3',3,'8-10','7','8',150,'Dumbbell Romanian Deadlift','Hip Thrust'),M('Leg Press','2-3',2,'6-8','7-8','10',150,'Dumbbell Lunge','Front Squat','','DS'),
+ M('Glute-Ham Raise','1-2',2,'8-10','7','8',90,'45° Back Extension','Lying Leg Curl'),M('Seated Calf Raise','0-1',3,'10-12','9','10',0,'Standing Calf Raise','Leg Press Calf Press','ss'),
+ M('Cable Crunch','0-1',3,'10-20','9','10',30,'Plate-Weighted Decline Sit-Up','Hanging Leg Raise')]],
+['Upper 2',[M('Lat Pulldown','1-2',2,'10-12','7-8','10',150,'Pull-Up (destekli)','Chin-Up','','LP'),M('Incline Dumbbell Press','2-3',3,'8-10','7-8','9',210,'Standing Dumbbell Shoulder Press','Seated Dumbbell Shoulder Press'),
+ M('Chest-Supported T-Bar Row','1-2',2,'10-12','7-8','10',150,'Dumbbell Row','Barbell Row','','LP'),M('Reverse Pec Deck','0-1',3,'10-12','9','10',90,'Rope Face Pull','Reverse Cable Fly'),
+ M('Triceps Pressdown','0-1',3,'10-12','9','10',0,'Cable Triceps Kickback','EZ-Bar Skullcrusher','ss'),M('Cable Curl','0-1',3,'10-12','9','10',30,'Incline Dumbbell Curl','Preacher Curl')]],
+['Lower 2',[M('Hack Squat','2-3',3,'6-8','7','8',150,'Leg Press','Dumbbell Lunge'),M('45° Back Extension','1-2',2,'8-10','7-8','9',150,'Good Morning','Glute-Ham Raise'),
+ M('Leg Extension','1-2',2,'10-12','9','10',90,'Goblet Squat','Dumbbell Lunge','','LP'),M('Seated Leg Curl','1-2',2,'10-12','9','10',90,'Lying Leg Curl','Nordic Ham Curl','','LP'),
+ M('Standing Calf Raise','0-1',3,'12-15','9','10',0,'Seated Calf Raise','Leg Press Calf Press','ss'),M('Roman Chair Leg Raise','0-1',3,'10-20','9','10',30,'Hanging Leg Raise','Bent-Knee Leg Raise')]]]);
+ML(7,'Upper/Lower 4 gün','Orta/ileri','Kas ve güç kazanmak','60-90 dk',['Upper 1','Lower 1','','Upper 2','Lower 2','',''],[
+['Upper 1',[M('Bench Press','2-3',3,'3-5','7-8','9',210,'Machine Chest Press','Flat Dumbbell Press'),M('Barbell Row','2-3',3,'8-10','7-8','9',150,'Pendlay Row','Dumbbell Row'),
+ M('Dumbbell Lateral Raise','0-1',2,'12-15','9','10',90,'Cable Lateral Raise','Machine Lateral Raise','','LP'),M('Pull-Up','1-2',3,'8-10','7-8','9',150,'Lat Pulldown','Chin-Up'),
+ M('Pec Deck','0-1',2,'15-20','9','10',90,'Dumbbell Fly','Push-Up','','DS'),M('Preacher Curl','0-1',3,'12-15','9','10',0,'EZ-Bar Biceps Curl','Dumbbell Biceps Curl','ss'),
+ M('EZ-Bar Skullcrusher','0-1',3,'12-15','9','10',30,'Dumbbell Skullcrusher','Overhead Triceps Extension')]],
+['Lower 1',[M('Deadlift','2-3',3,'3-5','6','7',240,'Romanian Deadlift','Hip Thrust'),M('Leg Press','2-3',3,'6-8','7','8',210,'Barbell Front Squat','Dumbbell Lunge'),
+ M('Glute-Ham Raise','1-2',3,'8-10','7','8',150,'45° Back Extension','Lying Leg Curl'),M('Seated Calf Raise','0-1',3,'10-12','9','10',90,'Standing Calf Raise','Leg Press Calf Press'),
+ M('Cable Crunch','0-1',3,'10-12','9','10',90,'Plate-Weighted Decline Sit-Up','Hanging Leg Raise')]],
+['Upper 2',[M('Lat Pulldown','1-2',3,'10-12','7-8','9',150,'Pull-Up (destekli)','Chin-Up'),M('Overhead Barbell Press','2-3',3,'6-8','7-8','9',210,'Standing Dumbbell Shoulder Press','Seated Dumbbell Shoulder Press'),
+ M('Dumbbell Row','1-2',3,'10-12','7-8','9',150,'Chest-Supported T-Bar Row','Barbell Row'),M('Flat Dumbbell Press','1-2',3,'8-10','7-8','9',150,'Dip','Bench Press'),
+ M('Reverse Pec Deck','0-1',3,'10-12','9','10',90,'Rope Face Pull','Reverse Cable Fly'),M('Triceps Pressdown','0-1',3,'10-12','9','10',0,'Cable Triceps Kickback','EZ-Bar Skullcrusher','ss'),
+ M('Bayesian Cable Curl','0-1',3,'10-12','9','10',30,'Incline Dumbbell Curl','Preacher Curl')]],
+['Lower 2',[M('Barbell Back Squat','2-3',3,'3-5','7','8',210,'Leg Press','Dumbbell Lunge'),M('45° Back Extension','1-2',3,'8-10','7-8','9',150,'Good Morning','Glute-Ham Raise'),
+ M('Leg Extension','1-2',2,'10-12','9','10',150,'Goblet Squat','Dumbbell Lunge','','LP'),M('Seated Leg Curl','1-2',2,'10-12','9','10',150,'Lying Leg Curl','Nordic Ham Curl','','LP'),
+ M('Standing Calf Raise','0-1',3,'12-15','9','10',90,'Seated Calf Raise','Leg Press Calf Press'),M('Roman Chair Leg Raise','0-1',3,'10-20','9','10',90,'Hanging Leg Raise','Bent-Knee Leg Raise')]]]);
+ML(6,'Upper/Lower 4 gün','Başlangıç','Kas ve güç kazanmak','60-90 dk',['Upper 1','Lower 1','','Upper 2','Lower 2','',''],[
+['Upper 1',[M('Machine Chest Press','2-3',3,'6-8','7-8','9',150,'Bench Press','Flat Dumbbell Press'),M('Chest-Supported T-Bar Row','2-3',3,'8-10','7-8','9',150,'Pendlay Row','Dumbbell Row'),
+ M('Dumbbell Lateral Raise','0-1',3,'12-15','9','10',90,'Cable Lateral Raise','Machine Lateral Raise'),M('Lat Pulldown','1-2',3,'8-10','7-8','9',150,'Pull-Up (destekli)','Chin-Up'),
+ M('Pec Deck','0-1',2,'15-20','9','10',90,'Dumbbell Fly','Push-Up'),M('Preacher Curl','0-1',2,'12-15','9','10',0,'EZ-Bar Biceps Curl','Dumbbell Biceps Curl','ss'),
+ M('EZ-Bar Skullcrusher','0-1',2,'12-15','9','10',30,'Dumbbell Skullcrusher','Overhead Triceps Extension')]],
+['Lower 1',[M('Romanian Deadlift','2-3',3,'8-10','6','7',150,'Deadlift','Hip Thrust'),M('Leg Press','2-3',3,'6-8','7','8',210,'Barbell Front Squat','Dumbbell Lunge'),
+ M('Glute-Ham Raise','1-2',2,'8-10','7','8',150,'45° Back Extension','Lying Leg Curl'),M('Seated Calf Raise','0-1',3,'10-12','9','10',90,'Standing Calf Raise','Leg Press Calf Press'),
+ M('Cable Crunch','0-1',3,'10-12','9','10',90,'Plate-Weighted Decline Sit-Up','Hanging Leg Raise')]],
+['Upper 2',[M('Lat Pulldown','1-2',3,'10-12','7-8','9',150,'Pull-Up (destekli)','Chin-Up'),M('Seated Dumbbell Shoulder Press','2-3',3,'6-8','7-8','9',150,'Standing Dumbbell Shoulder Press','Overhead Barbell Press'),
+ M('Dumbbell Row','1-2',3,'10-12','7-8','9',150,'Chest-Supported T-Bar Row','Barbell Row'),M('Flat Dumbbell Press','1-2',3,'8-10','7-8','9',150,'Dip','Bench Press'),
+ M('Reverse Pec Deck','0-1',2,'10-12','9','10',90,'Rope Face Pull','Reverse Cable Fly'),M('Triceps Pressdown','0-1',2,'10-12','9','10',0,'Cable Triceps Kickback','EZ-Bar Skullcrusher','ss'),
+ M('Bayesian Cable Curl','0-1',2,'10-12','9','10',30,'Incline Dumbbell Curl','Preacher Curl')]],
+['Lower 2',[M('Leg Press','2-3',3,'6-8','7','8',210,'Barbell Back Squat','Dumbbell Lunge'),M('45° Back Extension','1-2',3,'8-10','7-8','9',150,'Good Morning','Glute-Ham Raise'),
+ M('Leg Extension','1-2',2,'10-12','9','10',150,'Goblet Squat','Dumbbell Lunge'),M('Seated Leg Curl','1-2',2,'10-12','9','10',150,'Lying Leg Curl','Nordic Ham Curl'),
+ M('Standing Calf Raise','0-1',3,'12-15','9','10',90,'Seated Calf Raise','Leg Press Calf Press'),M('Roman Chair Leg Raise','0-1',3,'10-20','9','10',90,'Hanging Leg Raise','Bent-Knee Leg Raise')]]]);
+ML(5,'Full Body 3 gün (kısa)','Her seviye','Kısıtlı zamanda kas ve güç','45-60 dk',['Full Body 1','','Full Body 2','','Full Body 3','',''],[
+['Full Body 1',[M('Hack Squat','2-3',3,'6-8','7','8',150,'Leg Press','Dumbbell Lunge'),M('Chest-Supported T-Bar Row','2-3',2,'8-10','9','10',150,'Dumbbell Row','Cable Row','','LP'),
+ M('Glute-Ham Raise','1-2',2,'8-10','7','8',0,'45° Back Extension','Lying Leg Curl','ss'),M('Dumbbell Lateral Raise','0-1',2,'12-15','9','10',30,'Cable Lateral Raise','Machine Lateral Raise'),
+ M('Pec Deck','0-1',2,'15-20','9','10',0,'Dumbbell Fly','Push-Up','ss'),M('Preacher Curl','0-1',2,'12-15','9','10',30,'EZ-Bar Biceps Curl','Dumbbell Biceps Curl')]],
+['Full Body 2',[M('Machine Chest Press','2-3',2,'6-8','9','10',150,'Bench Press','Flat Dumbbell Press','','DS'),M('Leg Press','2-3',3,'6-8','7','8',150,'Barbell Front Squat','Dumbbell Lunge'),
+ M('Pull-Up','1-2',3,'8-10','7-8','9',0,'Lat Pulldown','Chin-Up','ss'),M('Seated Calf Raise','0-1',3,'10-12','9','10',30,'Standing Calf Raise','Leg Press Calf Press'),
+ M('Reverse Pec Deck','0-1',3,'15-20','9','10',0,'Rope Face Pull','Reverse Cable Fly','ss'),M('EZ-Bar Skullcrusher','0-1',3,'12-15','9','10',30,'Dumbbell Skullcrusher','Overhead Triceps Extension')]],
+['Full Body 3',[M('Barbell Romanian Deadlift','2-3',3,'8-10','7','8',150,'Dumbbell Romanian Deadlift','Hip Thrust'),M('Incline Dumbbell Press','2-3',2,'8-10','9','10',150,'Incline Machine Chest Press','Incline Barbell Bench Press','','LP'),
+ M('Seated Leg Curl','1-2',3,'10-12','9','10',0,'Lying Leg Curl','Nordic Ham Curl','ss'),M('Lat Pulldown','1-2',3,'10-12','7-8','9',30,'Pull-Up (destekli)','Chin-Up'),
+ M('Leg Extension','1-2',3,'10-12','9','10',0,'Goblet Squat','Dumbbell Lunge','ss'),M('Plate-Weighted Decline Sit-Up','0-1',3,'8-10','9','10',30,'Cable Crunch','Plank')]]]);
+ML(4,'Full Body 3 gün','Orta/ileri','Kas ve güç kazanmak','60-90 dk',['Full Body 1','','Full Body 2','','Full Body 3','',''],[
+['Full Body 1',[M('Barbell Back Squat','2-3',3,'3-5','7','8',210,'Leg Press','Dumbbell Lunge'),M('Chest-Supported T-Bar Row','2-3',3,'8-10','7-8','9',150,'Dumbbell Row','Cable Row'),
+ M('Glute-Ham Raise','1-2',3,'8-10','7','8',150,'45° Back Extension','Lying Leg Curl'),M('Dumbbell Lateral Raise','0-1',2,'12-15','9','10',90,'Cable Lateral Raise','Machine Lateral Raise','','LP'),
+ M('Pec Deck','0-1',2,'15-20','9','10',90,'Dumbbell Fly','Push-Up','','DS'),M('Preacher Curl','0-1',3,'12-15','9','10',90,'EZ-Bar Biceps Curl','Dumbbell Biceps Curl')]],
+['Full Body 2',[M('Bench Press','2-3',3,'3-5','7-8','9',210,'Machine Chest Press','Flat Dumbbell Press'),M('Leg Press','2-3',3,'6-8','7','8',210,'Barbell Front Squat','Dumbbell Lunge'),
+ M('Pull-Up','1-2',3,'8-10','7-8','9',150,'Lat Pulldown','Chin-Up'),M('EZ-Bar Skullcrusher','0-1',3,'12-15','9','10',90,'Dumbbell Skullcrusher','Overhead Triceps Extension'),
+ M('Reverse Pec Deck','0-1',3,'15-20','9','10',90,'Rope Face Pull','Reverse Cable Fly'),M('Seated Calf Raise','0-1',3,'10-12','9','10',90,'Standing Calf Raise','Leg Press Calf Press')]],
+['Full Body 3',[M('Deadlift','2-3',3,'3-5','6','7',240,'Romanian Deadlift','Hip Thrust'),M('Incline Dumbbell Press','2-3',3,'8-10','7-8','9',150,'Incline Machine Chest Press','Incline Barbell Bench Press'),
+ M('Seated Leg Curl','1-2',2,'10-12','9','10',90,'Lying Leg Curl','Nordic Ham Curl','','LP'),M('Lat Pulldown','1-2',3,'10-12','7-8','9',150,'Pull-Up (destekli)','Chin-Up'),
+ M('Leg Extension','1-2',2,'10-12','9','10',90,'Goblet Squat','Dumbbell Lunge','','LP'),M('Plate-Weighted Decline Sit-Up','0-1',3,'8-10','9','10',90,'Cable Crunch','Plank')]]]);
+ML(3,'Full Body 3 gün','Başlangıç','Kas ve güç kazanmak','60-90 dk',['Full Body 1','','Full Body 2','','Full Body 3','',''],[
+['Full Body 1',[M('Leg Press','2-3',3,'6-8','7','8',210,'Barbell Back Squat','Dumbbell Lunge'),M('Chest-Supported T-Bar Row','2-3',3,'8-10','7-8','9',150,'Dumbbell Row','Cable Row'),
+ M('Glute-Ham Raise','1-2',2,'8-10','7','8',150,'45° Back Extension','Lying Leg Curl'),M('Dumbbell Lateral Raise','0-1',3,'12-15','9','10',90,'Cable Lateral Raise','Machine Lateral Raise'),
+ M('Pec Deck','0-1',2,'15-20','9','10',90,'Dumbbell Fly','Push-Up'),M('Preacher Curl','0-1',2,'12-15','9','10',90,'EZ-Bar Biceps Curl','Dumbbell Biceps Curl')]],
+['Full Body 2',[M('Machine Chest Press','2-3',3,'6-8','7-8','9',150,'Barbell Bench Press','Flat Dumbbell Press'),M('Leg Press','2-3',3,'6-8','7','8',210,'Barbell Front Squat','Dumbbell Lunge'),
+ M('Lat Pulldown','1-2',3,'8-10','7-8','9',150,'Pull-Up (destekli)','Chin-Up'),M('EZ-Bar Skullcrusher','0-1',2,'12-15','9','10',90,'Dumbbell Skullcrusher','Overhead Triceps Extension'),
+ M('Reverse Pec Deck','0-1',2,'15-20','9','10',90,'Rope Face Pull','Reverse Cable Fly'),M('Seated Calf Raise','0-1',3,'10-12','9','10',90,'Standing Calf Raise','Leg Press Calf Press')]],
+['Full Body 3',[M('Romanian Deadlift','2-3',3,'8-10','6','7',150,'Deadlift','Hip Thrust'),M('Incline Dumbbell Press','2-3',3,'8-10','7-8','9',150,'Incline Machine Chest Press','Incline Barbell Bench Press'),
+ M('Seated Leg Curl','1-2',2,'10-12','9','10',90,'Lying Leg Curl','Nordic Ham Curl'),M('Lat Pulldown','1-2',3,'10-12','7-8','9',150,'Pull-Up (destekli)','Chin-Up'),
+ M('Leg Extension','1-2',2,'10-12','9','10',90,'Goblet Squat','Dumbbell Lunge'),M('Plate-Weighted Decline Sit-Up','0-1',3,'8-10','9','10',90,'Cable Crunch','Plank')]]]);
+ML(2,'Full Body 2 gün (kısa)','Her seviye','Kısıtlı zamanda kas ve güç','45-60 dk',['Full Body 1','','','Full Body 2','','',''],[
+['Full Body 1',[M('Leg Press','2-3',3,'6-8','7','8',0,'Barbell Front Squat','Dumbbell Lunge','ss'),M('Dumbbell Lateral Raise','0-1',3,'8-10','7-8','10',45,'Cable Lateral Raise','Machine Lateral Raise'),
+ M('Lat Pulldown','1-2',3,'8-10','7-8','10',90,'Pull-Up (destekli)','Chin-Up'),M('Barbell Romanian Deadlift','2-3',2,'8-10','7','8',150,'Dumbbell Romanian Deadlift','Hip Thrust'),
+ M('Machine Chest Press','1-2',3,'6-8','7-8','10',0,'Bench Press','Flat Dumbbell Press','ss'),M('Standing Calf Raise','0-1',3,'6-8','7-8','10',90,'Seated Calf Raise','Leg Press Calf Press')]],
+['Full Body 2',[M('Seated Leg Curl','2',3,'12-15','8','9',90,'Lying Leg Curl','Nordic Ham Curl'),M('Hack Squat','3-4',3,'6-8','7','8',210,'Leg Press','Dumbbell Lunge'),
+ M('Incline Dumbbell Press','1-2',3,'8-10','7-8','9',150,'Incline Machine Chest Press','Incline Barbell Bench Press'),M('Chest-Supported T-Bar Row','2-3',3,'8-10','8-9','10',150,'Pendlay Row','Dumbbell Row'),
+ M('EZ-Bar Biceps Curl','0-1',2,'6-8','7-8','10',0,'Standing Barbell Curl','Dumbbell Biceps Curl','ss'),M('EZ-Bar Skullcrusher','0-1',2,'10-12','7-8','10',45,'Dumbbell Skullcrusher','Overhead Triceps Extension'),
+ M('Cable Crunch','1',3,'10-12','9','10',90,'Plate-Weighted Decline Sit-Up','Hanging Leg Raise')]]]);
+ML(1,'Full Body 2 gün','Başlangıç','Kas ve güç kazanmak','60-90 dk',['Full Body 1','','','Full Body 2','','',''],[
+['Full Body 1',[M('Leg Press','2-3',2,'6-8','7','8',210,'Barbell Back Squat','Dumbbell Lunge'),M('Chest-Supported T-Bar Row','1-2',3,'8-10','7-8','9',150,'Pendlay Row','Dumbbell Row'),
+ M('Barbell Romanian Deadlift','1-2',3,'6-8','7','8',150,'Dumbbell Romanian Deadlift','Hip Thrust'),M('Incline Dumbbell Press','1-2',3,'12-15','7-8','9',150,'Incline Machine Chest Press','Incline Barbell Bench Press'),
+ M('Lat Pulldown','1-2',3,'10-12','7-8','9',150,'Pull-Up (destekli)','Chin-Up'),M('EZ-Bar Biceps Curl','0-1',2,'6-8','7-8','10',0,'Standing Barbell Curl','Dumbbell Biceps Curl','ss'),
+ M('EZ-Bar Skullcrusher','0-1',2,'10-12','7-8','10',45,'Dumbbell Skullcrusher','Overhead Triceps Extension')]],
+['Full Body 2',[M('Machine Chest Press','2-3',3,'6-8','7','8',150,'Bench Press','Flat Dumbbell Press'),M('Leg Press','1-2',3,'6-8','7','8',210,'Barbell Front Squat','Dumbbell Lunge'),
+ M('Lat Pulldown','1-2',3,'6-10','7-8','9',150,'Pull-Up (destekli)','Chin-Up'),M('Seated Leg Curl','1-2',3,'10-12','7-8','9',150,'Lying Leg Curl','Nordic Ham Curl'),
+ M('Cable Lateral Raise','0-1',2,'12-15','9','10',90,'Machine Lateral Raise','Dumbbell Lateral Raise'),M('Standing Calf Raise','0-1',3,'10-12','9','10',0,'Seated Calf Raise','Leg Press Calf Press','ss'),
+ M('Cable Crunch','0-1',3,'12-15','9','10',45,'Plate-Weighted Decline Sit-Up','Hanging Leg Raise')]]]);
+})();
+Object.assign(LBL,{LP:['Uzatılmış kısmi tekrarlar','Tükenişe ulaşınca hareketin esneme (alt) yarısında, yarım tekrar bile yapamayana kadar kısmi tekrarlarla devam et.'],
+DS:['Drop set','Tükenişe gelince ağırlığı yaklaşık %25-50 düşür ve yine tükenişe kadar devam et.'],MY:LBL.M,
+CR:['Hileli tekrarlar','Tükenişe gelince biraz momentumla 2-3 tekrar daha yap, inişi kontrollü tut.'],
+SH:['Statik esnetme (30 sn)','Son tekrardan sonra ağırlığı esneme pozisyonunda 30 saniye tut.'],
+IP:['Entegre kısmi tekrarlar','Her sette bir tam, bir yarım (esneme yarısında) tekrar yap; yarım tekrarlar da sayılır.'],
+F:['Tükenişe kadar','Son seti iyi formla bir tekrar daha yapamayacağın noktaya kadar götür.'],
+QS:['Quadriceps statik esnetme (30 sn)','Son setten sonra o bacak için 30 saniye quadriceps esnet.']});
+const PROG=()=>PROGS.find(p=>p.id==(S.prog||'ulppl'))||PROGS[0];
+const isU=()=>(S.prog||'ulppl')=='ulppl';
+const blockFor=(p,wk)=>(p.blocks||[]).find(b=>wk>=b.from&&wk<=b.to);
+function rowToEx(r,p,wk){
+ if(p.id.startsWith('cb')){const [n,wu,s,rp,it,note]=r,pk=v=>Array.isArray(v)?v[Math.min(wk-1,v.length-1)]:v,iv=String(pk(it)),pct=iv[0]=='%';
+  return{n,wu:String(wu),sets:+pk(s),reps:String(pk(rp)),rpe:pct?'':iv,pct:pct?iv.slice(1):'',rest:pct?180:120,alt:(p.alt&&p.alt[n])||[],note:note||'',ss:0,tech:''}}
+ const [n,wu,sets,reps,rpe,rest,alt,note,flag,tech,pct]=r,dr=flag=='drop'||flag=='dropL';
+ return{n,wu:String(wu??''),sets:+sets||1,reps:String(reps),rpe:String(rpe??''),rest:+rest||0,alt:((alt&&alt.length?alt:p.alt&&p.alt[n])||[]).filter(Boolean),note:note||'',ss:flag=='ss'?1:0,tech:dr?'DS':(tech||''),techAll:flag=='drop'||tech=='IP'?1:0,pct:pct||''}}
+const dkey=()=>new Date().toDateString();
+function deal(p){if(S.deal&&S.deal.d==dkey())return S.deal.ex;const deck=[];for(let s=0;s<4;s++)for(let v=2;v<=14;v++)deck.push([s,v]);
+ for(let i=deck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[deck[i],deck[j]]=[deck[j],deck[i]]}
+ const cnt=[0,0,0,0],ex=[],VN={11:'Vale',12:'Kız',13:'Papaz',14:'As'};
+ for(const [s,v] of deck.slice(0,20)){if(v==14){if(ex.length)ex[ex.length-1].rest=120;continue}
+  const [sym,,list]=p.suits[s],[n,alts]=list[cnt[s]++%list.length],reps=v<=10?v+10:20;
+  ex.push({n,sets:1,reps:String(reps),rest:0,alt:alts,note:`Kart: ${sym} ${VN[v]||v}. `+((p.notes||{})[n]||''),ss:0,tech:'',rpe:'',wu:''})}
+ S.deal={d:dkey(),ex};return ex}
+function genW(p,wk){if(p.card)return{w:{'C.A.R.D.':deal(p)},sched:p.sched};
+ const b=blockFor(p,wk),days=p.days||(b&&b.days)||[],w={};days.forEach(([nm2,rows])=>w[nm2]=rows.map(r=>rowToEx(r,p,wk)));
+ return{w,sched:(b&&b.sched)||p.sched}}
+function regen(){const p=PROG();if(p.editable)return;const g=genW(p,S.week||1);S.w=g.w;
+ const ok=S.sched&&S.sched.every(x=>!x||g.w[x])&&S.sched.filter(Boolean).length==g.sched.filter(Boolean).length;if(!ok)S.sched=g.sched.slice()}
+function setProg(id){if(id==S.prog)return;S.ps=S.ps||{};S.ps[S.prog||'ulppl']={week:S.week,sched:S.sched,...(isU()?{w:S.w}:{})};
+ S.prog=id;const st=S.ps[id]||{};S.week=st.week||1;S.plan=null;
+ if(isU()){S.w=st.w||clone(DEF);S.sched=st.sched||['Upper','Lower','','Push','Pull','','']}else{S.sched=st.sched||null;regen()}}
+function mig(s){if(!s.prog)s.prog='ulppl';if(!s.v)['Upper','Push'].forEach(k=>{if(!s.w[k])s.w[k]=clone(DEF[k])});
 if((s.v||0)<3){(s.w.Upper||[]).forEach(e=>{if(e.n=='EZ-Bar Cheat Curl (süperset 1)'){e.n='EZ-Bar Cheat Curl';e.ss=1}if(e.n=='EZ-Bar Skull Crusher (süperset 1)')e.n='EZ-Bar Skull Crusher'});s.week=1;s.v=3}return s}
-function load(){try{const s=JSON.parse(localStorage.getItem(KEY));if(s&&s.w)return mig(s)}catch(e){}
-return{v:3,week:1,sched:['Upper','Lower','','Push','Pull','',''],w:clone(DEF),last:{},log:[]}}
-function save(){try{S.run=V.run&&V.view=='run'&&(!V.run.done||V.run.mode)?V.run:null;localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function load(){try{const s=KEY&&JSON.parse(localStorage.getItem(KEY));if(s&&s.w)return mig(s)}catch(e){}
+return{_new:1,v:3,prog:'ulppl',week:1,sched:['Upper','Lower','','Push','Pull','',''],w:clone(DEF),last:{},log:[]}}
+function save(){if(!KEY)return;try{S.run=V.run&&V.view=='run'&&(!V.run.done||V.run.mode)?V.run:null;localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 const today=()=>(new Date().getDay()+6)%7;
-let S=load(),V={view:'splash',day:today(),run:null},actx=null;
-if(S.run&&S.w[S.run.w]){V.run=S.run;const r=V.run;if(r.phase=='rest'&&r.nx&&Date.now()>=r.end){r.ei=r.nx.ei;r.si=r.nx.si;r.phase='set'}}else S.run=null;
+let S=load(),V={view:'splash',day:today(),run:null},actx=null,P={list:[],last:''};
+try{P=Object.assign(P,JSON.parse(localStorage.getItem(PKEY))||{})}catch(e){}
+const saveP=()=>{try{localStorage.setItem(PKEY,JSON.stringify(P))}catch(e){}};
+function useProfile(name){const first=!P.list.length;PROF=name;KEY=LEGACY+':'+name;
+try{if(first&&!localStorage.getItem(KEY)){const old=localStorage.getItem(LEGACY);if(old)localStorage.setItem(KEY,old)}}catch(e){}
+if(!P.list.includes(name))P.list.push(name);P.last=name;saveP();
+S=load();V.newProf=!!S._new;delete S._new;if(!isU())regen();V.run=null;V.chg=false;
+if(S.run&&S.w[S.run.w]){V.run=S.run;const r=V.run;if(r.phase=='rest'&&r.nx&&Date.now()>=r.end){r.ei=r.nx.ei;r.si=r.nx.si;r.phase='set'}}else S.run=null}
+if(P.last&&P.list.includes(P.last))useProfile(P.last);
 const esc=t=>String(t??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const phase=()=>{const k=S.week||1;return k==1||k==7?0:k<7?1:2};
 const same=(w,i,e)=>DEF[w]&&DEF[w][i]&&DEF[w][i].n==e.n;
-const rirOf=(w,i,e)=>phase()&&WR[w]&&same(w,i,e)?WR[w][i]:e.rir;
-const techOf=(w,i,e)=>phase()==2&&TECH[w]&&same(w,i,e)?TECH[w][i]||'':'';
+const rirOf=(w,i,e)=>isU()&&phase()&&WR[w]&&same(w,i,e)?WR[w][i]:e.rir;
+const techOf=(w,i,e)=>isU()?(phase()==2&&TECH[w]&&same(w,i,e)?TECH[w][i]||'':''):(e.tech||'');
+// Set hedefi: ULPPL'de RIR, diğer programlarda RPE ("erken|son" biçiminde) ve varsa %1RM.
+function target(w,i,e,si){if(isU()){const rr=rirOf(w,i,e);return rr&&rr[si]!=null?', RIR '+rr[si]:''}
+ const pr=(e.rpe||'').split('|'),v=pr.length>1?(si==e.sets-1?pr[1]:pr[0]):pr[0];return(v?', RPE '+v:'')+(e.pct?', 1RM\'in %'+e.pct+'\'i':'')}
+const techNow=(w,i,e,si)=>isU()?(si==e.sets-1?techOf(w,i,e):''):(e.tech&&(e.techAll||si==e.sets-1)?e.tech:'');
 const fmt=s=>{s=Math.max(0,s);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
 const fmtE=s=>{s=Math.max(0,Math.floor(s));const h=Math.floor(s/3600);return h?h+':'+String(Math.floor(s%3600/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0'):fmt(s)};
 const dur=s=>{if(!s)return'';const m=Math.max(1,Math.round(s/60));return m<60?m+' dk':Math.floor(m/60)+' sa '+(m%60)+' dk'};
@@ -205,33 +1023,43 @@ const CARDIO_G=[
 ['Açık hava / diğer',['Tempolu yürüyüş','Açık havada koşu','Yokuş / merdiven çıkma','Doğa yürüyüşü (hiking)','Bisiklet (açık hava)','Yüzme']]];
 const CARDIO=CARDIO_G.flatMap(g=>g[1]);
 const csec=c=>c?(c.acc||0)+(c.t0?(Date.now()-c.t0)/1000:0):0;
-const lr=l=>l.cardio?dur(l.sec)+' kardiyo':(l.s.map(x=>x.skip?'atlandı':x.kg+'×'+x.r).join(', ')+(l.skip?(l.s.length?', kalanı atlandı':'Atlandı'):''));
+const lr=l=>l.cardio?dur(l.sec)+' kardiyo':(l.s.map(x=>x.skip?'atlandı':fnum(num(x.kg))+'×'+x.r).join(', ')+(l.skip?(l.s.length?', kalanı atlandı':'Atlandı'):''));
 function addLog(x){const r=V.run;r.log.push(x);if(r.done){const h=S.log[r.li];if(h&&h.log!==r.log)h.log.push(x)}}
 const PLATES={Upper:'red',Lower:'blue',Push:'yel',Pull:'grn'},PL=['red','blue','yel','grn'];
-const pc=w=>!w||!S.w[w]?'rest':PLATES[w]||PL[Math.max(0,Object.keys(S.w).indexOf(w))%4];
+const pc=w=>!w||!S.w[w]?'rest':PLATES[w]||(/upper|chest|shoulder|squat test/i.test(w)?'red':/lower|leg|deadlift test/i.test(w)?'blue':/push|bench/i.test(w)?'yel':/pull|back|arm/i.test(w)?'grn':PL[Math.max(0,Object.keys(S.w).indexOf(w))%4]);
+const nWk=()=>PROG().weeks||1,wLab=i=>(PROG().wlabels||{})[i]||'Hafta '+i;
 const today8=()=>new Date().toLocaleDateString('tr-TR',{weekday:'long',day:'numeric',month:'long'});
-const wks=()=>`<div class="wks" aria-hidden="true">${[...Array(12)].map((_,i)=>`<span class="${i+1<S.week?'d':i+1==S.week?'c':''}"></span>`).join('')}</div>`;
+const wks=()=>nWk()<2?'':`<div class="wks" style="grid-template-columns:repeat(${nWk()},1fr)" aria-hidden="true">${[...Array(nWk())].map((_,i)=>`<span class="${i+1<S.week?'d':i+1==S.week?'c':''}"></span>`).join('')}</div>`;
 const nav=(a,t)=>`<button class="li" data-a="${a}"><span>${t}</span><span class="chev" aria-hidden="true">›</span></button>`;
 const when=h=>{const d=new Date(h.d);return d.toLocaleDateString('tr-TR',{day:'numeric',month:'long'})+', '+d.toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'})+(h.wk?`, ${h.wk}. hafta`:'')+(h.part?', yarım kaldı':'')};
 const strip=(sc,td,sel,act='day')=>`<div class="wk">${DAYS.map((d,i)=>{const k=sc[i],ok=k&&S.w[k];return`<button class="${i==td?'td':''} ${i==sel?'on':''}" data-a="${act}" data-i="${i}" ${act=='mv'&&i==sel?'disabled':''} aria-label="${DAYL[i]}: ${ok?esc(k):'dinlenme'}"><b>${d}</b><i class="p-${ok?pc(k):'rest'} ${ok?'':'off'}"></i><small>${ok?esc(k):'Dinlenme'}</small></button>`}).join('')}</div>`;
 
-function splash(){const w=eff()[today()],rw=V.run&&V.run.w,show=rw||(w&&S.w[w]?w:'');
+function who(){return`<div class="splash"><div class="sp-top"><span class="brand">Antrenman</span><span class="mut">${today8()}</span></div>
+<div class="who"><h1 class="pt">${P.list.length?'Kim antrenman yapıyor?':'Adın ne?'}</h1>
+${P.list.length?`<div class="list">${P.list.map(n=>`<button class="li" data-a="prof" data-v="${esc(n)}"><span>${esc(n)}</span><span class="chev" aria-hidden="true">›</span></button>`).join('')}</div><label class="lab" for="pn">Yeni kişi ekle</label>`:''}
+<div class="inl"><input id="pn" maxlength="30" autocomplete="given-name" placeholder="Adını yaz" aria-label="Ad"><button class="btn" data-a="pnew">Devam</button></div>
+<p class="mut" style="font-size:13px">Her kişinin programı, geçmişi ve notları ayrı saklanır. Şifre yoktur; bu telefonu kullanan herkes kişileri seçebilir.</p>
+${PROF?'<button class="lnk" data-a="pcancel">Vazgeç</button>':''}</div></div>`}
+function splash(){if(!PROF||V.chg)return who();const w=eff()[today()],rw=V.run&&V.run.w,show=rw||(w&&S.w[w]?w:'');
 return`<div class="splash"><div class="sp-top"><span class="brand">Antrenman</span><span class="mut">${today8()}</span></div>
-<div class="plate sp-plate p-${pc(show)}"><div class="sp-lab">${rw?'Yarım kalan antrenman':'Bugün'}</div><div class="sp-w">${show?esc(show):'Dinlenme'}</div><p class="sp-m">${show?`${S.w[show].length} hareket, programın ${S.week}. haftası.`:'Bugün programda antrenman yok.'}</p></div>
+<div class="hd" style="margin-top:-8px"><span>Merhaba, <b>${esc(PROF)}</b></span><button class="lnk" data-a="pchg">Kişi değiştir</button></div>
+<div class="plate sp-plate p-${pc(show)}"><div class="sp-lab">${rw?'Yarım kalan antrenman':'Bugün'}</div><div class="sp-w">${show?esc(show):'Dinlenme'}</div><p class="sp-m">${show?`${S.w[show].length} hareket. ${esc(PROG().name)}${nWk()>1?`, ${S.week}. hafta`:''}.`:'Bugün programda antrenman yok.'}</p></div>
 <div><div class="track"><span class="tl">Başlamak için kaydır</span><button class="knob" data-a="enter" aria-label="Uygulamaya gir"></button></div><p class="sp-hint">Ya da ekranı yukarı kaydır.</p></div></div>`}
-function enter(){V.view=V.run?'run':'main';render();window.scrollTo(0,0)}
+function enter(){if(!PROF||V.chg)return;V.view=V.run?'run':V.newProf?'progs':'main';render();window.scrollTo(0,0)}
 
 function main(){const td=today(),sc=eff(),w=sc[td],ex=S.w[w]||[],last=S.log[S.log.length-1];
 const sets=ex.reduce((a,e)=>a+(+e.sets||0),0),min=Math.round(ex.reduce((a,e)=>a+e.sets*(+e.rest+40),0)/60);
 let nxt='';if(!ex.length)for(let k=1;k<7;k++){const j=(td+k)%7,x=j>td?sc[j]:S.sched[j];if(x&&S.w[x]){nxt=x+', '+DAYL[j];break}}
-return`<div class="hd"><span class="date">${today8()}</span><select id="wk" class="wsel" data-a="week" aria-label="Program haftası">${[...Array(12)].map((_,i)=>`<option value="${i+1}" ${S.week==i+1?'selected':''}>Hafta ${i+1}</option>`).join('')}</select></div>
-${wks()}<p class="wkn">12 haftalık programın ${S.week}. haftası${S.week%6==1?', tanıtım haftası':''}.</p>${msg()}
+return`<div class="hd"><span class="date">${today8()}</span>${nWk()>1?`<select id="wk" class="wsel" data-a="week" aria-label="Program haftası">${[...Array(nWk())].map((_,i)=>`<option value="${i+1}" ${S.week==i+1?'selected':''}>${esc(wLab(i+1))}</option>`).join('')}</select>`:''}</div>
+<button class="lnk" data-a="progs" style="padding:2px 0 6px;text-align:left">${esc(PROG().name)}</button>
+${wks()}${isU()&&S.week%6==1?'<p class="wkn">Tanıtım haftası.</p>':''}${(PROG().wnotes||{})[S.week]?`<p class="wkn">${esc(PROG().wnotes[S.week])}</p>`:''}${msg()}
 <div class="hd lab"><span>Bugün</span>${ex.length?`<button class="lnk" data-a="post" data-i="${td}">Ertele</button>`:''}</div>
 ${ex.length?`<div class="plate p-${pc(w)}"><div class="wn">${esc(w)}</div><ul class="pl">${ex.map(e=>`<li><span>${esc(nm(e))}</span><span>${e.sets}×${esc(e.reps)}</span></li>`).join('')}</ul><p class="pm">${sets} set, yaklaşık ${min} dakika.</p><div class="pa"><button class="pbtn" data-a="start" data-i="${td}">Başla</button><button class="lnk" data-a="day" data-i="${td}">Ayrıntılar</button></div></div>`
 :`<div class="plate p-rest"><div class="wn">Dinlenme</div><p class="pm" style="margin-bottom:0">${nxt?'Sıradaki antrenman: '+esc(nxt)+'.':'Programa henüz gün atanmamış.'}</p></div>`}
 <div class="hd lab"><span>Bu hafta${planOn()?', ertelemeyle düzenlendi':''}</span>${planOn()?'<button class="lnk" data-a="unplan">Sıfırla</button>':''}</div>${strip(sc,td,-1)}
 ${last?`<div class="lab">Son antrenman</div><div class="list"><div class="row"><div class="grow"><b>${esc(last.w)}</b><span class="sub">${when(last)}</span></div><span class="v">${last.dur?dur(last.dur):''}</span></div></div>`:''}
-<div class="list" style="margin-top:24px">${nav('hist','Geçmiş')}${nav('edit','Programı düzenle')}${nav('exp','Yedekle')}${nav('imp','Yedeği geri yükle')}</div>`}
+<div class="list" style="margin-top:24px">${nav('progs','Program seç')}${nav('rep','Raporlar')}${nav('hist','Geçmiş')}${PROG().editable?nav('edit','Programı düzenle'):''}${nav('exp','Yedekle')}${nav('imp','Yedeği geri yükle')}</div>
+<div class="list" style="margin-top:12px"><button class="li" data-a="pchg"><span>Kişi: <b>${esc(PROF)}</b></span><span class="mut" style="font-size:13px">Değiştir</span></button></div>`}
 
 async function exportData(){const name='antrenman-yedek-'+new Date().toISOString().slice(0,10)+'.json',blob=new Blob([JSON.stringify(S)],{type:'application/json'});
 try{const f=new File([blob],name,{type:'application/json'});if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:'Antrenman yedeği'});return}}catch(e){if(e&&e.name=='AbortError')return}
@@ -240,14 +1068,14 @@ const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=
 function day(){const sc=eff(),w=sc[V.day],ex=S.w[w]||[],canPost=V.day>=today()&&V.day<6;
 return`<div class="hd"><button class="lnk back" data-a="home">‹ Ana ekran</button><span class="mut">${S.week}. hafta</span></div><h1 class="pt">${DAYL[V.day]}</h1>${strip(sc,today(),V.day)}${msg()}
 <div class="lab">${w&&ex.length?`${esc(w)} antrenmanını bu hafta başka güne taşı`:'Bu hafta başka günün antrenmanını buraya al'}</div>${strip(sc,today(),V.day,'mv')}
-<p class="mut" style="font-size:13px;margin:8px 0 0">Bir güne dokun. O günde antrenman varsa iki gün yer değiştirir. Sadece bu hafta için geçerli, ana ekrandaki Sıfırla ile geri alınır.</p>
+<p class="mut" style="font-size:13px;margin:8px 0 0">Dolu bir güne dokunursan iki gün yer değiştirir. Sadece bu hafta için.</p>
 <label class="lab" for="sel">Haftalık programda bu gün (kalıcı)</label>
 <select id="sel" data-a="sched"><option value="">Dinlenme</option>${Object.keys(S.w).map(k=>`<option value="${esc(k)}" ${k==w?'selected':''}>${esc(k)}</option>`).join('')}</select>
-${w&&ex.length?`<div class="list" style="margin-top:12px">${ex.map((e,i)=>{const t=techOf(w,i,e);return`<div class="row at"><div class="grow"><b>${esc(nm(e))}</b>${e.ss?'<span class="tag">süperset</span>':''}${FOCUS[e.n]?`<span class="sub">${esc(FOCUS[e.n])}</span>`:''}${chips(e)}</div><div class="v"><b class="n">${e.sets}×${esc(e.reps)}</b><span class="sub">${fmt(e.rest)} dinlenme</span>${t?`<span class="sub">${esc(LBL[t][0])}</span>`:''}</div></div>`}).join('')}</div>
+${w&&ex.length?`<div class="list" style="margin-top:12px">${ex.map((e,i)=>{const t=techOf(w,i,e);return`<div class="row at"><div class="grow"><b>${esc(nm(e))}</b>${e.ss?'<span class="tag">süperset</span>':''}${FOCUS[e.n]?`<span class="sub">${esc(FOCUS[e.n])}</span>`:''}${(S.notes||{})[nm(e)]?`<span class="sub unote">Notun: ${esc(S.notes[nm(e)])}</span>`:''}${chips(e)}</div><div class="v"><b class="n">${e.sets}×${esc(e.reps)}</b><span class="sub">${fmt(e.rest)} dinlenme</span>${!isU()&&e.rpe?`<span class="sub">RPE ${esc(e.rpe.replace('|',', son set '))}</span>`:''}${e.pct?`<span class="sub">1RM %${esc(e.pct)}</span>`:''}${t?`<span class="sub">${esc(LBL[t][0])}</span>`:''}</div></div>`}).join('')}</div>
 <div class="${canPost?'two':''}"><button class="btn" data-a="start">Başla</button>${canPost?`<button class="btn alt" data-a="post" data-i="${V.day}">Ertele</button>`:''}</div>`:'<p class="mut" style="margin-top:14px">Bu gün dinlenme günü.</p>'}
 `}
 
-function hist(){return`<div class="hd"><button class="lnk back" data-a="home">‹ Ana ekran</button></div><h1 class="pt">Geçmiş</h1>`+(S.log.length?S.log.map((h,i)=>`<div class="lab hl p-${pc(h.w)}"><span class="sq"></span>${esc(h.w)}</div><div class="list"><div class="row"><span class="mut" style="font-size:13px">${when(h)}</span><span class="v">${h.dur?dur(h.dur):''}</span></div>${h.log.map(l=>`<div class="row at"><span>${esc(l.n)}</span><span class="v">${lr(l)}</span></div>`).join('')}<div class="row"><button class="lnk danger" data-a="delh" data-i="${i}">Kaydı sil</button></div></div>`).reverse().join(''):'<p class="mut">Henüz kayıtlı antrenman yok.</p>')}
+function hist(){return`<div class="hd"><button class="lnk back" data-a="home">‹ Ana ekran</button></div><h1 class="pt">Geçmiş</h1>`+(S.log.length?S.log.map((h,i)=>`<div class="lab hl p-${pc(h.w)}"><span class="sq"></span>${esc(h.w)}</div><div class="list"><div class="row"><span class="mut" style="font-size:13px">${when(h)}</span><span class="v">${h.dur?dur(h.dur):''}</span></div>${h.log.map(l=>`<div class="row at"><div class="grow"><span>${esc(l.n)}</span>${trend(l,i)}</div><span class="v">${lr(l)}</span></div>`).join('')}<div class="row"><button class="lnk danger" data-a="delh" data-i="${i}">Kaydı sil</button></div></div>`).reverse().join(''):'<p class="mut">Henüz kayıtlı antrenman yok.</p>')}
 
 // Atlanan hareketler (r.sk) sıralamada ve süperset eşleşmesinde yok sayılır.
 function nextPos(r){const ex=S.w[r.w],e=ex[r.ei],sk=r.sk||[],ok=i=>!sk.includes(i);
@@ -255,12 +1083,22 @@ if(e.ss&&ex[r.ei+1]&&ok(r.ei+1))return{ei:r.ei+1,si:r.si,free:1};
 if(r.ei>0&&ex[r.ei-1].ss&&ok(r.ei-1)){if(r.si+1<e.sets)return{ei:r.ei-1,si:r.si+1}}
 else if(r.si+1<e.sets)return{ei:r.ei,si:r.si+1};
 let j=r.ei+1;while(j<ex.length&&!ok(j))j++;return j<ex.length?{ei:j,si:0}:null}
-function finish(r){r.done=true;r.dur=Math.round(elapsed(r));S.log.push({d:new Date().toISOString(),w:r.w,wk:S.week,dur:r.dur,log:r.log});r.li=S.log.length-1}
+function finish(r){r.done=true;r.dur=Math.round(elapsed(r));S.log.push({d:new Date().toISOString(),w:r.w,wk:S.week,pg:S.prog,dur:r.dur,log:r.log});r.li=S.log.length-1}
 // Seti atla: set "atlandı" olarak kaydedilir (toplam sete sayılmaz), dinlenme olmadan sıradaki sete geçilir.
 function skipSet(r){const e=S.w[r.w][r.ei];let l=r.log.find(x=>x.ei==r.ei);if(!l){l={ei:r.ei,n:nm(e),s:[]};r.log.push(l)}
 l.s.push({skip:1});delete r.cs;delete r.dkg;delete r.drp;
 const nx=nextPos(r);if(!nx)finish(r);else{r.ei=nx.ei;r.si=nx.si;r.phase='set'}}
 const setCount=log=>log.reduce((a,l)=>a+l.s.filter(x=>!x.skip).length,0);
+// İlerleme: bir hareketin en iyi seti (en yüksek kg, eşitse en çok tekrar) bir önceki aynı hareketle kıyaslanır.
+const num=v=>{const n=parseFloat(String(v??'').replace(',','.'));return isFinite(n)?n:0};
+const fnum=n=>(Math.round(n*10)/10).toLocaleString('tr-TR');
+const best=l=>{let b=null;for(const x of (l&&l.s)||[]){if(x.skip)continue;const k=num(x.kg),r=num(x.r);if(!b||k>b.kg||k==b.kg&&r>b.r)b={kg:k,r}}return b};
+const e1=l=>Math.max(0,...((l&&l.s)||[]).filter(x=>!x.skip).map(x=>num(x.kg)*(1+num(x.r)/30)));
+function prevOf(name,before){for(let i=Math.min(before,S.log.length)-1;i>=0;i--){const h=S.log[i],l=h.log.find(x=>!x.cardio&&x.n==name&&best(x));if(l)return{h,l,i}}return null}
+const arrow=(d,unit,same)=>d>0?`<span class="dl up">↑ ${fnum(d)} ${unit}</span>`:d<0?`<span class="dl dn">↓ ${fnum(-d)} ${unit}</span>`:`<span class="dl eq">= ${same}</span>`;
+function trend(l,before){const c=best(l);if(l.cardio||!c)return'';const p=prevOf(l.n,before);if(!p)return'<span class="tr"><span class="dl eq">İlk kayıt</span></span>';const b=best(p.l);
+return`<span class="tr">${arrow(c.kg-b.kg,'kg','ağırlık aynı')}${arrow(c.r-b.r,'tekrar','tekrar aynı')}</span>`}
+const dshort=d=>new Date(d).toLocaleDateString('tr-TR',{day:'numeric',month:'long'});
 function moveDay(from,to){const days=eff().slice(),a=days[from],b=days[to];days[from]=b;days[to]=a;S.plan={wk:monKey(),days};
 V.day=to;V.msg=a&&b?`${a} ${DAYL[to]}, ${b} ${DAYL[from]} gününe geçti.`:a?`${a} ${DAYL[to]} gününe taşındı.`:`${b} ${DAYL[from]} gününe taşındı.`}
 // Antrenman sırasında tüm hareketlerin durumunu gösteren açılır liste.
@@ -282,22 +1120,87 @@ return`<div class="rh"><button class="lnk" data-a="ccancel">Vazgeç</button><spa
 function run(){const r=V.run,ex=S.w[r.w],e=ex[r.ei],p='p-'+pc(r.w);
 if(r.mode=='pick')return pickV();
 if(r.mode=='cardio'&&r.cx)return cardioV(r);
-if(r.done){const n=setCount(r.log);return`<h1 class="pt" style="margin-top:14px">Antrenman bitti</h1><p class="lead">${r.dur?dur(r.dur)+', ':''}${n} set.</p><div class="list">${r.log.map(l=>`<div class="row at"><b>${esc(l.n)}</b><span class="v">${lr(l)}</span></div>`).join('')}</div><button class="btn alt" data-a="pick">Kardiyo ekle</button><button class="btn" data-a="home">Ana ekrana dön</button>`}
+if(r.done){const n=setCount(r.log);return`<h1 class="pt" style="margin-top:14px">Antrenman bitti</h1><p class="lead">${r.dur?dur(r.dur)+', ':''}${n} set.</p><div class="list">${r.log.map(l=>`<div class="row at"><div class="grow"><b>${esc(l.n)}</b>${trend(l,r.li)}</div><span class="v">${lr(l)}</span></div>`).join('')}</div><p class="mut" style="font-size:13px">Oklar her hareketin en iyi setini, o hareketin bir önceki yapılışıyla kıyaslar.</p><button class="btn alt" data-a="pick">Kardiyo ekle</button><button class="btn" data-a="home">Ana ekrana dön</button>`}
 const head=`<div class="rh"><button class="lnk" data-a="quit">Bitir</button><span class="clk">${r.t0?`<span id="el">${fmtE(elapsed(r))}</span>`:''}</span><span class="rn">${r.ei+1}/${ex.length}</span></div><div class="prog ${p}"><i style="width:${r.ei/ex.length*100}%"></i></div>`;
 if(r.phase=='rest'){const rem=Math.ceil((r.end-Date.now())/1000);return head+`<div class="lab">Dinlenme</div><div class="timer" id="t">${fmt(rem)}</div><div class="rbar ${p}"><i id="tb" style="width:${r.rt?Math.max(0,Math.min(100,rem/r.rt*100)):0}%"></i></div><p class="nx">Sıradaki: <b>${esc(nextOf(r))}</b></p><div class="two"><button class="btn alt" data-a="add" data-v="-15">−15 sn</button><button class="btn alt" data-a="add" data-v="15">+15 sn</button></div><button class="btn" data-a="skip">Dinlenmeyi geç</button>${planList(r)}`}
-const cn=nm(e),lw=S.last[cn]||{},rr=rirOf(r.w,r.ei,e),tq=r.si==e.sets-1?techOf(r.w,r.ei,e):'';
+const cn=nm(e),pv=prevOf(cn,S.log.length),lw=S.last[cn]||{},tq=techNow(r.w,r.ei,e,r.si);
 return head+`<h1 class="xt">${esc(cn)}</h1>${FOCUS[e.n]?`<p class="focus">Odak: ${esc(FOCUS[e.n])}</p>`:''}${chips(e)}
-<div class="kv"><div><small>Set</small><b>${r.si+1}/${e.sets}</b></div><div><small>Hedef tekrar</small><b>${esc(e.reps)}</b></div>${rr&&rr[r.si]!=null?`<div><small>RIR</small><b>${rr[r.si]}</b></div>`:''}</div>
-${e.note&&cn==e.n?`<p class="tip">${esc(e.note)}</p>`:''}${tq?`<p class="tip"><b>Son set tekniği: ${LBL[tq][0]}.</b> ${LBL[tq][1]}</p>`:''}${e.ss?'<p class="tip">Süperset: bu seti bitirince dinlenmeden sıradaki harekete geç.</p>':''}
+<p class="goal"><b>${r.si+1}. set</b><span class="of">/ ${e.sets}</span><span class="tg">Hedef ${esc(e.reps)} tekrar${esc(target(r.w,r.ei,e,r.si))}</span></p>
+${r.si==0&&e.wu&&e.wu!='0'&&e.wu!='0-1'?`<p class="tip">Önce ${esc(e.wu)} ısınma seti yap; ısınma setlerini kaydetmen gerekmez.</p>`:''}
+${e.note&&cn==e.n?`<p class="tip">${esc(e.note)}</p>`:''}${tq&&LBL[tq]?`<p class="tip"><b>${e.techAll?'Set tekniği':'Son set tekniği'}: ${LBL[tq][0]}.</b> ${LBL[tq][1]}</p>`:''}${e.ss?'<p class="tip">Süperset: bu seti bitirince dinlenmeden sıradaki harekete geç.</p>':''}
+${pv?`<p class="last">Geçen sefer, ${dshort(pv.h.d)}: <b>${lr(pv.l)}</b></p>`:''}
+<label class="lab" for="nt" style="margin-top:14px">Notun</label><textarea id="nt" class="nt" data-n="${esc(cn)}" rows="2" placeholder="Tempo, sehpa veya koltuk ayarı, tutuş... Bu harekette her seferinde görünür.">${esc((S.notes||{})[cn]||'')}</textarea>
 <div class="two"><label>Ağırlık (kg)<input id="kg" type="number" inputmode="decimal" step="0.5" value="${r.dkg??lw.kg??''}"></label><label>Tekrar<input id="rp" type="number" inputmode="numeric" value="${r.drp??''}"></label></div><button class="btn" data-a="ok">Seti kaydet</button>
 ${r.cs?`<p class="tip">${r.si+1}. set yapılmadan "atlandı" olarak kaydedilecek ve dinlenme olmadan ${r.si+1<e.sets?'sıradaki sete':'sıradaki harekete'} geçilecek.</p><div class="two"><button class="btn alt" data-a="skipno">Vazgeç</button><button class="btn dng" data-a="skipx">Evet, seti atla</button></div>`:'<button class="lnk" data-a="skipx">Bu seti atla</button>'}${planList(r)}`}
 
-function edit(){const at=(k,w,i)=>`data-w="${esc(w)}" data-i="${i}" data-k="${k}"`;
+const DPW=p=>(p.sched||[]).filter(Boolean).length;
+const pInfo=p=>`Haftada ${DPW(p)} gün${p.weeks>1?`, ${p.weeks} hafta`:', her hafta aynı'}`;
+function progs(){const f=V.pf||0,groups=[];PROGS.forEach(p=>{if(f&&DPW(p)!=f)return;let g=groups.find(x=>x[0]==p.src);if(!g)groups.push(g=[p.src,[]]);g[1].push(p)});
+return`<div class="hd"><button class="lnk back" data-a="home">‹ Ana ekran</button></div><h1 class="pt">Program seç</h1>
+<p class="mut" style="margin-top:-6px">Şu an: <b style="color:var(--ink)">${esc(PROG().name)}</b></p>
+<div class="lab">Haftada kaç gün?</div><div class="segm sm" role="group">${[0,2,3,4,5,6].map(n=>`<button class="${f==n?'on':''}" data-a="pf" data-v="${n}" aria-pressed="${f==n}">${n||'Tümü'}</button>`).join('')}</div>
+${groups.map(([src,ps])=>`<div class="lab">${esc(src)}</div><div class="list">${ps.map(p=>`<button class="li" data-a="pv" data-v="${p.id}"><span>${esc(p.name)}${p.id==S.prog?' <b class="tag" style="color:var(--up)">aktif</b>':''}<span class="sub">${pInfo(p)}</span></span><span class="chev" aria-hidden="true">›</span></button>`).join('')}</div>`).join('')||'<p class="mut">Bu gün sayısında program yok.</p>'}`}
+function progV(){const p=PROGS.find(x=>x.id==V.pid)||PROG(),act=p.id==S.prog,g=p.editable?{w:act?S.w:DEF,sched:p.sched}:genW(p,1);
+return`<div class="hd"><button class="lnk back" data-a="progs">‹ Programlar</button></div><h1 class="pt">${esc(p.name)}</h1><p class="mut">${esc(p.src)}. ${pInfo(p)}.</p><p>${esc(p.desc||'')}</p>
+<div class="lab">${p.weeks>1?'1. hafta':'Haftalık düzen'}</div><div class="list">${g.sched.map((d,i)=>d?`<div class="row at"><b style="min-width:84px">${DAYL[i]}</b><div class="grow"><span>${esc(d)}</span><span class="sub">${(g.w[d]||[]).map(e=>esc(e.n)).join(', ')}</span></div></div>`:'').join('')}</div>
+${act?'<p class="msg">Bu program şu an aktif.</p>':`<button class="btn" data-a="psel" data-v="${p.id}">Bu programa geç</button><p class="mut small">Şu anki programının haftası ve gün düzeni saklanır; geri döndüğünde kaldığın yerden devam edersin. Geçmiş kayıtların ve notların silinmez.</p>`}`}
+function edit(){if(!PROG().editable)return`<div class="hd"><button class="lnk back" data-a="home">‹ Ana ekran</button></div><h1 class="pt">Program</h1><p>${esc(PROG().name)} PDF'teki haliyle gelir ve haftaya göre kendiliğinden değişir, bu yüzden burada düzenlenemez. Hareket değiştirmek için alternatifleri kullanabilirsin.</p>`;
+const at=(k,w,i)=>`data-w="${esc(w)}" data-i="${i}" data-k="${k}"`;
 return`<div class="hd"><button class="lnk back" data-a="home">‹ Ana ekran</button></div><h1 class="pt">Program</h1>`+Object.keys(S.w).map(k=>`<div class="list" style="margin-bottom:16px"><div class="row p-${pc(k)}"><span class="sq"></span><input data-k="wn" data-w="${esc(k)}" value="${esc(k)}" aria-label="Antrenman adı" style="font-weight:700"><button class="lnk danger" data-a="delw" data-w="${esc(k)}">Sil</button></div>
 ${S.w[k].map((e,i)=>`<div class="ex"><input ${at('n',k,i)} value="${esc(e.n)}" aria-label="Hareket adı"><div class="g3"><label>Set<input type="number" ${at('sets',k,i)} value="${e.sets}"></label><label>Tekrar<input ${at('reps',k,i)} value="${esc(e.reps)}"></label><label>Dinlenme (sn)<input type="number" ${at('rest',k,i)} value="${e.rest}"></label></div><div class="exa"><label class="chk"><input type="checkbox" ${at('ss',k,i)} ${e.ss?'checked':''}>Sonraki hareketle süperset</label><button class="lnk danger" data-a="delx" data-w="${esc(k)}" data-i="${i}">Hareketi sil</button></div></div>`).join('')}
 <div class="row"><button class="lnk" data-a="addx" data-w="${esc(k)}">Hareket ekle</button></div></div>`).join('')+`<button class="btn alt" data-a="addw">Yeni antrenman ekle</button>`}
 
-function render(){app.innerHTML=V.view=='splash'?splash():V.view=='run'?run():V.view=='edit'?edit():V.view=='hist'?hist():V.view=='day'?day():main()}
+// ---- Raporlar: haftalık / aylık kıyas ve grafikler (bağımlılıksız SVG) ----
+const wkKey=d=>{const x=new Date(d);x.setHours(0,0,0,0);x.setDate(x.getDate()-(x.getDay()+6)%7);return x.getTime()};
+const moKey=d=>{const x=new Date(d);return x.getFullYear()*12+x.getMonth()};
+function perKeys(mode,n){const out=[];if(mode=='w'){const c=new Date(wkKey(Date.now()));for(let i=n-1;i>=0;i--){const x=new Date(c);x.setDate(x.getDate()-7*i);out.push(x.getTime())}}else{const c=moKey(Date.now());for(let i=n-1;i>=0;i--)out.push(c-i)}return out}
+const perLab=(mode,k)=>mode=='w'?new Date(k).toLocaleDateString('tr-TR',{day:'numeric',month:'short'}):new Date(Math.floor(k/12),k%12,1).toLocaleDateString('tr-TR',{month:'short'});
+const perOf=(mode,d)=>mode=='w'?wkKey(d):moKey(d);
+function agg(mode){const m=new Map();for(const h of S.log){const k=perOf(mode,h.d);let a=m.get(k);if(!a)m.set(k,a={n:0,sets:0,vol:0,dur:0,car:0});a.n++;a.dur+=h.dur||0;
+for(const l of h.log){if(l.cardio){a.car+=l.sec||0;continue}for(const x of l.s)if(!x.skip){a.sets++;a.vol+=num(x.kg)*num(x.r)}}}return m}
+function perBest(mode,k){const m=new Map();for(const h of S.log){if(perOf(mode,h.d)!=k)continue;for(const l of h.log){const v=e1(l);if(l.cardio||!v)continue;const o=m.get(l.n);if(!o||v>o.v)m.set(l.n,{v,b:best(l)})}}return m}
+const fk=n=>Math.round(n).toLocaleString('tr-TR');
+const niceMax=v=>{if(v<=0)return 1;const p=Math.pow(10,Math.floor(Math.log10(v))),m=v/p;return(m<=1?1:m<=2?2:m<=2.5?2.5:m<=5?5:10)*p};
+function delta(c,p,pct){if(!c&&!p)return'';if(!p)return'<span class="dl eq">önceki dönem boş</span>';const d=c-p;if(!d)return'<span class="dl eq">= aynı</span>';
+const t=pct?'%'+Math.abs(Math.round(d/p*100)):fnum(Math.abs(d));return d>0?`<span class="dl up">↑ ${t}</span>`:`<span class="dl dn">↓ ${t}</span>`}
+function colChart(items,aria){const W=440,H=196,L=48,R=8,T=24,B=26,pw=W-L-R,ph=H-T-B,max=niceMax(Math.max(0,...items.map(i=>i.val))),band=pw/items.length,bw=Math.min(24,band*.6);
+let g='';for(let t=0;t<=4;t++){const y=T+ph-ph*t/4;g+=`<line x1="${L}" x2="${W-R}" y1="${y}" y2="${y}" class="gl"/><text x="${L-6}" y="${y+4}" class="yt">${fk(max*t/4)}</text>`}
+items.forEach((it,i)=>{const cx=L+band*i+band/2,h=ph*it.val/max,x=cx-bw/2,y=T+ph-h,rr=Math.min(4,h);
+const d=h>0?`M${x},${T+ph}V${y+rr}Q${x},${y} ${x+rr},${y}H${x+bw-rr}Q${x+bw},${y} ${x+bw},${y+rr}V${T+ph}Z`:'';
+g+=`<g class="bar ${it.cur?'cur':''}" tabindex="0" data-tip="${esc(it.tip)}"><rect x="${L+band*i}" y="${T}" width="${band}" height="${ph+B}" fill="transparent"/>${d?`<path d="${d}"/>`:''}<text x="${cx}" y="${H-8}" class="xl">${esc(it.lab)}</text>${it.cur&&it.val?`<text x="${cx}" y="${y-7}" class="vl">${fk(it.val)}</text>`:''}</g>`});
+return`<svg viewBox="0 0 ${W} ${H}" class="svg" role="img" aria-label="${esc(aria)}">${g}</svg>`}
+function lineChart(pts,aria){const W=440,H=196,L=48,R=46,T=16,B=26,pw=W-L-R,ph=H-T-B,vs=pts.map(p=>p.val),mn=Math.min(...vs),mx=Math.max(...vs),sp=(mx-mn)||Math.max(mx*.2,5);
+const st=(v=>{const p=Math.pow(10,Math.floor(Math.log10(v))),m=v/p;return(m<=1?1:m<=2?2:m<=2.5?2.5:m<=5?5:10)*p})(Math.max(sp*1.4/3,.5)),lo=Math.max(0,Math.floor((mn-sp*.2)/st)*st),hi=Math.max(lo+st,Math.ceil((mx+sp*.2)/st)*st),X=i=>L+(pts.length>1?pw*i/(pts.length-1):pw/2),Y=v=>T+ph-ph*(v-lo)/((hi-lo)||1);
+let g='';for(let v=lo;v<=hi+1e-9;v+=st){const y=Y(v);g+=`<line x1="${L}" x2="${W-R}" y1="${y}" y2="${y}" class="gl"/><text x="${L-6}" y="${y+4}" class="yt">${fnum(v)}</text>`}
+const many=pts.length>12;
+g+=`<path class="ln" d="${pts.map((p,i)=>(i?'L':'M')+X(i).toFixed(1)+','+Y(p.val).toFixed(1)).join('')}"/>`;
+const hw=pts.length>1?pw/(pts.length-1):pw;
+pts.forEach((p,i)=>{g+=`<g class="hit" tabindex="0" data-tip="${esc(p.tip)}"><rect x="${X(i)-hw/2}" y="${T}" width="${hw}" height="${ph}" fill="transparent"/><line class="ch" x1="${X(i)}" x2="${X(i)}" y1="${T}" y2="${T+ph}"/><circle class="pt2 ${many&&i<pts.length-1?'opt':''}" cx="${X(i)}" cy="${Y(p.val)}" r="4"/></g>`});
+const n=pts.length-1;g+=`<text x="${X(n)+8}" y="${Y(pts[n].val)+4}" class="vl" style="text-anchor:start">${fnum(pts[n].val)}</text>`;
+g+=`<text x="${X(0)}" y="${H-8}" class="xl" style="text-anchor:start">${esc(pts[0].lab)}</text>${n?`<text x="${X(n)}" y="${H-8}" class="xl" style="text-anchor:end">${esc(pts[n].lab)}</text>`:''}`;
+return`<svg viewBox="0 0 ${W} ${H}" class="svg" role="img" aria-label="${esc(aria)}">${g}</svg>`}
+const table=(head,rows)=>`<details class="tv"><summary>Tablo olarak göster</summary><div style="overflow-x:auto"><table class="tb"><tr>${head.map((h,i)=>`<th class="${i?'n':''}">${h}</th>`).join('')}</tr>${rows.map(r=>`<tr>${r.map((c,i)=>`<td class="${i?'n':''}">${c}</td>`).join('')}</tr>`).join('')}</table></div></details>`;
+function rep(){const mode=V.rp||'w',N=mode=='w'?8:6,m=agg(mode),keys=perKeys(mode,N),Z={n:0,sets:0,vol:0,dur:0,car:0},cur=m.get(keys[N-1])||Z,prv=m.get(keys[N-2])||Z;
+const [pc1,pc2,pc3]=mode=='w'?['Bu hafta','geçen hafta','Son 8 hafta']:['Bu ay','geçen ay','Son 6 ay'];
+const row=(t,c,p,f,pct)=>`<div class="row"><span>${t}</span><span class="v"><b class="n">${f(c)}</b><span class="sub">${delta(c,p,pct)}</span></span></div>`;
+const items=keys.map((k,i)=>{const a=m.get(k)||Z;return{lab:perLab(mode,k),val:a.vol,cur:i==N-1,tip:`${mode=='w'?perLab(mode,k)+' haftası':perLab(mode,k)}: ${fk(a.vol)} kg hacim, ${a.n} antrenman, ${a.sets} set`}});
+const cb=perBest(mode,keys[N-1]),pb=perBest(mode,keys[N-2]);
+const names=[];for(let i=S.log.length-1;i>=0;i--)for(const l of S.log[i].log)if(!l.cardio&&best(l)&&!names.includes(l.n))names.push(l.n);
+const sel=V.rx&&names.includes(V.rx)?V.rx:names[0];const pts=[];
+if(sel)S.log.forEach((h,i)=>{const l=h.log.find(x=>!x.cardio&&x.n==sel&&best(x));if(l){const b=best(l),v=Math.round(e1(l)*2)/2;pts.push({val:v,lab:new Date(h.d).toLocaleDateString('tr-TR',{day:'numeric',month:'short'}),tip:`${dshort(h.d)}: en iyi set ${fnum(b.kg)} kg × ${b.r}, tahmini 1RM ${fnum(v)} kg`,b,l,i})}});
+return`<div class="hd"><button class="lnk back" data-a="home">‹ Ana ekran</button></div><h1 class="pt">Raporlar</h1>
+<div class="segm" role="group" aria-label="Dönem"><button class="${mode=='w'?'on':''}" data-a="rp" data-v="w" aria-pressed="${mode=='w'}">Haftalık</button><button class="${mode=='m'?'on':''}" data-a="rp" data-v="m" aria-pressed="${mode=='m'}">Aylık</button></div>
+${S.log.length?`<div class="lab">${pc1}, ${pc2} ile kıyasla</div><div class="list">${row('Antrenman',cur.n,prv.n,x=>x)}${row('Tamamlanan set',cur.sets,prv.sets,x=>x,1)}${row('Toplam hacim',cur.vol,prv.vol,x=>fk(x)+' kg',1)}${row('Antrenman süresi',cur.dur,prv.dur,x=>x?dur(x):'0 dk',1)}${row('Kardiyo',cur.car,prv.car,x=>x?dur(x):'0 dk',1)}</div>
+<p class="mut small">${pc1} henüz bitmedi; dönem sonunda kıyas netleşir. Hacim, tüm setlerde ağırlık × tekrar toplamıdır.</p>
+<div class="lab">Toplam hacim (kg), ${pc3.toLocaleLowerCase('tr')}</div><div class="list"><figure class="fig"><p class="ro" aria-live="polite">${esc(items[N-1].tip)}</p>${colChart(items,pc3+' toplam hacim')}</figure>${table(['Dönem','Hacim (kg)','Antrenman','Set'],keys.map(k=>{const a=m.get(k)||Z;return[perLab(mode,k),fk(a.vol),a.n,a.sets]}))}</div>
+${cb.size?`<div class="lab">${pc1} hareketler, ${pc2} ile kıyasla</div><div class="list">${[...cb].map(([n,o])=>{const p=pb.get(n);return`<div class="row at"><div class="grow"><span>${esc(n)}</span><span class="tr">${p?arrow(Math.round((o.v-p.v)*2)/2,'kg tahmini 1RM','aynı'):'<span class="dl eq">'+pc2+' yok</span>'}</span></div><span class="v">${fnum(o.b.kg)}×${o.b.r}</span></div>`}).join('')}</div>`:''}
+<div class="lab">Hareket gelişimi</div><select id="rx" data-a="rx" aria-label="Hareket">${names.map(n=>`<option value="${esc(n)}" ${n==sel?'selected':''}>${esc(n)}</option>`).join('')}</select>
+<div class="list" style="margin-top:8px">${pts.length>=2?`<figure class="fig"><p class="ro" aria-live="polite">${esc(pts[pts.length-1].tip)}</p>${lineChart(pts,sel+' tahmini 1RM gelişimi')}</figure>`:`<p class="mut" style="padding:12px 0;margin:0">Grafik için bu hareketi en az iki kez kaydetmen gerekiyor.</p>`}
+${pts.length?table(['Tarih','En iyi set','Tahmini 1RM'],pts.slice().reverse().map(p=>[p.lab,fnum(p.b.kg)+' × '+p.b.r,fnum(p.val)+' kg'])):''}</div>
+<p class="mut small">Tahmini 1RM, en iyi setten tek tekrarda kaldırabileceğin ağırlığın tahminidir (Epley: kg × (1 + tekrar / 30)). Ağırlık aynı kalsa bile tekrar artarsa yükselir.</p>`
+:'<p class="mut">Rapor için henüz kayıtlı antrenman yok.</p>'}`}
+
+function render(){app.innerHTML=V.view=='progs'?progs():V.view=='prog'?progV():V.view=='rep'?rep():V.view=='splash'?splash():V.view=='run'?run():V.view=='edit'?edit():V.view=='hist'?hist():V.view=='day'?day():main()}
 
 function beep(){try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();const o=actx.createOscillator(),g=actx.createGain();o.connect(g);g.connect(actx.destination);o.frequency.value=880;g.gain.value=.2;o.start();o.stop(actx.currentTime+.4)}catch(e){}try{navigator.vibrate&&navigator.vibrate([200,100,200])}catch(e){}}
 function advance(){const r=V.run;r.ei=r.nx.ei;r.si=r.nx.si;r.phase='set';beep();save();render()}
@@ -305,6 +1208,17 @@ setInterval(()=>{const r=V.run;if(V.view!='run'||!r)return;if(r.cx){const c=docu
 
 app.addEventListener('click',ev=>{const b=ev.target.closest('[data-a]');if(!b||b.tagName=='SELECT')return;const a=b.dataset.a,d=b.dataset,r=V.run;
 if(a=='enter'){if(ev.detail===0)enter();return}
+if(a=='prof'){useProfile(d.v);render();return}
+if(a=='pnew'){const i=document.getElementById('pn'),v=i.value.trim().replace(/\s+/g,' ');if(!v){i.focus();return}
+ const ex=P.list.find(n=>n.toLocaleLowerCase('tr')==v.toLocaleLowerCase('tr'));useProfile(ex||v);render();return}
+if(a=='pchg'){V.view='splash';V.chg=true;render();window.scrollTo(0,0);return}
+if(a=='pcancel'){V.chg=false;render();return}
+if(a=='rep'){V.view='rep';render();window.scrollTo(0,0);return}
+if(a=='progs'){V.view='progs';V.newProf=0;render();window.scrollTo(0,0);return}
+if(a=='pf'){V.pf=+d.v;render();return}
+if(a=='pv'){V.pid=d.v;V.view='prog';render();window.scrollTo(0,0);return}
+if(a=='psel'){if(V.run&&!V.run.done){V.msg='Önce devam eden antrenmanı bitir.';V.view='main'}else{setProg(d.v);V.msg=PROG().name+' seçildi.';V.view='main';save()}render();window.scrollTo(0,0);return}
+if(a=='rp'){V.rp=d.v;render();return}
 if(a=='day'){V.day=+d.i;V.view='day'}
 else if(a=='post')postpone(+d.i);
 else if(a=='unplan'){S.plan=null;V.msg='Bu hafta yeniden şablon programa döndü.'}
@@ -321,7 +1235,7 @@ else if(a=='home'){V.view='main';V.run=null}
 else if(a=='start'){if(d.i!=null)V.day=+d.i;const w=eff()[V.day];if(!S.w[w])return;V.run={w,ei:0,si:0,phase:'set',log:[],t0:Date.now()};V.view='run';try{navigator.wakeLock&&navigator.wakeLock.request('screen').catch(()=>{})}catch(e){}}
 else if(a=='hist')V.view='hist';
 else if(a=='delh'){S.log.splice(+d.i,1)}
-else if(a=='quit'){if(r.log.length)S.log.push({d:new Date().toISOString(),w:r.w,wk:S.week,part:1,dur:Math.round(elapsed(r)),log:r.log});V.view='main';V.run=null}
+else if(a=='quit'){if(r.log.length)S.log.push({d:new Date().toISOString(),w:r.w,wk:S.week,pg:S.prog,part:1,dur:Math.round(elapsed(r)),log:r.log});V.view='main';V.run=null}
 else if(a=='ok'){const kg=document.getElementById('kg').value,rp=document.getElementById('rp').value;if(rp===''){document.getElementById('rp').focus();return}
  try{actx=actx||new (window.AudioContext||window.webkitAudioContext)()}catch(e){}
  const ex=S.w[r.w],e=ex[r.ei],cn=nm(e);let l=r.log.find(x=>x.ei==r.ei);if(!l){l={ei:r.ei,n:cn,s:[]};r.log.push(l)}
@@ -329,7 +1243,7 @@ else if(a=='ok'){const kg=document.getElementById('kg').value,rp=document.getEle
  const nx=nextPos(r);
  delete r.cs;
  if(!nx)finish(r)
- else if(nx.free){r.ei=nx.ei;r.si=nx.si}
+ else if(nx.free||!(+e.rest>0)){r.ei=nx.ei;r.si=nx.si}
  else{r.nx=nx;r.phase='rest';r.rt=+e.rest;r.end=Date.now()+e.rest*1000}
  save()}
 else if(a=='alt'){S.pick=S.pick||{};if(d.v==d.o)delete S.pick[d.o];else S.pick[d.o]=d.v;if(r&&!r.done&&r.phase=='set')delete r.dkg}
@@ -346,12 +1260,19 @@ else if(a=='delx'){S.w[d.w].splice(+d.i,1);save()}
 else if(a=='addw'){let n=Object.keys(S.w).length+1,k='Antrenman '+n;while(S.w[k])k='Antrenman '+(++n);S.w[k]=[];save()}
 else if(a=='delw'){delete S.w[d.w];S.sched=S.sched.map(x=>x==d.w?'':x);if(S.plan)S.plan.days=S.plan.days.map(x=>x==d.w?'':x);save()}
 save();render()});
-app.addEventListener('input',ev=>{const t=ev.target,d=t.dataset;if((t.id=='kg'||t.id=='rp')&&V.run){V.run['d'+t.id]=t.value;save();return}if(!d.k||d.k=='wn')return;const e=S.w[d.w]&&S.w[d.w][+d.i];if(!e)return;
+app.addEventListener('input',ev=>{const t=ev.target,d=t.dataset;
+if(t.id=='nt'){S.notes=S.notes||{};if(t.value.trim())S.notes[d.n]=t.value;else delete S.notes[d.n];save();return}if((t.id=='kg'||t.id=='rp')&&V.run){V.run['d'+t.id]=t.value;save();return}if(!d.k||d.k=='wn')return;const e=S.w[d.w]&&S.w[d.w][+d.i];if(!e)return;
 e[d.k]=t.type=='checkbox'?(t.checked?1:0):(d.k=='sets'||d.k=='rest')?Math.max(1,Number(t.value)||1):t.value;save()});
 app.addEventListener('change',ev=>{const t=ev.target,d=t.dataset;
 if(d.a=='sched'){S.sched[V.day]=t.value;if(planOn())S.plan.days[V.day]=t.value;save();render()}
-else if(d.a=='week'){S.week=+t.value;save();render()}
+else if(d.a=='week'){S.week=+t.value;regen();save();render()}
+else if(d.a=='rx'){V.rx=t.value;render()}
 else if(d.k=='wn'){const n=t.value.trim();if(n&&n!=d.w&&!S.w[n]){S.w[n]=S.w[d.w];delete S.w[d.w];S.sched=S.sched.map(x=>x==d.w?n:x);if(S.plan)S.plan.days=S.plan.days.map(x=>x==d.w?n:x);save()}render()}});
+// Grafik: dokunulan / üzerine gelinen / odaklanan dönemin değeri grafiğin üstündeki satırda yazar.
+const showTip=ev=>{const g=ev.target.closest&&ev.target.closest('[data-tip]');if(!g)return;const f=g.closest('figure');if(!f)return;
+f.querySelector('.ro').textContent=g.dataset.tip;f.querySelectorAll('.act').forEach(x=>x.classList.remove('act'));g.classList.add('act')};
+app.addEventListener('pointerover',showTip);app.addEventListener('focusin',showTip);app.addEventListener('pointerdown',showTip);
+app.addEventListener('keydown',ev=>{if(ev.key=='Enter'&&ev.target.id=='pn'){ev.preventDefault();const b=app.querySelector('[data-a=pnew]');if(b)b.click()}});
 // Giriş ekranı: düğmeyi sağa sürükle ya da ekranı yukarı kaydır.
 let drag=null;
 app.addEventListener('pointerdown',ev=>{if(V.view!='splash')return;const k=ev.target.closest('.knob');
@@ -364,7 +1285,7 @@ app.addEventListener('pointerup',ev=>dragEnd(ev));app.addEventListener('pointerc
 document.getElementById('impf').addEventListener('change',async ev=>{const f=ev.target.files[0];ev.target.value='';if(!f)return;
 try{const s=JSON.parse(await f.text());if(!s||!s.w||!Array.isArray(s.sched))throw 0;
 if(!confirm('Yedek geri yüklensin mi? Bu cihazdaki mevcut kayıtların yerini alacak.'))return;
-S=mig(s);S.run=null;V={view:'main',day:today(),run:null};save();render();alert('Yedek geri yüklendi.')}
+S=mig(s);S.run=null;regen();V={view:'main',day:today(),run:null};save();render();alert('Yedek geri yüklendi.')}
 catch(e){alert('Bu dosya geçerli bir antrenman yedeği değil.')}});
 if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js').catch(()=>{});
 render();
