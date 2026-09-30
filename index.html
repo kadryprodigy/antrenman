@@ -93,6 +93,10 @@ button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .goal{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin:16px 0 4px}.goal b{font-stretch:70%;font-weight:800;font-size:34px;line-height:1}.goal .of{font-weight:700;color:var(--mut)}.goal .tg{margin-left:auto;font-weight:700}
 .last{font-size:14px;margin:12px 0 0}
 .small{font-size:13px;margin:8px 0 0}
+.wk i.miss{background:transparent;box-shadow:inset 0 0 0 2px var(--pc)}
+.card{background:var(--sf);border-radius:6px;padding:12px 14px;margin:14px 0 0;font-size:14px}.card p{margin:6px 0 0}.card .btn{margin:10px 0 0}
+.rpe{display:flex;gap:4px;margin-top:10px;align-items:center;flex-wrap:wrap}.rpe span{font-size:13px;font-weight:600;color:var(--mut);margin-right:4px}.rpe button{background:none;border:0;box-shadow:inset 0 0 0 1.5px var(--line);border-radius:6px;min-width:38px;padding:7px 0;font-weight:700;color:var(--mut)}.rpe .on{background:var(--ink);color:var(--bg);box-shadow:none}
+.gd{min-height:calc(100svh - 60px);display:flex;flex-direction:column}.gd .gtx{flex:1}.gd .dots{display:flex;gap:6px;margin:16px 0}.gd .dots i{width:24px;height:4px;border-radius:2px;background:var(--line)}.gd .dots .on{background:var(--ink)}
 .sug{margin:12px 0 0;font-size:14px}.sug b{font-stretch:70%;font-weight:800;font-size:20px}
 .pr{background:var(--ink);color:var(--bg);border-radius:6px;padding:12px 14px;margin:0 0 14px;display:flex;flex-direction:column;gap:4px;font-size:14px}.pr b{font-stretch:70%;font-weight:800;font-size:20px}
 .mbar{height:6px;background:var(--line);border-radius:2px;margin-top:5px}.mbar i{display:block;height:100%;background:var(--bar);border-radius:2px}
@@ -1039,7 +1043,7 @@ const CARDIO_G=[
 ['Açık hava / diğer',['Tempolu yürüyüş','Açık havada koşu','Yokuş / merdiven çıkma','Doğa yürüyüşü (hiking)','Bisiklet (açık hava)','Yüzme']]];
 const CARDIO=CARDIO_G.flatMap(g=>g[1]);
 const csec=c=>c?(c.acc||0)+(c.t0?(Date.now()-c.t0)/1000:0):0;
-const lr=l=>l.cardio?dur(l.sec)+' kardiyo':(l.s.map(x=>x.skip?'atlandı':fnum(num(x.kg))+'×'+x.r).join(', ')+(l.skip?(l.s.length?', kalanı atlandı':'Atlandı'):''));
+const lr=l=>l.cardio?dur(l.sec)+' kardiyo':(l.s.map(x=>x.skip?'atlandı':fnum(num(x.kg))+'×'+x.r+(x.rpe?' @'+x.rpe:'')).join(', ')+(l.skip?(l.s.length?', kalanı atlandı':'Atlandı'):''));
 function addLog(x){const r=V.run;r.log.push(x);if(r.done){const h=S.log[r.li];if(h&&h.log!==r.log)h.log.push(x)}}
 const PLATES={Upper:'red',Lower:'blue',Push:'yel',Pull:'grn'},PL=['red','blue','yel','grn'];
 const pc=w=>!w||!S.w[w]?'rest':PLATES[w]||(/upper|chest|shoulder|squat test/i.test(w)?'red':/lower|leg|deadlift test/i.test(w)?'blue':/push|bench/i.test(w)?'yel':/pull|back|arm/i.test(w)?'grn':PL[Math.max(0,Object.keys(S.w).indexOf(w))%4]);
@@ -1048,7 +1052,7 @@ const today8=()=>new Date().toLocaleDateString('tr-TR',{weekday:'long',day:'nume
 const wks=()=>nWk()<2?'':`<div class="wks" style="grid-template-columns:repeat(${nWk()},1fr)" aria-hidden="true">${[...Array(nWk())].map((_,i)=>`<span class="${i+1<S.week?'d':i+1==S.week?'c':''}"></span>`).join('')}</div>`;
 const nav=(a,t)=>`<button class="li" data-a="${a}"><span>${t}</span><span class="chev" aria-hidden="true">›</span></button>`;
 const when=h=>{const d=new Date(h.d);return d.toLocaleDateString('tr-TR',{day:'numeric',month:'long'})+', '+d.toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'})+(h.wk?`, ${h.wk}. hafta`:'')+(h.part?', yarım kaldı':'')};
-const strip=(sc,td,sel,act='day')=>`<div class="wk">${DAYS.map((d,i)=>{const k=sc[i],ok=k&&S.w[k];return`<button class="${i==td?'td':''} ${i==sel?'on':''}" data-a="${act}" data-i="${i}" ${act=='mv'&&i==sel?'disabled':''} aria-label="${DAYL[i]}: ${ok?esc(k):'dinlenme'}"><b>${d}</b><i class="p-${ok?pc(k):'rest'} ${ok?'':'off'}"></i><small>${ok?esc(k):'Dinlenme'}</small></button>`}).join('')}</div>`;
+const strip=(sc,td,sel,act='day')=>{const st=weekStatus(sc);return`<div class="wk">${DAYS.map((d,i)=>{const k=sc[i],ok=k&&S.w[k],s=st[i];return`<button class="${i==td?'td':''} ${i==sel?'on':''}" data-a="${act}" data-i="${i}" ${act=='mv'&&i==sel?'disabled':''} aria-label="${DAYL[i]}: ${ok?esc(k):'dinlenme'}${s=='done'?', yapıldı':s=='miss'?', kaçırıldı':''}"><b>${d}</b><i class="p-${ok?pc(k):'rest'} ${ok?'':'off'} ${s}"></i><small>${s=='miss'?'Kaçırıldı':s=='done'?'Yapıldı':ok?esc(k):'Dinlenme'}</small></button>`}).join('')}</div>`};
 
 function who(){return`<div class="splash"><div class="sp-top"><span class="brand">Antrenman</span><span class="mut">${today8()}</span></div>
 <div class="who"><h1 class="pt">${P.list.length?'Kim antrenman yapıyor?':'Adın ne?'}</h1>
@@ -1061,8 +1065,31 @@ return`<div class="splash"><div class="sp-top"><span class="brand">Antrenman</sp
 <div class="hd" style="margin-top:-8px"><span>Merhaba, <b>${esc(PROF)}</b></span><button class="lnk" data-a="pchg">Kişi değiştir</button></div>
 <div class="plate sp-plate p-${pc(show)}"><div class="sp-lab">${rw?'Yarım kalan antrenman':'Bugün'}</div><div class="sp-w">${show?esc(show):'Dinlenme'}</div><p class="sp-m">${show?`${S.w[show].length} hareket. ${esc(PROG().name)}${nWk()>1?`, ${S.week}. hafta`:''}.`:'Bugün programda antrenman yok.'}</p></div>
 <div><div class="track"><span class="tl">Başlamak için kaydır</span><button class="knob" data-a="enter" aria-label="Uygulamaya gir"></button></div><p class="sp-hint">Ya da ekranı yukarı kaydır.</p></div></div>`}
-function enter(){if(!PROF||V.chg)return;V.view=V.run?'run':V.newProf?'progs':'main';render();window.scrollTo(0,0)}
+function enter(){if(!PROF||V.chg)return;V.view=V.run?'run':!P.guided?'guide':V.newProf?'progs':'main';render();window.scrollTo(0,0)}
 
+// ---- Analizler: kaçırılan günler, yarım kalan antrenman, haftalık özet, durağanlık, deload ----
+const dayIdx=d=>(new Date(d).getDay()+6)%7;
+// Bu haftanın geçmiş günleri: planlı antrenman yapıldı mı? Aynı gün aynı adlı antrenman kaydı varsa yapılmış sayılır.
+function weekStatus(sc){const w0=wkKey(Date.now()),td=today(),st=[];for(let i=0;i<7;i++){const k=sc[i],ok=k&&S.w[k];if(!ok||i>=td){st.push('');continue}
+ st.push(S.log.some(h=>wkKey(h.d)==w0&&dayIdx(h.d)==i&&h.w==k)?'done':'miss')}return st}
+function resumable(){const h=S.log[S.log.length-1];if(!h||!h.part||new Date(h.d).toDateString()!=dkey()||(h.pg||'ulppl')!=S.prog||!S.w[h.w])return null;
+ const ex=S.w[h.w];for(let i=0;i<ex.length;i++){const n=(h.log.find(l=>l.ei==i)||{s:[]}).s.length;if(n<ex[i].sets)return{h,ei:i,si:n}}return null}
+// Durağanlık: son 3 yapılışta tahmini 1RM, ondan önceki yapılışı geçemediyse.
+function stalled(log,before){const out=[];for(const l of log){if(l.cardio||!best(l))continue;const hist=S.log.slice(0,before).map(h=>h.log.find(x=>!x.cardio&&x.n==l.n&&best(x))).filter(Boolean);
+ if(hist.length<3)continue;const last4=[...hist.slice(-3),l],base=e1(last4[0]);if(Math.max(...last4.slice(1).map(e1))<=base+0.01&&!out.includes(l.n))out.push(l.n)}return out}
+function lowVol(key){const m={};S.log.forEach(h=>{if(wkKey(h.d)!=key)return;h.log.forEach(l=>{if(l.cardio)return;const s=l.s.filter(x=>!x.skip).length;if(s)m[musOf(l.n)]=(m[musOf(l.n)]||0)+s})});
+ return Object.entries(m).filter(([k,v])=>v<10&&k!='Diğer'&&k!='Trapez').map(([k,v])=>`${k} ${v} set`)}
+// Deload: son 7 günde yapılan hareketlerin çoğu, o hareketin önceki en iyisinin %3'ten fazla altındaysa.
+function needDeload(){const since=Date.now()-7*864e5,recent=new Map();S.log.forEach((h,i)=>{if(new Date(h.d)<since)return;h.log.forEach(l=>{if(!l.cardio&&best(l))recent.set(l.n,Math.max(recent.get(l.n)||0,e1(l)))})});
+ let n=0,down=0;recent.forEach((v,name)=>{const prev=Math.max(0,...S.log.filter(h=>new Date(h.d)<since).flatMap(h=>h.log.filter(l=>!l.cardio&&l.n==name).map(e1)));if(!prev)return;n++;if(v<prev*0.97)down++});
+ return n>=4&&down/n>=0.6}
+function summaryCard(){const k=wkKey(Date.now())-7*864e5;if(S.sumSeen==monKey())return'';const hs=S.log.map((h,i)=>[h,i]).filter(([h])=>wkKey(h.d)==k);if(!hs.length)return'';
+ const sets=hs.reduce((a,[h])=>a+setCount(h.log),0),vol=hs.reduce((a,[h])=>a+h.log.reduce((b,l)=>b+l.s.reduce((c,x)=>c+(x.skip?0:num(x.kg)*num(x.r)),0),0),0),durs=hs.reduce((a,[h])=>a+(h.dur||0),0);
+ const prs=hs.flatMap(([h,i])=>prsOf(h.log,i)),planned=(S.sched||[]).filter(x=>x&&S.w[x]).length,low=lowVol(k);
+ return`<div class="card"><div class="hd"><b>Geçen hafta</b><button class="lnk" data-a="sumok">Tamam</button></div>
+<p>${hs.length} antrenman${planned?` (planlanan ${planned})`:''}, ${sets} set, ${fk(vol)} kg hacim${durs?', '+dur(durs):''}.</p>
+${prs.length?`<p><b>${prs.length} rekor:</b> ${prs.map(esc).join('; ')}.</p>`:''}${planned>hs.length?`<p>${planned-hs.length} antrenman kaçırıldı.</p>`:''}
+${low.length?`<p>Az çalışılan kas grupları: ${low.join(', ')}. Kas gelişimi için haftada 10 set civarı hedefle.</p>`:''}</div>`}
 function main(){const td=today(),sc=eff(),w=sc[td],ex=S.w[w]||[],last=S.log[S.log.length-1];
 const sets=ex.reduce((a,e)=>a+(+e.sets||0),0),min=Math.round(ex.reduce((a,e)=>a+e.sets*(+e.rest+40),0)/60);
 let nxt='';if(!ex.length)for(let k=1;k<7;k++){const j=(td+k)%7,x=j>td?sc[j]:S.sched[j];if(x&&S.w[x]){nxt=x+', '+DAYL[j];break}}
@@ -1070,10 +1097,14 @@ return`<div class="hd"><span class="date">${today8()}</span>${nWk()>1?`<select i
 <button class="lnk" data-a="progs" style="padding:2px 0 6px;text-align:left">${esc(PROG().name)}</button>
 ${wks()}${isU()&&S.week%6==1?'<p class="wkn">Tanıtım haftası.</p>':''}${(PROG().wnotes||{})[S.week]?`<p class="wkn">${esc(PROG().wnotes[S.week])}</p>`:''}${msg()}
 ${S.log.length&&(!S.lastBk||Date.now()-S.lastBk>7*864e5)?`<div class="tip hd" style="margin-top:14px"><span>${S.lastBk?`Son yedeğin ${Math.floor((Date.now()-S.lastBk)/864e5)} gün önce.`:'Henüz yedek almadın.'} Kayıtların sadece bu telefonda.</span><button class="lnk" data-a="exp">Yedekle</button></div>`:''}
+${summaryCard()}
+${S.dlSeen!=monKey()&&needDeload()?`<div class="card"><div class="hd"><b>Hafif hafta (deload) önerisi</b><button class="lnk" data-a="dlok">Tamam</button></div><p>Son bir haftada hareketlerinin çoğu önceki en iyinin altında kaldı; yorgunluk birikmiş olabilir. Bu hafta ağırlıkları yaklaşık %10 azalt, her hareketten bir set eksik yap ve setleri tükenişten 3-4 tekrar önce bırak.</p></div>`:''}
+${(()=>{const rs=resumable();return rs?`<div class="card"><b>Yarım kalan ${esc(rs.h.w)}</b><p>${esc(nm(S.w[rs.h.w][rs.ei]))}, ${rs.si+1}. setten devam edebilirsin.</p><button class="btn" data-a="resume">Kaldığın yerden devam et</button></div>`:''})()}
 <div class="hd lab"><span>Bugün</span>${ex.length?`<button class="lnk" data-a="post" data-i="${td}">Ertele</button>`:''}</div>
 ${ex.length?`<div class="plate p-${pc(w)}"><div class="wn">${esc(w)}</div><ul class="pl">${ex.map(e=>`<li><span>${esc(nm(e))}</span><span>${e.sets}×${esc(e.reps)}</span></li>`).join('')}</ul><p class="pm">${sets} set, yaklaşık ${min} dakika.</p><div class="pa"><button class="pbtn" data-a="start" data-i="${td}">Başla</button><button class="lnk" data-a="day" data-i="${td}">Ayrıntılar</button></div></div>`
 :`<div class="plate p-rest"><div class="wn">Dinlenme</div><p class="pm" style="margin-bottom:0">${nxt?'Sıradaki antrenman: '+esc(nxt)+'.':'Programa henüz gün atanmamış.'}</p></div>`}
 <div class="hd lab"><span>Bu hafta${planOn()?', ertelemeyle düzenlendi':''}</span>${planOn()?'<button class="lnk" data-a="unplan">Sıfırla</button>':''}</div>${strip(sc,td,-1)}
+${(()=>{const st=weekStatus(sc),mi=st.map((s,i)=>s=='miss'?i:-1).filter(i=>i>=0);return mi.length?`<p class="mut small">Kaçırılan: ${mi.map(i=>esc(sc[i])+' ('+DAYL[i]+')').join(', ')}. ${td<6?`Bu hafta yapmak istersen <button class="lnk" data-a="mvmiss" data-i="${mi[0]}" style="padding:0">başka güne taşı</button>.`:''}</p>`:''})()}
 ${last?`<div class="lab">Son antrenman</div><div class="list"><div class="row"><div class="grow"><b>${esc(last.w)}</b><span class="sub">${when(last)}</span></div><span class="v">${last.dur?dur(last.dur):''}</span></div></div>`:''}
 <div class="list" style="margin-top:24px">${nav('progs','Program seç')}${nav('rep','Raporlar')}${nav('prs','Rekorlar')}${nav('hist','Geçmiş')}${PROG().editable?nav('edit','Programı düzenle'):''}${nav('set','Ayarlar ve yedek')}</div>
 <div class="list" style="margin-top:12px"><button class="li" data-a="pchg"><span>Kişi: <b>${esc(PROF)}</b></span><span class="mut" style="font-size:13px">Değiştir</span></button></div>`}
@@ -1094,6 +1125,7 @@ return`<div class="hd"><button class="lnk back" data-a="home">‹ Ana ekran</but
 <div class="lab">Program haftası</div><div class="list"><button class="li" data-a="awk"><span>Her pazartesi haftayı otomatik ilerlet</span><b>${S.autoWk===false?'Kapalı':'Açık'}</b></button></div>
 <div class="lab">Takvim hatırlatması</div><div class="inl"><input id="ct" data-k="ctime" type="time" value="${S.ctime||'18:00'}" aria-label="Antrenman saati"><button class="btn alt" data-a="ics">Takvime ekle</button></div>
 <p class="mut small">Antrenman günlerin iPhone Takvim'ine her hafta tekrarlanan etkinlik olarak eklenir ve 15 dakika önce hatırlatır. Açılan dosyada "Tümünü ekle"ye dokun. Gün düzenin değişirse eski etkinlikleri silip yeniden ekle.</p>
+<div class="lab">Yardım</div><div class="list">${nav('guide','Rehberi yeniden göster')}</div>
 <div class="lab">Yedek</div><div class="list">${nav('exp','Şimdi yedekle')}${nav('imp','Yedeği geri yükle')}</div><p class="mut small">${lb==null?'Henüz yedek almadın.':`Son yedek ${lb?lb+' gün önce':'bugün'}.`} Yedekle'ye dokununca paylaşım menüsünden "Dosyalar'a kaydet" ile iCloud Drive'a kaydedebilirsin. Uygulama 7 günde bir hatırlatır.</p>`}
 
 // Taşıma: tek buton; açılınca hedef günler liste halinde, her satır sonucu söyler. Sadece bu hafta için geçerli.
@@ -1165,7 +1197,9 @@ function suggest(e,cn,si,pv){const rnd=isBar(cn)?r25:r05;
  if(e.pct){const b=bestE1(cn),ps=(e.pct.replace(/,/g,'.').match(/[\d.]+/g)||[]).map(Number);if(b&&ps.length){const p=ps.reduce((a,x)=>a+x,0)/ps.length/100;return{kg:rnd(b*p),why:`1RM tahminin ${fnum(b)} kg, bunun %${e.pct}'i`}}}
  if(!pv)return null;const ss=pv.l.s.filter(x=>!x.skip);if(!ss.length)return null;const ps=ss[Math.min(si,ss.length-1)],kg=num(ps.kg),rp=num(ps.r),rg=repRange(e.reps);if(!kg)return null;
  if(!rg)return{kg,why:'geçen seferki ağırlık'};
- if(rp>=rg[1])return{kg:rnd(kg+(kg>=20?2.5:1)),why:`geçen sefer ${fnum(kg)}×${rp}, tekrar üst sınırına ulaştın, ağırlığı artır`};
+ const pr=num(ps.rpe);
+ if(pr&&pr>=10&&rp<rg[1])return{kg,why:`geçen sefer ${fnum(kg)}×${rp} tükenişe yakındı (RPE ${pr}), aynı ağırlıkta kal`};
+ if(rp>=rg[1]||pr&&pr<=7&&rp>=rg[0])return{kg:rnd(kg+(kg>=20?2.5:1)),why:`geçen sefer ${fnum(kg)}×${rp}${pr?` (RPE ${pr})`:''}, ${rp>=rg[1]?'tekrar üst sınırına ulaştın':'rahat geçti'}, ağırlığı artır`};
  if(rp<rg[0]-2)return{kg:rnd(kg*0.95),why:`geçen sefer ${fnum(kg)}×${rp}, hedefin altında kaldın, biraz hafiflet`};
  return{kg,why:`geçen sefer ${fnum(kg)}×${rp}, aynı ağırlıkla bir tekrar fazlasını dene`}}
 const PLATES_ALL=[25,20,15,10,5,2.5,1.25,0.5];
@@ -1184,10 +1218,38 @@ function prsV(){const m=new Map();S.log.forEach(h=>h.log.forEach(l=>{if(l.cardio
  if(b.kg>o.kg||b.kg==o.kg&&b.r>(o.r||0)){o.kg=b.kg;o.r=b.r;o.kd=h.d}const v=e1(l);if(v>o.e){o.e=v;o.ed=h.d}m.set(l.n,o)}));
  const rows=[...m].sort((a,b)=>a[0].localeCompare(b[0],'tr'));
  return`<div class="hd"><button class="lnk back" data-a="home">‹ Ana ekran</button></div><h1 class="pt">Rekorlar</h1>`+(rows.length?`<div class="list">${rows.map(([n,o])=>`<div class="row at"><div class="grow"><b>${esc(n)}</b><span class="sub">En ağır: ${fnum(o.kg)} kg × ${o.r}, ${dshort(o.kd)}</span></div><span class="v"><b class="n">${fnum(o.e)} kg</b><span class="sub">tahmini 1RM</span></span></div>`).join('')}</div><p class="mut small">Tahmini 1RM, en iyi setten Epley formülüyle hesaplanır.</p>`:'<p class="mut">Henüz kayıt yok.</p>')}
+// Paylaşım görseli: 1080×1350 PNG, bitmiş antrenmanın özeti ve rekorları.
+async function shareImg(){const r=V.run;if(!r||!r.done)return;try{await document.fonts.load('800 60px Archivo')}catch(e){}
+ const W=1080,H=1350,c=document.createElement('canvas');c.width=W;c.height=H;const g=c.getContext('2d'),F='Archivo, system-ui, sans-serif';
+ const col={red:'#C4122F',blue:'#1C4E9D',yel:'#F0BE00',grn:'#1B7A47',rest:'#6B727C'}[pc(r.w)]||'#C4122F';
+ g.fillStyle='#111315';g.fillRect(0,0,W,H);g.fillStyle=col;g.fillRect(0,0,W,24);
+ g.fillStyle='#A3AAB3';g.font=`600 34px ${F}`;g.fillText(new Date().toLocaleDateString('tr-TR',{day:'numeric',month:'long',year:'numeric'})+(PROF?', '+PROF:''),72,110);
+ g.fillStyle='#ECEEF0';g.font=`800 110px ${F}`;g.fillText(r.w.slice(0,18),72,230);
+ const pr=prsOf(r.log,r.li??S.log.length),vol=r.log.reduce((b,l)=>b+l.s.reduce((c2,x)=>c2+(x.skip?0:num(x.kg)*num(x.r)),0),0);
+ const st=[[r.dur?dur(r.dur):'-','süre'],[String(setCount(r.log)),'set'],[fk(vol)+' kg','hacim']];
+ st.forEach(([v,l],i)=>{const x=72+i*330;g.fillStyle='#ECEEF0';g.font=`800 64px ${F}`;g.fillText(v,x,350);g.fillStyle='#A3AAB3';g.font=`600 30px ${F}`;g.fillText(l,x,392)});
+ let y=470;if(pr.length){g.fillStyle=col;g.fillRect(72,y-44,W-144,62+pr.length*48);g.fillStyle=pc(r.w)=='yel'?'#111315':'#fff';g.font=`800 40px ${F}`;g.fillText('Yeni rekor',100,y);
+  g.font=`600 30px ${F}`;pr.slice(0,4).forEach((p,i)=>g.fillText(p.slice(0,56),100,y+48*(i+1)));y+=62+pr.length*48+40}
+ g.font=`600 32px ${F}`;for(const l of r.log.slice(0,Math.floor((H-y-80)/52))){g.fillStyle='#ECEEF0';g.fillText(l.n.slice(0,30),72,y);g.fillStyle='#A3AAB3';const t=lr(l);g.textAlign='right';g.fillText(t.slice(0,28),W-72,y);g.textAlign='left';y+=52}
+ g.fillStyle='#6B727C';g.font=`700 28px ${F}`;g.fillText('Antrenman',72,H-60);
+ const blob=await new Promise(res=>c.toBlob(res,'image/png'));if(!blob)return;const name='antrenman-'+new Date().toISOString().slice(0,10)+'.png';
+ try{const f=new File([blob],name,{type:'image/png'});if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f]});return}}catch(e){if(e&&e.name=='AbortError')return}
+ const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1000)}
+// İlk açılış rehberi: terimler ve uygulamanın akışı.
+const GUIDE=[['Nasıl çalışır?','<p>Önce bir program seç. Ana ekranda bugünün antrenmanı çıkar; <b>Başla</b> deyince hareketler sırayla gelir.</p><p>Her seti bitirince kilo ve tekrarı girip <b>Seti kaydet</b>\'e bas. Dinlenme sayacı kendiliğinden başlar, bitince sıradaki set açılır.</p><p>Bir sonraki sefere uygulama geçen seferki setlerine bakıp kilo önerir, ilerlemeni oklarla ve rekorlarla gösterir.</p>'],
+['RPE ve RIR','<p><b>RPE</b>, setin ne kadar zor olduğunu 1-10 arasında puanlar. 10: bir tekrar daha yapamazdın. 9: bir tekrar daha yapabilirdin. 8: iki tekrar daha.</p><p><b>RIR</b> aynı şeyin tersidir: depoda kaç tekrar kaldığı. RIR 1, RPE 9 demektir.</p><p>Programda "RPE 8" görürsen seti tükenişe iki tekrar kala bitir. Seti kaydederken zorluğu da işaretlersen öneriler daha isabetli olur.</p>'],
+['1RM ve yüzdeler','<p><b>1RM</b>, bir harekette tek tekrarla kaldırabileceğin en ağır kilodur. Uygulama bunu en iyi setinden tahmin eder; kendin denemen gerekmez.</p><p>Bazı programlar kiloyu 1RM yüzdesiyle verir; örneğin "%75", 1RM\'in 100 kg ise 75 kg demektir. Uygulama bu kiloyu geçmişinden hesaplayıp önerir.</p>'],
+['Teknikler','<p><b>Süperset:</b> iki ya da üç hareketi aralarında dinlenmeden arka arkaya yap.</p><p><b>Drop set:</b> tükenişe gelince kiloyu düşürüp devam et. <b>Myo-reps:</b> kısa nefeslenmelerle küçük tekrar serileri ekle. <b>Kısmi tekrar:</b> hareketin esneme yarısında devam et.</p><p><b>Deload:</b> yorgunluğu atmak için bir hafta daha hafif çalışmak. Uygulama gerektiğinde önerir.</p>']];
+function guideV(){const i=Math.min(V.gp||0,GUIDE.length-1),[t,b]=GUIDE[i];
+return`<div class="gd"><div class="hd"><span class="brand">Antrenman</span><button class="lnk" data-a="gdone">Geç</button></div><div class="gtx"><h1 class="pt">${t}</h1>${b}</div>
+<div class="dots">${GUIDE.map((_,j)=>`<i class="${j==i?'on':''}"></i>`).join('')}</div>
+<div class="two">${i?'<button class="btn alt" data-a="gprev">Geri</button>':'<span></span>'}<button class="btn" data-a="${i<GUIDE.length-1?'gnext':'gdone'}">${i<GUIDE.length-1?'İleri':'Başla'}</button></div></div>`}
 function run(){const r=V.run,ex=S.w[r.w],e=ex[r.ei],p='p-'+pc(r.w);
 if(r.mode=='pick')return pickV();
 if(r.mode=='cardio'&&r.cx)return cardioV(r);
-if(r.done){const n=setCount(r.log),pr=prsOf(r.log,r.li??S.log.length);return`<h1 class="pt" style="margin-top:14px">Antrenman bitti</h1><p class="lead">${r.dur?dur(r.dur)+', ':''}${n} set.</p>${pr.length?`<div class="pr"><b>Yeni rekor${pr.length>1?'lar':''}</b>${pr.map(x=>`<span>${esc(x)}</span>`).join('')}</div>`:''}<div class="list">${r.log.map(l=>`<div class="row at"><div class="grow"><b>${esc(l.n)}</b>${trend(l,r.li)}</div><span class="v">${lr(l)}</span></div>`).join('')}</div><p class="mut" style="font-size:13px">Oklar her hareketin en iyi setini, o hareketin bir önceki yapılışıyla kıyaslar.</p><button class="btn alt" data-a="pick">Kardiyo ekle</button><button class="btn" data-a="home">Ana ekrana dön</button>`}
+if(r.done){const n=setCount(r.log),pr=prsOf(r.log,r.li??S.log.length);return`<h1 class="pt" style="margin-top:14px">Antrenman bitti</h1><p class="lead">${r.dur?dur(r.dur)+', ':''}${n} set.</p>${pr.length?`<div class="pr"><b>Yeni rekor${pr.length>1?'lar':''}</b>${pr.map(x=>`<span>${esc(x)}</span>`).join('')}</div>`:''}
+${(()=>{const st=stalled(r.log,r.li??S.log.length);return st.length?`<div class="card" style="margin:0 0 14px"><b>İlerlemeyen hareket${st.length>1?'ler':''}</b><p>${st.map(esc).join(', ')}: son 3 antrenmandır ne kilo ne tekrar arttı. Birkaç gün daha iyi dinlenmeyi, bir hafif hafta (deload) yapmayı ya da bu hareket için alternatiflerden birini denemeyi düşün.</p></div>`:''})()}
+<button class="btn alt" data-a="shimg" style="margin:0 0 14px">Özeti görsel olarak paylaş</button><div class="list">${r.log.map(l=>`<div class="row at"><div class="grow"><b>${esc(l.n)}</b>${trend(l,r.li)}</div><span class="v">${lr(l)}</span></div>`).join('')}</div><p class="mut" style="font-size:13px">Oklar her hareketin en iyi setini, o hareketin bir önceki yapılışıyla kıyaslar.</p><button class="btn alt" data-a="pick">Kardiyo ekle</button><button class="btn" data-a="home">Ana ekrana dön</button>`}
 const head=`<div class="rh"><button class="lnk" data-a="quit">Bitir</button><span class="clk">${r.t0?`<span id="el">${fmtE(elapsed(r))}</span>`:''}</span><span class="rn">${r.ei+1}/${ex.length}</span></div><div class="prog ${p}"><i style="width:${r.ei/ex.length*100}%"></i></div>`;
 if(r.phase=='rest'){const rem=Math.ceil((r.end-Date.now())/1000);return head+`<div class="lab">Dinlenme</div><div class="timer" id="t">${fmt(rem)}</div><div class="rbar ${p}"><i id="tb" style="width:${r.rt?Math.max(0,Math.min(100,rem/r.rt*100)):0}%"></i></div><p class="nx">Sıradaki: <b>${esc(nextOf(r))}</b></p><div class="two"><button class="btn alt" data-a="add" data-v="-15">−15 sn</button><button class="btn alt" data-a="add" data-v="15">+15 sn</button></div><button class="btn" data-a="skip">Dinlenmeyi geç</button>${planList(r)}`}
 const cn=nm(e),pv=prevOf(cn,S.log.length),lw=S.last[cn]||{},tq=techNow(r.w,r.ei,e,r.si),sg=suggest(e,cn,r.si,pv),kv=r.dkg??(sg?String(sg.kg):lw.kg)??'';
@@ -1199,6 +1261,7 @@ ${pv?`<p class="last">Geçen sefer, ${dshort(pv.h.d)}: <b>${lr(pv.l)}</b></p>`:'
 <label class="lab" for="nt" style="margin-top:14px">Notun</label><textarea id="nt" class="nt" data-n="${esc(cn)}" rows="2" placeholder="Tempo, sehpa veya koltuk ayarı, tutuş... Bu harekette her seferinde görünür.">${esc((S.notes||{})[cn]||'')}</textarea>
 ${sg?`<p class="sug">Öneri: <b>${fnum(sg.kg)} kg</b>. ${esc(sg.why)}.</p>`:''}
 <div class="two"><label>Ağırlık (kg)<input id="kg" type="number" inputmode="decimal" step="0.5" value="${esc(kv)}"></label><label>Tekrar<input id="rp" type="number" inputmode="numeric" value="${r.drp??''}"></label></div>
+<div class="rpe" role="group" aria-label="Setin zorluğu, RPE"><span>Zorluk (RPE)</span>${[6,7,8,9,10].map(v=>`<button class="${r.drpe==v?'on':''}" data-a="rpe" data-v="${v}" aria-pressed="${r.drpe==v}">${v}</button>`).join('')}</div>
 ${isBar(cn)?`<p class="mut small" id="pl">${plates(num(kv))}</p>`:''}<button class="btn" data-a="ok">Seti kaydet</button>
 ${r.cs?`<p class="tip">${r.si+1}. set yapılmadan "atlandı" olarak kaydedilecek ve dinlenme olmadan ${r.si+1<e.sets?'sıradaki sete':'sıradaki harekete'} geçilecek.</p><div class="two"><button class="btn alt" data-a="skipno">Vazgeç</button><button class="btn dng" data-a="skipx">Evet, seti atla</button></div>`:'<button class="lnk" data-a="skipx">Bu seti atla</button>'}${planList(r)}`}
 
@@ -1253,8 +1316,8 @@ return`<svg viewBox="0 0 ${W} ${H}" class="svg" role="img" aria-label="${esc(ari
 const table=(head,rows)=>`<details class="tv"><summary>Tablo olarak göster</summary><div style="overflow-x:auto"><table class="tb"><tr>${head.map((h,i)=>`<th class="${i?'n':''}">${h}</th>`).join('')}</tr>${rows.map(r=>`<tr>${r.map((c,i)=>`<td class="${i?'n':''}">${c}</td>`).join('')}</tr>`).join('')}</table></div></details>`;
 // Kas grubu: hareket adındaki anahtar kelimelerden birincil kas grubu (sıra önemli: "leg curl" "curl"dan önce gelir).
 const MUS=[['Baldır',/calf/i],['Karın',/crunch|leg raise|plank|sit-up|rollout|ab wheel/i],['Trapez',/shrug/i],['Arka bacak',/leg curl|ham curl|rdl|romanian|stiff-leg|good morning|glute-ham|hyperextension|back extension|deadlift/i],
-['Kalça',/hip thrust|glute|abduction|pull-through|reverse hyper/i],['Ön bacak',/squat|leg press|leg extension|lunge|step-up|sissy|reverse nordic|split/i],['Triceps',/tricep|skull|pressdown|kickback|french|jm press|close-grip (bench|push|db)|diamond|dip\b|floor press|pin press/i],
-['Biceps',/curl/i],['Omuz',/shoulder|overhead|military|lateral|y-raise|face ?pull|reverse pec|rear delt|reverse (cable|db|dumbbell)|upright|arnold|pull-apart|pike/i],['Sırt',/row|pulldown|pull-up|pullup|chin|pullover|pull-in|pull-around/i],['Göğüs',/bench|chest|pec|fly|flye|push-up|crossover|incline|dip|jug press/i]];
+['Kalça',/hip thrust|glute|abduction|pull-through|reverse hyper/i],['İç bacak',/adduction/i],['Ön bacak',/squat|leg press|leg extension|lunge|step-up|sissy|reverse nordic|split/i],['Triceps',/tricep|skull|pressdown|kickback|french|jm press|close-grip (bench|push|db)|diamond|dip\b|floor press|pin press/i],
+['Biceps',/curl/i],['Omuz',/shoulder|overhead|military|lateral|y-raise|face ?pull|reverse pec|rear delt|reverse (cable|db|dumbbell)|upright|arnold|pull-apart|pike/i],['Sırt',/row|pulldown|pull-up|pullup|chin-?up|pullover|pull-in|pull-around/i],['Göğüs',/bench|chest|pec|fly|flye|push-up|crossover|incline|dip|jug press|flat (db|dumbbell) press/i]];
 const musOf=n=>(MUS.find(([,re])=>re.test(n))||['Diğer'])[0];
 function musV(mode,k,kp,pc1,pc2){const cnt=key=>{const m={};S.log.forEach(h=>{if(perOf(mode,h.d)!=key)return;h.log.forEach(l=>{if(l.cardio)return;const s=l.s.filter(x=>!x.skip).length;if(s)m[musOf(l.n)]=(m[musOf(l.n)]||0)+s})});return m};
  const c=cnt(k),p=cnt(kp),ks=[...new Set([...Object.keys(c),...Object.keys(p)])].sort((a,b)=>(c[b]||0)-(c[a]||0));if(!ks.length)return'';const mx=Math.max(...ks.map(x=>Math.max(c[x]||0,p[x]||0)));
@@ -1281,7 +1344,7 @@ ${pts.length?table(['Tarih','En iyi set','Tahmini 1RM'],pts.slice().reverse().ma
 <p class="mut small">Tahmini 1RM, en iyi setten tek tekrarda kaldırabileceğin ağırlığın tahminidir (Epley: kg × (1 + tekrar / 30)). Ağırlık aynı kalsa bile tekrar artarsa yükselir.</p>`
 :'<p class="mut">Rapor için henüz kayıtlı antrenman yok.</p>'}`}
 
-function render(){if(PROF&&!V.run)autoWeek();app.innerHTML=V.view=='prs'?prsV():V.view=='set'?setV():V.view=='progs'?progs():V.view=='prog'?progV():V.view=='rep'?rep():V.view=='splash'?splash():V.view=='run'?run():V.view=='edit'?edit():V.view=='hist'?hist():V.view=='day'?day():main()}
+function render(){if(PROF&&!V.run)autoWeek();app.innerHTML=V.view=='guide'?guideV():V.view=='prs'?prsV():V.view=='set'?setV():V.view=='progs'?progs():V.view=='prog'?progV():V.view=='rep'?rep():V.view=='splash'?splash():V.view=='run'?run():V.view=='edit'?edit():V.view=='hist'?hist():V.view=='day'?day():main()}
 
 function beep(){try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();const o=actx.createOscillator(),g=actx.createGain();o.connect(g);g.connect(actx.destination);o.frequency.value=880;g.gain.value=.2;o.start();o.stop(actx.currentTime+.4)}catch(e){}try{navigator.vibrate&&navigator.vibrate([200,100,200])}catch(e){}}
 function advance(auto){const r=V.run;r.ei=r.nx.ei;r.si=r.nx.si;r.phase='set';beep();save();render();if(!auto)return;setTimeout(beep,450);setTimeout(beep,900);
@@ -1298,6 +1361,16 @@ if(a=='pcancel'){V.chg=false;render();return}
 if(a=='rep'){V.view='rep';render();window.scrollTo(0,0);return}
 if(a=='progs'){V.view='progs';V.newProf=0;render();window.scrollTo(0,0);return}
 if(a=='pf'){V.pf=+d.v;render();return}
+if(a=='rpe'){const r=V.run,v=+d.v;r.drpe=r.drpe==v?null:v;const kg=document.getElementById('kg'),rp=document.getElementById('rp');if(kg)r.dkg=kg.value;if(rp)r.drp=rp.value;save();render();return}
+if(a=='sumok'){S.sumSeen=monKey();save();render();return}
+if(a=='dlok'){S.dlSeen=monKey();save();render();return}
+if(a=='mvmiss'){V.day=+d.i;V.view='day';V.mvOpen=1;render();return}
+if(a=='resume'){const rs=resumable();if(rs){const h=S.log.pop();V.run={w:h.w,ei:rs.ei,si:rs.si,phase:'set',log:h.log,t0:Date.now()-(h.dur||0)*1000};V.view='run';save()}render();window.scrollTo(0,0);return}
+if(a=='shimg'){shareImg();return}
+if(a=='gnext'){V.gp=(V.gp||0)+1;render();window.scrollTo(0,0);return}
+if(a=='gprev'){V.gp=Math.max(0,(V.gp||0)-1);render();return}
+if(a=='gdone'){P.guided=1;saveP();V.gp=0;V.view=V.newProf?'progs':'main';render();window.scrollTo(0,0);return}
+if(a=='guide'){V.gp=0;V.view='guide';render();window.scrollTo(0,0);return}
 if(a=='prs'||a=='set'){V.view=a;render();window.scrollTo(0,0);return}
 if(a=='plt'){const p=+d.v;let l=S.plates||[25,20,15,10,5,2.5,1.25];l=l.includes(p)?l.filter(x=>x!=p):[...l,p];S.plates=l;save();render();return}
 if(a=='awk'){S.autoWk=S.autoWk===false?true:false;S.wkAt=monTime();save();render();return}
@@ -1327,7 +1400,7 @@ else if(a=='quit'){if(r.log.length)S.log.push({d:new Date().toISOString(),w:r.w,
 else if(a=='ok'){const kg=document.getElementById('kg').value,rp=document.getElementById('rp').value;if(rp===''){document.getElementById('rp').focus();return}
  try{actx=actx||new (window.AudioContext||window.webkitAudioContext)()}catch(e){}
  const ex=S.w[r.w],e=ex[r.ei],cn=nm(e);let l=r.log.find(x=>x.ei==r.ei);if(!l){l={ei:r.ei,n:cn,s:[]};r.log.push(l)}
- l.n=cn;l.s.push({kg:kg||'0',r:rp});S.last[cn]={kg};delete r.dkg;delete r.drp;
+ l.n=cn;l.s.push({kg:kg||'0',r:rp,...(r.drpe?{rpe:r.drpe}:{})});S.last[cn]={kg};delete r.dkg;delete r.drp;delete r.drpe;
  const nx=nextPos(r);
  delete r.cs;
  if(!nx)finish(r)
