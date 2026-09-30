@@ -1,6 +1,6 @@
 // Uygulamayı çevrimdışı çalıştırır. Önce önbellekten açar, arka planda yeni sürümü indirir
 // (güncellemeler bir sonraki açılışta görünür). Dosyaları değiştirince C'deki sürümü artır.
-const C='antrenman-v11';
+const C='antrenman-v14';
 const CORE=['./','./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png','./apple-touch-icon.png'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(CORE)));self.skipWaiting()});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==C).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
