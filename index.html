@@ -103,6 +103,7 @@ button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .dots{display:flex;gap:3px;margin-top:6px}.dots i{width:10px;height:10px;border-radius:2px;background:var(--line)}.dots i.on{background:var(--up)}
 .rtl .li{justify-content:flex-start}.rtl .grow{flex:1}.rtl .li.cur{font-weight:700}
 .ck{flex:none;width:22px;height:22px;margin-right:10px;border-radius:50%;border:2px solid var(--mut);display:grid;place-items:center;font-weight:800;font-size:13px}.ck.on{background:var(--up);border-color:var(--up);color:#fff}
+.mm{margin:0;padding:12px 0 4px}.mm svg{display:block;width:100%;max-width:420px;height:auto;margin:0 auto}.mm figcaption{margin:6px 0 4px}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 .gl{margin:0;padding:0;list-style:none;background:var(--sf);border-radius:6px}.gl li{position:relative;padding:11px 14px 11px 34px;border-bottom:1px solid var(--line);font-size:15px;line-height:1.4}.gl li:last-child{border-bottom:0}
 .gl li::before{content:"✓";position:absolute;left:13px;top:11px;font-weight:800;color:var(--up)}.gl.no li::before{content:"✕";color:var(--err)}
@@ -1186,7 +1187,7 @@ function menuV(){const st=streak(),wk0=wkKey(Date.now()),wkN=S.log.filter(h=>wkK
 ${T('progs','Program',esc(PROG().name),'wide')}
 ${T('rep','Raporlar',wkN?`Bu hafta ${wkN} antrenman`:'Hacim, gelişim, kaslar')}
 ${T('cal','Takvim',st?`${st} haftalık seri`:'Aylık görünüm')}
-${T('prs','Rekorlar',prN?`${prN} harekette rekor`:'Güç seviyesi')}
+${T('prs','Rekorlar',prN?`${prN} harekette rekor`:'Güç seviyesi')}${T('orm','1RM hesabı','Yüzde tablosu, plakalar')}
 ${T('hist','Geçmiş',S.log.length?`${S.log.length} kayıt`:'Henüz kayıt yok')}
 ${T('karne','Karne','Program ilerlemen')}${T('badges','Rozetler',`${badges().filter(b=>b.ok).length} rozet kazandın`)}
 ${T('hpaste','Sağlık','Kestirmeden yapıştır')}${T('guides','Rehberler','Set, protein, uyku, takviye')}
@@ -1202,15 +1203,28 @@ async function exportData(){if(await shareFile('antrenman-yedek-'+new Date().toI
 // Takvim: haftalık düzendeki her antrenman günü için tekrarlayan, 15 dk önce hatırlatan etkinlik (.ics).
 function icsText(){const [hh,mm]=(S.ctime||'18:00').split(':'),BY=['MO','TU','WE','TH','FR','SA','SU'],p2=n=>String(n).padStart(2,'0'),now=new Date(),stamp=now.toISOString().replace(/[-:]/g,'').slice(0,15)+'Z';
  const ev=S.sched.map((w,i)=>{if(!w||!S.w[w])return'';const d=new Date();d.setDate(d.getDate()+((i-today()+7)%7));const ds=`${d.getFullYear()}${p2(d.getMonth()+1)}${p2(d.getDate())}T${p2(hh)}${p2(mm)}00`;
-  return['BEGIN:VEVENT',`UID:antrenman-${PROF}-${S.prog}-${i}@antrenman`,`DTSTAMP:${stamp}`,`DTSTART:${ds}`,'DURATION:PT1H',`RRULE:FREQ=WEEKLY;BYDAY=${BY[i]}`,`SUMMARY:Antrenman: ${w}`,`DESCRIPTION:${PROG().name}`,'BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:Antrenman vakti','TRIGGER:-PT15M','END:VALARM','END:VEVENT'].join('\r\n')}).filter(Boolean);
+  return['BEGIN:VEVENT',`UID:antrenman-${PROF}-${S.prog}-${i}@antrenman`,`DTSTAMP:${stamp}`,`DTSTART:${ds}`,'DURATION:PT1H',`RRULE:FREQ=WEEKLY;BYDAY=${BY[i]}`,`SUMMARY:Antrenman: ${icsE(w)}`,`DESCRIPTION:${icsE(PROG().name)}`,'BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:Antrenman vakti','TRIGGER:-PT15M','END:VALARM','END:VEVENT'].join('\r\n')}).filter(Boolean);
+ return['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Antrenman//TR','CALSCALE:GREGORIAN',...ev,'END:VCALENDAR'].join('\r\n')}
+// Takviye hatırlatmaları: aynı saatteki takviyeler tek etkinlikte; her gün tekrarlar. "Antrenmandan önce" olanlar sadece antrenman günlerinde, antrenman saatinden 45 dk önce.
+const icsE=s=>String(s).replace(/[\\,;]/g,m=>'\\'+m).replace(/\n/g,'\\n');
+const STIMES0={Sabah:'08:30',Öğle:'13:00',Akşam:'19:30',Gece:'22:30'},SLOTL={Sabah:'Sabah',Öğle:'Öğle',Akşam:'Akşam',Gece:'Yatmadan önce',Ant:'Antrenmandan önce'};
+const slotOf=t=>/yatmadan|gece/i.test(t)?'Gece':/antrenman|kolajen/i.test(t)?'Ant':/akşam/i.test(t)?'Akşam':/öğle/i.test(t)?'Öğle':'Sabah';
+function suppSlots(){const g={};suppList().forEach(x=>(g[slotOf(x.t)]=g[slotOf(x.t)]||[]).push(x.n));return g}
+function icsSupp(){const T={...STIMES0,...S.stimes},BY=['MO','TU','WE','TH','FR','SA','SU'],p2=n=>String(n).padStart(2,'0'),stamp=new Date().toISOString().replace(/[-:]/g,'').slice(0,15)+'Z',g=suppSlots();
+ const [ch,cm]=(S.ctime||'18:00').split(':').map(Number),ant=new Date(2000,0,1,ch,cm-45),days=S.sched.map((w,i)=>w&&S.w[w]?BY[i]:'').filter(Boolean);
+ const ev=Object.entries(g).map(([k,ns])=>{const [hh,mm]=k=='Ant'?[ant.getHours(),ant.getMinutes()]:T[k].split(':').map(Number);if(k=='Ant'&&!days.length)return'';const d=new Date();
+  return['BEGIN:VEVENT',`UID:takviye-${PROF}-${k}@antrenman`,`DTSTAMP:${stamp}`,`DTSTART:${d.getFullYear()}${p2(d.getMonth()+1)}${p2(d.getDate())}T${p2(hh)}${p2(mm)}00`,'DURATION:PT10M',k=='Ant'?`RRULE:FREQ=WEEKLY;BYDAY=${days.join(',')}`:'RRULE:FREQ=DAILY',`SUMMARY:Takviye: ${icsE([...new Set(ns)].join(', '))}`,`DESCRIPTION:${SLOTL[k]}`,'BEGIN:VALARM','ACTION:DISPLAY',`DESCRIPTION:Takviye: ${icsE([...new Set(ns)].join(', '))}`,'TRIGGER:PT0M','END:VALARM','END:VEVENT'].join('\r\n')}).filter(Boolean);
  return['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Antrenman//TR','CALSCALE:GREGORIAN',...ev,'END:VCALENDAR'].join('\r\n')}
 function setV(){const pl=S.plates||[25,20,15,10,5,2.5,1.25],lb=S.lastBk?Math.floor((Date.now()-S.lastBk)/864e5):null;
 return`<div class="hd"><button class="lnk back" data-a="home">‹ Ana ekran</button></div><h1 class="pt">Ayarlar</h1>${msg()}
 <div class="lab">Plaka hesabı</div><label class="mut" for="bar" style="font-size:13px">Bar ağırlığı (kg)</label><input id="bar" data-k="bar" type="number" inputmode="decimal" step="0.5" value="${S.bar??20}" style="margin:4px 0 12px">
 <span class="mut" style="font-size:13px">Salondaki plakalar (kg)</span><div class="toggles" style="margin-top:6px">${PLATES_ALL.map(p=>`<button class="${pl.includes(p)?'on':''}" data-a="plt" data-v="${p}" aria-pressed="${pl.includes(p)}">${fnum(p)}</button>`).join('')}</div>
+<p class="mut small">Bar hareketlerinde kilo önerileri en küçük plakana göre ${fnum(barStep())} kg adımla yuvarlanır${barStep()<2.5?'; ağırlık artışları da yaklaşık %2 olacak şekilde küçülür (mikro yükleme)':'. 0,5 ya da 0,25 kg plakaları seçersen artışlar küçülür (mikro yükleme)'}.</p>
 <div class="lab">Program haftası</div><div class="list"><button class="li" data-a="awk"><span>Her pazartesi haftayı otomatik ilerlet</span><b>${S.autoWk===false?'Kapalı':'Açık'}</b></button></div>
 <div class="lab">Takvim hatırlatması</div><div class="inl"><input id="ct" data-k="ctime" type="time" value="${S.ctime||'18:00'}" aria-label="Antrenman saati"><button class="btn alt" data-a="ics">Takvime ekle</button></div>
 <p class="mut small">Antrenman günlerin iPhone Takvim'ine her hafta tekrarlanan etkinlik olarak eklenir ve 15 dakika önce hatırlatır. Açılan dosyada "Tümünü ekle"ye dokun. Gün düzenin değişirse eski etkinlikleri silip yeniden ekle.</p>
+${suppList().length?`<div class="lab">Takviye hatırlatması</div><div class="list">${Object.entries(suppSlots()).map(([k,ns])=>`<div class="row"><div class="grow"><span>${SLOTL[k]}</span><span class="sub">${esc([...new Set(ns)].join(', '))}</span></div>${k=='Ant'?`<span class="v mut" style="font-size:13px">antrenmandan 45 dk önce</span>`:`<input type="time" data-k="stime" data-s="${k}" value="${({...STIMES0,...S.stimes})[k]}" aria-label="${SLOTL[k]} saati" style="width:auto">`}</div>`).join('')}</div>
+<button class="btn alt" data-a="icss" style="margin-top:10px">Takviyeleri takvime ekle</button><p class="mut small">Aynı saatteki takviyeler tek hatırlatmada toplanır ve her gün tekrarlar. Antrenman öncesi olanlar sadece antrenman günlerinde, yukarıdaki antrenman saatinden 45 dakika önce gelir. Listeyi değiştirirsen eski etkinlikleri Takvim'den silip yeniden ekle.</p>`:''}
 <div class="lab">Antrenman öncesi</div><div class="list"><button class="li" data-a="nochk"><span>Başlarken sabah kontrolü sor</span><b>${S.noChk?'Kapalı':'Açık'}</b></button><button class="li" data-a="nowarm"><span>Başlarken ısınma rutini</span><b>${S.noWarm?'Kapalı':'Açık'}</b></button><button class="li" data-a="nosplash"><span>Hızlı açılış (kaydırma ekranını atla)</span><b>${S.noSplash?'Açık':'Kapalı'}</b></button></div>
 <div class="lab">Görünüm</div><span class="mut" style="font-size:13px;display:block;margin-bottom:6px">Tema rengi (butonlar ve vurgular)</span><div class="toggles">${Object.entries(ACC).map(([k,[l,c]])=>`<button class="${(S.accent||'ink')==k?'on':''}" data-a="acc" data-v="${k}" aria-pressed="${(S.accent||'ink')==k}"><i class="sw" style="background:${c||'var(--ink)'}"></i>${l}</button>`).join('')}</div>
 <div class="list" style="margin-top:10px"><button class="li" data-a="bigm"><span>Salon modu (antrenmanda büyük yazı ve butonlar)</span><b>${S.big?'Açık':'Kapalı'}</b></button><button class="li" data-a="smrest"><span>Akıllı dinlenme (zor setten sonra uzat)</span><b>${S.noSmartRest?'Kapalı':'Açık'}</b></button><button class="li" data-a="logwarm"><span>Isınma setlerini de kaydet (rekora ve hacme sayılmaz)</span><b>${S.logWarm?'Açık':'Kapalı'}</b></button></div>
@@ -1283,7 +1297,10 @@ return`<div class="rh"><button class="lnk" data-a="ccancel">Vazgeç</button><spa
 <label class="lab" for="cm">Ya da süreyi elle gir (dakika)</label><div class="inl"><input id="cm" type="number" inputmode="decimal" min="1" placeholder="Örneğin 20"><button class="btn alt" data-a="cman">Kaydet</button></div>`}
 
 // ---- Ağırlık önerisi, plaka ve ısınma hesabı, rekorlar ----
-const r05=x=>Math.round(x*2)/2,r25=x=>Math.round(x/2.5)*2.5;
+// Bar hareketlerinde yuvarlama adımı salondaki en küçük plakaya göre: 1,25 kg plaka → 2,5 kg, 0,5 → 1 kg, 0,25 → 0,5 kg (mikro yükleme).
+const barStep=()=>Math.min(2.5,Math.max(0.5,2*Math.min(...(S.plates&&S.plates.length?S.plates:[1.25])))),r05=x=>Math.round(x*2)/2,r25=x=>{const st=barStep();return Math.round(x/st)*st};
+// Artış: barda yaklaşık %2 (en az bir adım), diğerlerinde 20 kg üstü 2,5, altı 1 kg.
+const incOf=(kg,bar)=>bar?Math.max(barStep(),Math.round(kg*0.02/barStep())*barStep()):kg>=20?2.5:1;
 const repRange=s=>{const m=String(s).match(/(\d+)\s*[-–]\s*(\d+)/);if(m)return[+m[1],+m[2]];const n=parseInt(s);return isFinite(n)?[n,n]:null};
 const bestE1=n=>Math.max(0,...S.log.flatMap(h=>h.log.filter(l=>!l.cardio&&l.n==n).map(e1)));
 const isBar=n=>/barbell|bench press|back squat|front squat|box squat|anderson|deadlift|rdl|good morning|overhead press|military|pendlay|ez-bar|t-bar|shrug|pin |close-grip bench|skull/i.test(n)&&!/dumbbell|\bdb\b|machine|cable|goblet|bulgarian|smith/i.test(n);
@@ -1299,13 +1316,18 @@ function suggest0(e,cn,si,pv){const rnd=isBar(cn)?r25:r05;
  if(!rg)return{kg,why:'geçen seferki ağırlık'};
  const pr=num(ps.rpe);
  if(pr&&pr>=10&&rp<rg[1])return{kg,why:`geçen sefer ${fnum(kg)}×${rp} tükenişe yakındı (RPE ${pr}), aynı ağırlıkta kal`};
- if(rp>=rg[1]||pr&&pr<=7&&rp>=rg[0])return{kg:rnd(kg+(kg>=20?2.5:1)),why:`geçen sefer ${fnum(kg)}×${rp}${pr?` (RPE ${pr})`:''}, ${rp>=rg[1]?'tekrar üst sınırına ulaştın':'rahat geçti'}, ağırlığı artır`};
+ if(rp>=rg[1]||pr&&pr<=7&&rp>=rg[0]){const inc=incOf(kg,isBar(cn));return{kg:rnd(kg+inc),why:`geçen sefer ${fnum(kg)}×${rp}${pr?` (RPE ${pr})`:''}, ${rp>=rg[1]?'tekrar üst sınırına ulaştın':'rahat geçti'}, ağırlığı ${isBar(cn)&&barStep()<2.5?`küçük plakalarla ${fnum(inc)} kg `:''}artır`}}
  if(rp<rg[0]-2)return{kg:rnd(kg*0.95),why:`geçen sefer ${fnum(kg)}×${rp}, hedefin altında kaldın, biraz hafiflet`};
  return{kg,why:`geçen sefer ${fnum(kg)}×${rp}, aynı ağırlıkla bir tekrar fazlasını dene`}}
-const PLATES_ALL=[25,20,15,10,5,2.5,1.25,0.5];
+const PLATES_ALL=[25,20,15,10,5,2.5,1.25,0.5,0.25];
+// Bir tarafa takılacak plakalar: 0,25 kg birimlerinde en az plakayla tam eşleşme (dinamik programlama); tam eşleşme yoksa en yakın alt değer.
+function sidePlates(side){const ps=(S.plates&&S.plates.length?S.plates:[25,20,15,10,5,2.5,1.25]).map(p=>Math.round(p*4)).filter(p=>p>0),n=Math.max(0,Math.floor(side*4+1e-6)),best=new Array(n+1).fill(Infinity),pick=new Array(n+1).fill(0);best[0]=0;
+ for(let i=1;i<=n;i++)for(const p of ps)if(p<=i&&best[i-p]+1<best[i]){best[i]=best[i-p]+1;pick[i]=p}
+ let t=n;while(t>0&&best[t]==Infinity)t--;const raw=[];for(let i=t;i>0;i-=pick[i])raw.push(pick[i]/4);raw.sort((a,b)=>b-a);
+ const out=[];raw.forEach(p=>{const l=out[out.length-1];if(l&&l.p==p)l.c++;else out.push({p,c:1})});return{out:out.map(({p,c})=>c>2?c+'×'+fnum(p):Array(c).fill(fnum(p))).flat(),left:side-t/4}}
 function plates(kg){const bar=S.bar??20,side=(kg-bar)/2;if(!(kg>0))return'';if(side<0)return`Bar tek başına ${fnum(bar)} kg.`;if(side==0)return'Sadece bar.';
- let left=side;const out=[];for(const p of (S.plates||[25,20,15,10,5,2.5,1.25]).slice().sort((a,b)=>b-a))while(left>=p-1e-9){out.push(p);left-=p}
- return`Her tarafa: ${out.map(fnum).join(' + ')||'plaka yok'}${left>0.01?` (${fnum(left*2)} kg eşleşmedi)`:''}, ${fnum(bar)} kg bar.`}
+ const {out,left}=sidePlates(side);
+ return`Her tarafa: ${out.join(' + ')||'plaka yok'}${left>0.01?` (${fnum(left*2)} kg eşleşmedi)`:''}, ${fnum(bar)} kg bar.`}
 function warmup(e,kg){const m=String(e.wu||'').match(/\d+/g);if(!m)return'';const n=Math.min(4,Math.max(...m.map(Number)));if(!n)return'';
  const P={1:[[.6,6]],2:[[.5,8],[.75,4]],3:[[.45,8],[.65,5],[.85,2]],4:[[.4,8],[.55,5],[.7,3],[.85,2]]}[n],rnd=isBar(e.n)?r25:r05;
  return kg>0?`Isınma: ${P.map(([p,rp])=>fnum(Math.max(isBar(e.n)?S.bar??20:0,rnd(kg*p)))+' kg × '+rp).join(', ')}. Isınma setlerini kaydetmen gerekmez.`:`Önce ${esc(e.wu)} ısınma seti yap. Ağırlığı girince ısınma kilolarını hesaplarım.`}
@@ -1317,13 +1339,13 @@ function prsOf(log,before){const out=[];for(const l of log){if(l.cardio||out.som
 function prsV(){const m=new Map();S.log.forEach(h=>h.log.forEach(l=>{if(l.cardio)return;const b=best(l);if(!b)return;const o=m.get(l.n)||{kg:0,e:0};
  if(b.kg>o.kg||b.kg==o.kg&&b.r>(o.r||0)){o.kg=b.kg;o.r=b.r;o.kd=h.d}const v=e1(l);if(v>o.e){o.e=v;o.ed=h.d}m.set(l.n,o)}));
  const rows=[...m].sort((a,b)=>a[0].localeCompare(b[0],'tr'));
- return`<div class="hd"><button class="lnk back" data-a="home">‹ Ana ekran</button></div><h1 class="pt">Rekorlar</h1>${strengthV()}<div class="lab">Hareket rekorları</div>`+(rows.length?`<div class="list">${rows.map(([n,o])=>`<div class="row at"><div class="grow"><b>${exl(n)}</b><span class="sub">En ağır: ${fnum(o.kg)} kg × ${o.r}, ${dshort(o.kd)}</span></div><span class="v"><b class="n">${fnum(o.e)} kg</b><span class="sub">tahmini 1RM</span></span></div>`).join('')}</div><p class="mut small">Tahmini 1RM, en iyi setten Epley formülüyle hesaplanır.</p>`:'<p class="mut">Henüz kayıt yok.</p>')}
+ return`<div class="hd"><button class="lnk back" data-a="home">‹ Ana ekran</button></div><h1 class="pt">Rekorlar</h1><p style="margin-top:-6px"><button class="lnk" data-a="orm" style="padding:0">1RM ve yüzde tablosu hesapla</button></p>${strengthV()}<div class="lab">Hareket rekorları</div>`+(rows.length?`<div class="list">${rows.map(([n,o])=>`<div class="row at"><div class="grow"><b>${exl(n)}</b><span class="sub">En ağır: ${fnum(o.kg)} kg × ${o.r}, ${dshort(o.kd)}</span></div><span class="v"><b class="n">${fnum(o.e)} kg</b><span class="sub">tahmini 1RM</span></span></div>`).join('')}</div><p class="mut small">Tahmini 1RM, en iyi setten Epley formülüyle hesaplanır.</p>`:'<p class="mut">Henüz kayıt yok.</p>')}
 // Paylaşım görseli: 1080×1350 PNG, bitmiş antrenmanın özeti ve rekorları.
-async function shareImg(){const r=V.run;if(!r||!r.done)return;try{await document.fonts.load('800 60px Archivo')}catch(e){}
+async function shareImg(src){const r=src||V.run;if(!r||!src&&!r.done)return;try{await document.fonts.load('800 60px Archivo')}catch(e){}
  const W=1080,H=1350,c=document.createElement('canvas');c.width=W;c.height=H;const g=c.getContext('2d'),F='Archivo, system-ui, sans-serif';
  const col={red:'#C4122F',blue:'#1C4E9D',yel:'#F0BE00',grn:'#1B7A47',rest:'#6B727C'}[pc(r.w)]||'#C4122F';
  g.fillStyle='#111315';g.fillRect(0,0,W,H);g.fillStyle=col;g.fillRect(0,0,W,24);
- g.fillStyle='#A3AAB3';g.font=`600 34px ${F}`;g.fillText(new Date().toLocaleDateString('tr-TR',{day:'numeric',month:'long',year:'numeric'})+(PROF?', '+PROF:''),72,110);
+ g.fillStyle='#A3AAB3';g.font=`600 34px ${F}`;g.fillText(new Date(r.d||Date.now()).toLocaleDateString('tr-TR',{day:'numeric',month:'long',year:'numeric'})+(PROF?', '+PROF:''),72,110);
  g.fillStyle='#ECEEF0';g.font=`800 110px ${F}`;g.fillText(r.w.slice(0,18),72,230);
  const pr=prsOf(r.log,r.li??S.log.length),vol=r.log.reduce((b,l)=>b+l.s.reduce((c2,x)=>c2+(x.skip?0:num(x.kg)*num(x.r)),0),0);
  const st=[[r.dur?dur(r.dur):'-','süre'],[String(setCount(r.log)),'set'],[fk(vol)+' kg','hacim']];
@@ -1332,7 +1354,7 @@ async function shareImg(){const r=V.run;if(!r||!r.done)return;try{await document
   g.font=`600 30px ${F}`;pr.slice(0,4).forEach((p,i)=>g.fillText(p.slice(0,56),100,y+48*(i+1)));y+=62+pr.length*48+40}
  g.font=`600 32px ${F}`;for(const l of r.log.slice(0,Math.floor((H-y-80)/52))){g.fillStyle='#ECEEF0';g.fillText(l.n.slice(0,30),72,y);g.fillStyle='#A3AAB3';const t=lr(l);g.textAlign='right';g.fillText(t.slice(0,28),W-72,y);g.textAlign='left';y+=52}
  g.fillStyle='#6B727C';g.font=`700 28px ${F}`;g.fillText('Antrenman',72,H-60);
- const blob=await new Promise(res=>c.toBlob(res,'image/png'));if(!blob)return;const name='antrenman-'+new Date().toISOString().slice(0,10)+'.png';
+ const blob=await new Promise(res=>c.toBlob(res,'image/png'));if(!blob)return;const name='antrenman-'+new Date(r.d||Date.now()).toISOString().slice(0,10)+'.png';
  try{const f=new File([blob],name,{type:'image/png'});if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f]});return}}catch(e){if(e&&e.name=='AbortError')return}
  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1000)}
 // İlk açılış rehberi: terimler ve uygulamanın akışı.
@@ -1382,6 +1404,29 @@ function guideDV(){const g=GUIDES[V.gi]||GUIDES[0];return`<div class="hd"><butto
 <div class="lab">Neden?</div><p>${esc(g.neden)}</p>${g.app?`<p class="tip"><b>Uygulamada:</b> ${esc(typeof g.app=='function'?g.app():g.app)}</p>`:''}
 <div class="lab">Kaynaklar</div><ul class="src">${g.src.map(k=>`<li>${esc(SRC[k][0])} <a href="${SRC[k][1]}" target="_blank" rel="noopener">Makaleyi aç</a></li>`).join('')}</ul>
 <div class="two" style="margin-top:16px">${V.gi>0?`<button class="btn alt" data-a="gv" data-i="${V.gi-1}">‹ Önceki</button>`:'<span></span>'}${V.gi<GUIDES.length-1?`<button class="btn alt" data-a="gv" data-i="${+V.gi+1}">Sonraki ›</button>`:''}</div>`}
+// ---- 1RM hesaplayıcı: kg × tekrar → tahmini 1RM (Epley) ve %50-100 tablosu, bar hareketlerinde plaka dizilimi ----
+function plateList(kg){const bar=S.bar??20,side=(kg-bar)/2;if(side<0)return'';if(side==0)return'sadece bar';const {out,left}=sidePlates(side);return out.join(' + ')+(left>0.01?` (${fnum(left*2)} kg eşleşmedi)`:'')}
+function ormV(){const names=[];for(let i=S.log.length-1;i>=0;i--)for(const l of S.log[i].log)if(!l.cardio&&best(l)&&!names.includes(l.n))names.push(l.n);names.sort((a,b)=>a.localeCompare(b,'tr'));
+ const n=V.on&&names.includes(V.on)?V.on:'';if(n&&V.ok===undefined){let bl=null;S.log.forEach(h=>h.log.forEach(l=>{if(!l.cardio&&l.n==n&&best(l)&&(!bl||e1(l)>e1(bl)))bl=l}));if(bl){const b=best(bl);V.ok=String(b.kg);V.or=String(b.r)}}
+ const kg=num(V.ok),r=Math.round(num(V.or)),bar=V.ob!==undefined?V.ob:n?isBar(n):true,rnd=bar?r25:r05,one=kg>0&&r>0?(r==1?kg:kg*(1+Math.min(r,15)/30)):0;
+ const P=[100,95,90,85,80,75,70,65,60,55,50];
+ return`<div class="hd"><button class="lnk back" data-a="home">‹ Ana ekran</button></div><h1 class="pt">1RM hesabı</h1><p class="mut" style="margin-top:-6px">Bir setin kilosunu ve tekrarını gir; tek tekrarda kaldırabileceğin ağırlığı ve yüzdelerini hesaplar.</p>
+${names.length?`<label class="lab" for="ormn">Kayıtlı hareketten doldur</label><select id="ormn" data-a="ormn"><option value="">Seç</option>${names.map(x=>`<option value="${esc(x)}" ${x==n?'selected':''}>${esc(x)}</option>`).join('')}</select>`:''}
+<div class="two" style="margin-top:12px"><label>Kilo (kg)<input id="ok" type="number" inputmode="decimal" value="${esc(V.ok||'')}"></label><label>Tekrar<input id="or" type="number" inputmode="numeric" value="${esc(V.or||'')}"></label></div>
+<div class="segm sm" role="group" aria-label="Ekipman" style="margin-top:10px"><button class="${bar?'on':''}" data-a="ormb" data-v="1" aria-pressed="${bar}">Bar</button><button class="${bar?'':'on'}" data-a="ormb" data-v="0" aria-pressed="${!bar}">Dambıl, makine</button></div>
+<button class="btn" data-a="ormc" style="margin-top:12px">Hesapla</button>
+${one?`<div class="ready" style="margin-top:16px"><div class="hd"><span>Tahmini 1RM</span><b>${fnum(rnd(one))}<small> kg</small></b></div><p class="mut small" style="margin-top:4px">${fnum(kg)} kg × ${r} tekrardan. ${r>10?'10 tekrarın üstünde tahmin daha az güvenilir.':''}</p></div>
+<div class="list" style="margin-top:12px">${P.map(p=>{const w=rnd(one*p/100),rp=p==100?1:Math.max(1,Math.round(30*(100/p-1)));return`<div class="row at"><div class="grow"><span><b class="n">%${p}</b>  ${fnum(w)} kg</span>${bar&&w>=(S.bar??20)?`<span class="sub">Her tarafa: ${plateList(w)}</span>`:''}</div><span class="v"><b class="n">~${rp}</b><span class="sub">tekrar</span></span></div>`}).join('')}</div>
+<p class="mut small">Epley formülü: kg × (1 + tekrar / 30). Tekrar sayıları yaklaşık; aynı yüzdede herkesin yapabildiği tekrar farklıdır. ${bar?`Kilolar en küçük plakana göre ${fnum(barStep())} kg adımla yuvarlandı.`:''}</p>`:''}`}
+// ---- Kas haritası: önden ve arkadan basit vücut çizimi, kas grubu set sayısına göre renklenir ----
+function musMap(m,full=20,cap=''){const f=k=>{const v=m[k]||0;return v?`fill="var(--up)" fill-opacity="${(0.25+0.75*Math.min(1,v/full)).toFixed(2)}"`:'fill="var(--line)"'},T=k=>`<title>${k}: ${m[k]||0} set</title>`;
+ const N='fill="var(--sf)" stroke="var(--line)" stroke-width="1.5"',R=(k,x,y,w,h,r=8)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}" ${f(k)}>${T(k)}</rect>`,E=(k,cx,cy,rx,ry)=>`<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" ${f(k)}>${T(k)}</ellipse>`;
+ const base=o=>`<g transform="translate(${o},0)"><circle cx="100" cy="26" r="18" ${N}/><rect x="92" y="42" width="16" height="12" ${N}/><rect x="42" y="124" width="14" height="44" rx="7" ${N}/><rect x="144" y="124" width="14" height="44" rx="7" ${N}/><rect x="76" y="244" width="20" height="54" rx="9" ${N}/><rect x="104" y="244" width="20" height="54" rx="9" ${N}/></g>`;
+ const front=`<g>${E('Omuz',56,70,12,12)}${E('Omuz',144,70,12,12)}${R('Göğüs',70,58,29,32)}${R('Göğüs',101,58,29,32)}${R('Biceps',46,84,16,38)}${R('Biceps',138,84,16,38)}${R('Karın',78,94,44,54)}<rect x="74" y="150" width="52" height="16" rx="6" fill="var(--sf)" stroke="var(--line)" stroke-width="1.5"/>${R('Ön bacak',72,168,24,72,10)}${R('Ön bacak',104,168,24,72,10)}${R('İç bacak',96,170,8,44,4)}</g>`;
+ const back=`<g transform="translate(200,0)"><path d="M100 46 L72 62 L100 94 L128 62 Z" ${f('Trapez')}>${T('Trapez')}</path>${E('Omuz',56,70,12,12)}${E('Omuz',144,70,12,12)}<path d="M74 70 L98 98 L98 142 L80 132 L70 92 Z" ${f('Sırt')}>${T('Sırt')}</path><path d="M126 70 L102 98 L102 142 L120 132 L130 92 Z" ${f('Sırt')}>${T('Sırt')}</path>${R('Triceps',46,84,16,38)}${R('Triceps',138,84,16,38)}${E('Kalça',87,160,14,14)}${E('Kalça',113,160,14,14)}${R('Arka bacak',73,178,23,62,10)}${R('Arka bacak',104,178,23,62,10)}${E('Baldır',86,264,10,22)}${E('Baldır',114,264,10,22)}</g>`;
+ const ks=Object.keys(m).filter(k=>k!='Diğer'&&m[k]);
+ return`<figure class="fig mm"><svg viewBox="0 0 400 320" class="svg" role="img" aria-label="Kas haritası${cap?', '+cap:''}: ${ks.map(k=>k+' '+m[k]+' set').join(', ')||'set yok'}">${base(0)}${base(200)}${front}${back}<text x="100" y="316" text-anchor="middle" font-size="13" fill="var(--mut)">Ön</text><text x="300" y="316" text-anchor="middle" font-size="13" fill="var(--mut)">Arka</text></svg>
+<figcaption class="mut small">Koyu yeşil daha çok set demek (${full} set ve üstü en koyu); gri kaslar ${cap||'bu dönemde'} hiç çalışmıyor.</figcaption></figure>`}
 // ---- Takviye takibi: ana ekranda günlük işaretlenen liste. S.supp listeyi, S.suppLog gün başına işaretlenenleri tutar. ----
 const SUPP0=[['D3 vitamini','Sabah, yağlı öğünle'],['Omega-3','Sabah, yağlı öğünle'],['B12','Sabah'],['Kreatin','Her gün, 3-5 g'],['Berberin','Kahvaltı, yemeğin başında'],['Berberin','Akşam yemeğinin başında'],['Kolajen','Antrenmandan 30-60 dk önce'],['C vitamini','Kolajenle birlikte'],['ZMA','Yatmadan önce, aç karnına']];
 const STIME=['Sabah','Öğle','Akşam','Antrenmandan önce','Yatmadan önce'];
@@ -1391,7 +1436,7 @@ function suppCard(){const L=suppList(),dn=(S.suppLog||{})[dkey()]||[],ed=V.sedit
  const ok=L.filter(x=>dn.includes(x.id)).length;
  return`<div class="hd lab"><span>Takviyeler ${L.length?`<span class="mut">${ok}/${L.length}</span>`:''}</span><button class="lnk" data-a="sedit">${ed?'Bitti':'Düzenle'}</button></div>
 <div class="supp">${L.map(x=>{const on=dn.includes(x.id);return`<button class="sp ${on&&!ed?'on':''}" data-a="${ed?'sdel':'stog'}" data-v="${x.id}" ${ed?'':`aria-pressed="${on}"`}><i aria-hidden="true">${on&&!ed?'✓':''}</i><span>${esc(x.n)}<small>${esc(x.t)}</small></span>${ed?'<em>Sil</em>':''}</button>`}).join('')}</div>
-${ed?`<div class="inl" style="margin-top:8px"><input id="snew" placeholder="Takviye adı" aria-label="Takviye adı"><select id="stime" aria-label="Ne zaman">${STIME.map(t=>`<option>${t}</option>`).join('')}</select><button class="btn alt" data-a="sadd">Ekle</button></div><p class="mut small">Silmek için takviyeye dokun.</p>`:''}`}
+${ed?`<div class="inl" style="margin-top:8px"><input id="snew" placeholder="Takviye adı" aria-label="Takviye adı"><select id="stime" aria-label="Ne zaman">${STIME.map(t=>`<option>${t}</option>`).join('')}</select><button class="btn alt" data-a="sadd">Ekle</button></div><p class="mut small">Silmek için takviyeye dokun. Saatinde hatırlatma için <button class="lnk" data-a="set" style="padding:0">Ayarlar'dan takvime ekle</button>.</p>`:''}`}
 function suppTog(id){const k=dkey();S.suppLog=S.suppLog||{};const a=S.suppLog[k]||(S.suppLog[k]=[]),i=a.indexOf(id);i<0?a.push(id):a.splice(i,1);
  const ks=Object.keys(S.suppLog);if(ks.length>90)ks.sort((x,y)=>new Date(x)-new Date(y)).slice(0,ks.length-90).forEach(x=>delete S.suppLog[x]);save()}
 // ---- Günlük takip: uyku, su ve kilo tek kartta. Uyku ve kilo S.health'e yazılır (Kestirme verisiyle aynı yere), su S.water'a. ----
@@ -1524,7 +1569,7 @@ function wplanV(){const sc=eff(),tot={};const days=DAYL.map((dn,i)=>{const w=sc[
  return`<div class="row at p-${pc(w)}"><div class="grow"><b><span class="sq" style="display:inline-block;margin-right:8px"></span>${dn}: ${esc(w)}</b><span class="sub">${Object.entries(m).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`${k} ${v}`).join(', ')}</span></div><span class="v"><b class="n">${S.w[w].reduce((a,e)=>a+(+e.sets||0),0)} set</b></span></div>`}).join('');
  const ks=Object.keys(tot).filter(k=>k!='Diğer').sort((a,b)=>tot[b]-tot[a]),mx=Math.max(20,...ks.map(k=>tot[k])),lo=volLow();
  return`<div class="hd"><button class="lnk back" data-a="home">‹ Ana ekran</button></div><h1 class="pt">Haftalık plan</h1><p class="mut" style="margin-top:-6px">${esc(PROG().name)}${nWk()>1?', '+S.week+'. hafta':''}</p>
-<div class="list">${days}</div><div class="lab">Kas grubu başına planlanan set</div><div class="list">${ks.map(k=>`<div class="row at"><div class="grow"><span>${k}</span><div class="mbar"><i style="width:${tot[k]/mx*100}%;${tot[k]<lo?'background:var(--err)':tot[k]>20?'background:var(--yel)':''}"></i></div></div><span class="v"><b class="n">${tot[k]} set</b><span class="sub">${tot[k]<lo?'az':tot[k]>20?'çok':'iyi'}</span></span></div>`).join('')}</div>
+<div class="list">${days}</div><div class="lab">Kas haritası, bu haftanın planı</div><div class="list">${musMap(tot,20,'bu haftanın planında')}</div><div class="lab">Kas grubu başına planlanan set</div><div class="list">${ks.map(k=>`<div class="row at"><div class="grow"><span>${k}</span><div class="mbar"><i style="width:${tot[k]/mx*100}%;${tot[k]<lo?'background:var(--err)':tot[k]>20?'background:var(--yel)':''}"></i></div></div><span class="v"><b class="n">${tot[k]} set</b><span class="sub">${tot[k]<lo?'az':tot[k]>20?'çok':'iyi'}</span></span></div>`).join('')}</div>
 <p class="mut small">Kas grubu başına haftada ${lo==6?'yeni başlayanlar için 6-10 set yeterli, ilerledikçe':'yaklaşık'} 10-20 set önerilir. Kırmızı az, sarı çok anlamına gelir. Her hareket tek bir birincil kas grubuna sayılır. <button class="lnk" data-a="gv" data-i="1" style="padding:0">Neden?</button></p>`}
 // ---- Hareket arama: bütün programlardaki, alternatiflerdeki ve geçmişteki hareket adları ----
 let EXIDX=null;function exIndex(){if(EXIDX)return EXIDX;const s=new Set();PROGS.forEach(p=>{for(let w=1;w<=(p.weeks||1);w++){try{Object.values(genW(p,w).w).forEach(a=>a.forEach(e=>{s.add(e.n);(e.alt||[]).forEach(x=>s.add(x))}))}catch(e){}}});
@@ -1615,7 +1660,7 @@ function perfV(){const P2=perfScores();if(P2.length<6)return'';const grp=(f,orde
  if(hr.length<2&&sl.length<2)return'';return`<div class="lab">Ne zaman daha güçlüsün?</div><div class="list">${hr.length>1?rows(hr):''}${sl.length>1?rows(sl):''}</div><p class="mut small">Yüzde, o antrenmandaki hareketlerin tahmini 1RM'inin, o güne kadarki en iyiye oranının ortalaması. %100'e yakın olmak, en iyi halindesin demek.</p>`}
 // ---- Geçmiş kaydı düzenleme ve elle kayıt ----
 function heditV(){const h=S.log[V.hi];if(!h)return'';const dv=new Date(h.d),loc=new Date(dv.getTime()-dv.getTimezoneOffset()*6e4).toISOString().slice(0,16);
- return`<div class="hd"><button class="lnk back" data-a="hist">‹ Geçmiş</button></div><h1 class="pt">${h.manual&&!h.log.length?'Elle antrenman':'Kaydı düzenle'}</h1>
+ return`<div class="hd"><button class="lnk back" data-a="hist">‹ Geçmiş</button>${h.log.some(l=>!l.cardio&&best(l))?'<button class="lnk" data-a="hshare">Görsel olarak paylaş</button>':''}</div><h1 class="pt">${h.manual&&!h.log.length?'Elle antrenman':'Kaydı düzenle'}</h1>
 <div class="two"><label>Antrenman adı<input data-he="w" value="${esc(h.w)}"></label><label>Tarih ve saat<input type="datetime-local" data-he="d" value="${loc}"></label></div>
 ${h.log.map((l,i)=>l.cardio?`<div class="list" style="margin-top:12px"><div class="row"><b>${esc(l.n)}</b><span class="v">${lr(l)}</span></div></div>`:`<div class="list" style="margin-top:12px"><div class="row"><input data-hn="${i}" value="${esc(l.n)}" style="font-weight:700"><button class="lnk danger" data-a="hdelx" data-i="${i}">Sil</button></div>
 ${l.s.map((x,j)=>`<div class="row"><span class="mut" style="min-width:44px">${j+1}. set</span><input data-hs="${i}" data-j="${j}" data-f="kg" type="number" inputmode="decimal" value="${x.skip?'':esc(x.kg)}" placeholder="kg" aria-label="kg"><input data-hs="${i}" data-j="${j}" data-f="r" type="number" inputmode="numeric" value="${x.skip?'':esc(x.r)}" placeholder="tekrar" aria-label="tekrar"><button class="lnk danger" data-a="hdels" data-i="${i}" data-j="${j}" aria-label="Seti sil">×</button></div>`).join('')}
@@ -1728,7 +1773,7 @@ const MUS=[['Baldır',/calf/i],['Karın',/crunch|leg raise|plank|sit-up|rollout|
 const musOf=n=>(MUS.find(([,re])=>re.test(n))||['Diğer'])[0];
 function musV(mode,k,kp,pc1,pc2){const cnt=key=>{const m={};S.log.forEach(h=>{if(perOf(mode,h.d)!=key)return;h.log.forEach(l=>{if(l.cardio)return;const s=l.s.filter(x=>!x.skip).length;if(s)m[musOf(l.n)]=(m[musOf(l.n)]||0)+s})});return m};
  const c=cnt(k),p=cnt(kp),ks=[...new Set([...Object.keys(c),...Object.keys(p)])].sort((a,b)=>(c[b]||0)-(c[a]||0));if(!ks.length)return'';const mx=Math.max(...ks.map(x=>Math.max(c[x]||0,p[x]||0)));
- return`<div class="lab">Kas grubu başına set, ${pc1.toLocaleLowerCase('tr')}</div><div class="list">${ks.map(x=>`<div class="row at"><div class="grow"><span>${x}</span><div class="mbar"><i style="width:${(c[x]||0)/mx*100}%"></i></div></div><span class="v"><b class="n">${c[x]||0} set</b><span class="sub">${delta(c[x]||0,p[x]||0)} ${pc2} ${p[x]||0}</span></span></div>`).join('')}</div>
+ return`<div class="lab">Kas grubu başına set, ${pc1.toLocaleLowerCase('tr')}</div><div class="list">${musMap(c,mode=='m'?80:20,pc1.toLocaleLowerCase('tr'))}${ks.map(x=>`<div class="row at"><div class="grow"><span>${x}</span><div class="mbar"><i style="width:${(c[x]||0)/mx*100}%"></i></div></div><span class="v"><b class="n">${c[x]||0} set</b><span class="sub">${delta(c[x]||0,p[x]||0)} ${pc2} ${p[x]||0}</span></span></div>`).join('')}</div>
 <p class="mut small">Her hareket tek bir birincil kas grubuna sayılır. Kas gelişimi için bir kas grubuna haftada yaklaşık 10-20 set genelde yeterli kabul edilir.</p>`}
 function rep(){const mode=V.rp||'w',N=mode=='w'?8:6,m=agg(mode),keys=perKeys(mode,N),Z={n:0,sets:0,vol:0,dur:0,car:0},cur=m.get(keys[N-1])||Z,prv=m.get(keys[N-2])||Z;
 const [pc1,pc2,pc3]=mode=='w'?['Bu hafta','geçen hafta','Son 8 hafta']:['Bu ay','geçen ay','Son 6 ay'];
@@ -1751,7 +1796,7 @@ ${pts.length?table(['Tarih','En iyi set','Tahmini 1RM'],pts.slice().reverse().ma
 <p class="mut small">Tahmini 1RM, en iyi setten tek tekrarda kaldırabileceğin ağırlığın tahminidir (Epley: kg × (1 + tekrar / 30)). Ağırlık aynı kalsa bile tekrar artarsa yükselir.</p>`
 :'<p class="mut">Rapor için henüz kayıtlı antrenman yok.</p>'}${dailyRep()}`}
 
-function render(){if(PROF&&!V.run)autoWeek();applyAccent();app.classList.toggle('bigm',!!S.big&&V.view=='run');app.innerHTML=V.view=='guides'?guidesV():V.view=='guide1'?guideDV():V.view=='badges'?badgesV():V.view=='wplan'?wplanV():V.view=='ex'?exV():V.view=='karne'?karneV():V.view=='hedit'?heditV():V.view=='cal'?calV():V.view=='guide'?guideV():V.view=='prs'?prsV():V.view=='set'?setV():V.view=='progs'?progs():V.view=='prog'?progV():V.view=='rep'?rep():V.view=='splash'?splash():V.view=='run'?run():V.view=='edit'?edit():V.view=='hist'?hist():V.view=='day'?day():main()}
+function render(){if(PROF&&!V.run)autoWeek();applyAccent();app.classList.toggle('bigm',!!S.big&&V.view=='run');app.innerHTML=V.view=='orm'?ormV():V.view=='guides'?guidesV():V.view=='guide1'?guideDV():V.view=='badges'?badgesV():V.view=='wplan'?wplanV():V.view=='ex'?exV():V.view=='karne'?karneV():V.view=='hedit'?heditV():V.view=='cal'?calV():V.view=='guide'?guideV():V.view=='prs'?prsV():V.view=='set'?setV():V.view=='progs'?progs():V.view=='prog'?progV():V.view=='rep'?rep():V.view=='splash'?splash():V.view=='run'?run():V.view=='edit'?edit():V.view=='hist'?hist():V.view=='day'?day():main()}
 
 function beep(){try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();const o=actx.createOscillator(),g=actx.createGain();o.connect(g);g.connect(actx.destination);o.frequency.value=880;g.gain.value=.2;o.start();o.stop(actx.currentTime+.4)}catch(e){}try{navigator.vibrate&&navigator.vibrate([200,100,200])}catch(e){}}
 function advance(auto){const r=V.run;r.ei=r.nx.ei;r.si=r.nx.si;r.phase='set';beep();save();render();if(!auto)return;setTimeout(beep,450);setTimeout(beep,900);
@@ -1845,6 +1890,10 @@ if(a=='dlok'){S.dlSeen=monKey();save();render();return}
 if(a=='mvmiss'){V.day=+d.i;V.view='day';V.mvOpen=1;render();return}
 if(a=='resume'){const rs=resumable();if(rs){const h=S.log.pop();V.run={w:h.w,ei:rs.ei,si:rs.si,phase:'set',log:h.log,t0:Date.now()-(h.dur||0)*1000};V.view='run';save()}render();window.scrollTo(0,0);return}
 if(a=='shimg'){shareImg();return}
+if(a=='hshare'){const h=S.log[V.hi];if(h)shareImg({w:h.w,log:h.log,li:V.hi,dur:h.dur,d:h.d});return}
+if(a=='orm'){V.view='orm';if(d.n)V.on=d.n;render();window.scrollTo(0,0);return}
+if(a=='ormc'){V.ok=document.getElementById('ok').value;V.or=document.getElementById('or').value;render();return}
+if(a=='ormb'){V.ob=d.v=='1';render();return}
 if(a=='gnext'){V.gp=(V.gp||0)+1;render();window.scrollTo(0,0);return}
 if(a=='gprev'){V.gp=Math.max(0,(V.gp||0)-1);render();return}
 if(a=='gdone'){P.guided=1;saveP();V.gp=0;V.view=V.newProf?'progs':'main';render();window.scrollTo(0,0);return}
@@ -1853,6 +1902,7 @@ if(a=='prs'||a=='set'){V.view=a;render();window.scrollTo(0,0);return}
 if(a=='plt'){const p=+d.v;let l=S.plates||[25,20,15,10,5,2.5,1.25];l=l.includes(p)?l.filter(x=>x!=p):[...l,p];S.plates=l;save();render();return}
 if(a=='awk'){S.autoWk=S.autoWk===false?true:false;S.wkAt=monTime();save();render();return}
 if(a=='ics'){shareFile('antrenman-takvim.ics',icsText(),'text/calendar','Antrenman takvimi');return}
+if(a=='icss'){shareFile('takviye-hatirlatma.ics',icsSupp(),'text/calendar','Takviye hatırlatmaları');return}
 if(a=='pcopy'){if(V.run&&!V.run.done){V.msg='Önce devam eden antrenmanı bitir.';V.view='main'}else{const c=copyProg(ALLP().find(x=>x.id==d.v));setProg(c.id);V.view='edit';V.msg=c.name+' oluşturuldu ve seçildi. Artık düzenleyebilirsin.';save()}render();window.scrollTo(0,0);return}
 if(a=='pdel'){S.custom=(S.custom||[]).filter(x=>x.id!=d.v);if(S.ps)delete S.ps[d.v];V.view='progs';save();render();return}
 if(a=='pv'){V.pid=d.v;V.view='prog';render();window.scrollTo(0,0);return}
@@ -1921,6 +1971,8 @@ else if(d.a=='week'){S.week=+t.value;S.wkAt=monTime();regen();save();render()}
 else if(d.k=='pname'){const v=t.value.trim();if(v&&PROG().custom){PROG().name=v;save()}}
 else if(d.k=='bar'){S.bar=Math.max(0,num(t.value));save();render()}
 else if(d.k=='ctime'){S.ctime=t.value;save()}
+else if(d.a=='ormn'){V.on=t.value;V.ok=V.or=undefined;V.ob=undefined;render()}
+else if(d.k=='stime'){S.stimes={...STIMES0,...S.stimes,[d.s]:t.value};save()}
 else if(d.a=='rx'){V.rx=t.value;render()}
 else if(d.k=='wn'){const n=t.value.trim();if(n&&n!=d.w&&!S.w[n]){S.w[n]=S.w[d.w];delete S.w[d.w];S.sched=S.sched.map(x=>x==d.w?n:x);if(S.plan)S.plan.days=S.plan.days.map(x=>x==d.w?n:x);save()}render()}});
 // Grafik: dokunulan / üzerine gelinen / odaklanan dönemin değeri grafiğin üstündeki satırda yazar.
