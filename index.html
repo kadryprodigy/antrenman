@@ -41,11 +41,17 @@
 :root{--bg:#E9EAEC;--sf:#FFFFFF;--ink:#15171A;--mut:#596069;--line:#D3D6DB;--pri:#15171A;--onpri:#FFFFFF;--err:#B00F2A;
 --red:#C4122F;--blue:#1C4E9D;--yel:#F0BE00;--grn:#1B7A47;--rest:#6B727C;--up:#17703F;--bar:#8E959E;
 --f:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
+/* Grafik ve küçük işaretler için plaka renklerinin veri sürümleri: renk körlüğü ayrımı, açıklık bandı ve 3:1 kontrast
+   dataviz doğrulayıcısıyla test edildi (açıkta en kötü çift ΔE 10,4; koyuda 11,0). Kartlar ve butonlar plaka renklerinde kalır. */
+--c-red:#A80F2A;--c-blue:#1C4E9D;--c-yel:#B88A00;--c-grn:#14866F;--c-rest:#8E959E;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#111315;--sf:#1B1E22;--ink:#ECEEF0;--mut:#A3AAB3;--line:#30353B;--pri:#ECEEF0;--onpri:#111315;--err:#FF7A7A;--rest:#4A5058;--up:#5BC98A;--bar:#6B727C;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#111315;--sf:#1B1E22;--ink:#ECEEF0;--mut:#A3AAB3;--line:#30353B;--pri:#ECEEF0;--onpri:#111315;--err:#FF7A7A;--rest:#4A5058;--up:#5BC98A;--bar:#6B727C;color-scheme:dark}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#111315;--sf:#1B1E22;--ink:#ECEEF0;--mut:#A3AAB3;--line:#30353B;--pri:#ECEEF0;--onpri:#111315;--err:#FF7A7A;--rest:#4A5058;--up:#5BC98A;--bar:#6B727C;--c-red:#C42F48;--c-blue:#5585D6;--c-yel:#B58A00;--c-grn:#2BA884;--c-rest:#6B727C;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#111315;--sf:#1B1E22;--ink:#ECEEF0;--mut:#A3AAB3;--line:#30353B;--pri:#ECEEF0;--onpri:#111315;--err:#FF7A7A;--rest:#4A5058;--up:#5BC98A;--bar:#6B727C;--c-red:#C42F48;--c-blue:#5585D6;--c-yel:#B58A00;--c-grn:#2BA884;--c-rest:#6B727C;color-scheme:dark}
 /* OLED: tam siyah zemin, yüzeyler hafif kalkık */
-:root[data-theme="oled"]{--bg:#000;--sf:#121416;--ink:#ECEEF0;--mut:#9DA4AD;--line:#2A2E33;--pri:#ECEEF0;--onpri:#000;--err:#FF7A7A;--rest:#4A5058;--up:#5BC98A;--bar:#6B727C;color-scheme:dark}
+:root[data-theme="oled"]{--bg:#000;--sf:#121416;--ink:#ECEEF0;--mut:#9DA4AD;--line:#2A2E33;--pri:#ECEEF0;--onpri:#000;--err:#FF7A7A;--rest:#4A5058;--up:#5BC98A;--bar:#6B727C;--c-red:#C42F48;--c-blue:#5585D6;--c-yel:#B58A00;--c-grn:#2BA884;--c-rest:#6B727C;color-scheme:dark}
+.k-red{--kc:var(--c-red)}.k-blue{--kc:var(--c-blue)}.k-yel{--kc:var(--c-yel)}.k-grn{--kc:var(--c-grn)}.k-rest{--kc:var(--c-rest)}
+.kq{display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--kc);margin-right:7px;vertical-align:0;flex:none}
+.lg{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:13px;color:var(--mut);margin:0 0 6px}.lg span{display:inline-flex;align-items:center}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 var(--f);-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
 button,input,select{font-family:inherit;font-variant-numeric:tabular-nums}
@@ -64,8 +70,12 @@ input:focus,select:focus{outline:none;border-color:var(--ink)}
 button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .wks{display:grid;grid-template-columns:repeat(12,1fr);gap:3px;margin:8px 0 5px}.wks span{height:6px;background:var(--line);border-radius:1px}.wks .d{background:var(--mut)}.wks .c{background:var(--ink)}
 .wkn{font-size:13px;color:var(--mut);margin:0}
-.lab{display:block;font-size:13px;font-weight:700;color:var(--mut);margin:24px 0 8px}
-.hd.lab{display:flex;margin-bottom:4px}
+/* Yazı ölçeği (dört basamak): sayfa başlığı 42 dar-kalın; bölüm başlığı 21 dar-kalın; gövde 15; ikincil bilgi 13 gri.
+   Form etiketleri ve ayar alt başlıkları 14 yarı-kalın. Başka boyut eklemeden önce bu dördünden birini kullan. */
+.lab{display:block;font-stretch:70%;font-weight:800;font-size:21px;line-height:1.05;color:var(--ink);margin:30px 0 10px}
+.hd.lab{display:flex;align-items:baseline;margin-bottom:10px}.hd.lab .lnk{font-stretch:100%;font-size:14px;padding:4px 0}.hd.lab .mut{font-stretch:100%;font-size:14px;font-weight:600}
+label.lab,.sl{display:block;font-stretch:100%;font-size:14px;font-weight:600;line-height:1.3;color:var(--ink);margin:16px 0 6px}
+.card .lab{font-size:17px;margin:14px 0 6px}
 .mut{color:var(--mut)}
 .msg{background:var(--ink);color:var(--bg);border-radius:6px;padding:10px 12px;font-size:14px;margin:14px 0 0}
 .plate{background:var(--pc);color:var(--po);border-radius:6px;padding:14px 16px 16px}
@@ -97,7 +107,7 @@ button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .btn.alt{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink)}
 .btn.dng{background:transparent;color:var(--err);box-shadow:inset 0 0 0 1.5px var(--err)}
 .wk button:disabled{cursor:default}
-.up{margin-top:24px}.up summary{display:flex;justify-content:space-between;align-items:center;list-style:none;cursor:pointer;padding:12px 14px;background:var(--sf);border-radius:6px;font-weight:700}
+details.up{margin-top:24px}.up summary{display:flex;justify-content:space-between;align-items:center;list-style:none;cursor:pointer;padding:12px 14px;background:var(--sf);border-radius:6px;font-weight:700}
 .up summary::-webkit-details-marker{display:none}.up summary::after{content:"Göster";font-size:13px;font-weight:700;text-decoration:underline;text-underline-offset:3px;margin-left:12px}
 .up[open] summary{border-radius:6px 6px 0 0;border-bottom:1px solid var(--line)}.up[open] summary::after{content:"Gizle"}.up[open] .list{border-radius:0 0 6px 6px}
 .up summary .mut{font-weight:500;font-size:13px;margin-left:auto}
@@ -105,7 +115,7 @@ button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:8px}.two .btn{margin:10px 0 0}
 .two label{font-size:13px;font-weight:600;color:var(--mut)}
 .two input{font-size:36px;text-align:center;margin-top:4px;padding:8px}
-.inl{display:flex;gap:8px}.inl .btn{width:auto;margin:0;padding:0 20px}
+.inl{display:flex;gap:8px}.inl .btn{width:auto;margin:0;padding:0 16px;white-space:nowrap;flex:none}.inl input{min-width:0}
 .rh{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px}.rh .lnk{justify-self:start}
 .clk{font-size:24px;text-align:center}.rn{font-size:24px;justify-self:end}
 .prog{height:4px;background:var(--line);border-radius:2px;margin:6px 0 4px}.prog i{display:block;height:100%;background:var(--pc);border-radius:2px}
@@ -117,7 +127,9 @@ button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .tip{background:var(--sf);border-radius:6px;padding:10px 12px;font-size:14px;margin:10px 0}
 .goal{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin:16px 0 4px}.goal b{font-stretch:70%;font-weight:800;font-size:34px;line-height:1}.goal .of{font-weight:700;color:var(--mut)}.goal .tg{margin-left:auto;font-weight:700}
 .last{font-size:14px;margin:12px 0 0}
-.small{font-size:13px;margin:8px 0 0}
+.small{font-size:13px;line-height:1.45;margin:8px 0 0}
+.wkc{padding:14px}.wkc .goalbar{margin:0 0 14px}.wkc .goalbar+.goalbar{padding-top:12px;border-top:1px solid var(--line)}.wkc .wk{margin-top:4px}.wkc>.small{margin-top:10px}
+.mini{list-style:none;margin:6px 0 0;padding:0}.mini li{padding:5px 0;border-top:1px solid var(--line)}.mini li span{color:var(--mut)}
 .supp{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .sp{display:flex;align-items:center;gap:10px;background:var(--sf);border:1px solid var(--line);border-radius:6px;padding:10px;text-align:left;color:var(--ink);font-size:15px;font-weight:600;min-height:54px;line-height:1.2}
 .sp i{flex:none;width:24px;height:24px;border-radius:50%;border:2px solid var(--mut);display:grid;place-items:center;font-style:normal;font-weight:800;font-size:14px}
@@ -169,7 +181,7 @@ button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .fig{margin:0;padding:12px 0 4px}.ro{font-size:13px;font-weight:700;margin:0 0 4px;min-height:2.8em}
 .svg{width:100%;height:auto;display:block;overflow:visible}.svg .gl{stroke:var(--line);stroke-width:1}
 .svg text{font-family:var(--f);font-size:12px;fill:var(--mut)}.svg .yt{text-anchor:end}.svg .xl{text-anchor:middle}.svg .vl{text-anchor:middle;fill:var(--ink);font-weight:700}
-.bar path{fill:var(--bar)}.bar.cur path{fill:var(--ink)}.bar.act path{fill:var(--mut)}.bar.cur.act path{fill:var(--ink);opacity:.75}
+.bar path{fill:var(--bar)}.bar.act path[style]{opacity:.75}.svg .xc{fill:var(--ink);font-weight:700}.bar.cur path{fill:var(--ink)}.bar.act path{fill:var(--mut)}.bar.cur.act path{fill:var(--ink);opacity:.75}
 .bar,.hit{outline:none;cursor:pointer}.bar:focus-visible rect,.hit:focus-visible rect{stroke:var(--ink);stroke-width:1.5}
 .ln{fill:none;stroke:var(--ink);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}.pt2{fill:var(--ink);stroke:var(--sf);stroke-width:2}
 .ch{stroke:var(--mut);stroke-width:1;opacity:0}.hit.act .ch{opacity:1}.pt2.opt{opacity:0}.hit.act .pt2.opt{opacity:1}
@@ -207,7 +219,7 @@ body.tabs #app{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
 body.tabs #tabs{display:block}
 #tabs div{max-width:480px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
 #tabs button{background:none;border:0;padding:12px 2px 13px;font-stretch:70%;font-weight:800;font-size:17px;color:var(--mut);position:relative}
-#tabs button[aria-current]{color:var(--ink)}#tabs button[aria-current]::before{content:"";position:absolute;left:22%;right:22%;top:-1px;height:3px;border-radius:0 0 2px 2px;background:var(--ink)}
+#tabs button[aria-current]{color:var(--ink)}#tabs button[aria-current]::before{content:"";position:absolute;left:22%;right:22%;top:-1px;height:3px;border-radius:0 0 2px 2px;background:var(--pri)}
 /* Kaydırınca beliren küçük başlık */
 #top{position:fixed;left:0;right:0;top:0;z-index:7;background:var(--bg);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px);transform:translateY(-110%);transition:transform .18s ease;pointer-events:none}
 #top.on{transform:none;pointer-events:auto}
@@ -1183,7 +1195,7 @@ function summaryCard(){const k=wkKey(Date.now())-7*864e5;if(S.sumSeen==monKey())
  const prs=hs.flatMap(([h,i])=>prsOf(h.log,i)),planned=(S.sched||[]).filter(x=>x&&S.w[x]).length,low=lowVol(k);
  return`<div class="card"><div class="hd"><b>Geçen hafta</b><button class="lnk" data-a="sumok">Tamam</button></div>
 <p>${hs.length} antrenman${planned?` (planlanan ${planned})`:''}, ${sets} set, ${fk(vol)} kg hacim${durs?', '+dur(durs):''}.</p>
-${prs.length?`<p><b>${prs.length} rekor:</b> ${prs.map(esc).join('; ')}.</p>`:''}${planned>hs.length?`<p>${planned-hs.length} antrenman kaçırıldı.</p>`:''}
+${prs.length?`<p><b>${prs.length} rekor</b></p><ul class="mini">${prs.slice(0,3).map(x=>{const i=x.indexOf(': ');return`<li><b>${esc(x.slice(0,i))}</b> <span>${esc(x.slice(i+2))}</span></li>`}).join('')}</ul>${prs.length>3?`<p><button class="lnk" data-a="prs" style="padding:0">${prs.length-3} rekor daha, Rekorlar'da</button></p>`:''}`:''}${planned>hs.length?`<p>${planned-hs.length} antrenman kaçırıldı.</p>`:''}
 ${low.length?`<p>Az çalışılan kas grupları: ${low.join(', ')}. Kas gelişimi için haftada en az ${volLow()} set hedefle.</p>`:''}</div>`}
 // ---- Sağlık verisi: iOS Kestirmeler panoya "nabiz_ort=142; nabiz_max=171; kilo=82,4; uyku=7,2; dinlenme_nabzi=55" kopyalar, uygulama yapıştırır. ----
 function parseHealth(t){const o={},K={nabiz_ort:'hrAvg',nabiz_max:'hrMax',kilo:'bw',uyku:'sleep',dinlenme_nabzi:'rhr'};
@@ -1251,8 +1263,9 @@ ${(()=>{const rs=resumable();return rs?`<div class="card"><b>Yarım kalan ${esc(
 <div class="hd lab"><span>Bugün</span>${ex.length?`<button class="lnk" data-a="post" data-i="${td}">Ertele</button>`:''}</div>
 ${ex.length?`<div class="plate p-${pc(w)}"><div class="wn">${esc(w)}</div><ul class="pl">${ex.map(e=>`<li><span>${esc(nm(e))}</span><span>${e.sets}×${esc(e.reps)}</span></li>`).join('')}</ul><p class="pm">${sets} set, yaklaşık ${min} dakika.</p><div class="pa"><button class="pbtn" data-a="start" data-i="${td}">Başla</button><button class="lnk" data-a="day" data-i="${td}">Ayrıntılar</button></div></div>`
 :`<div class="plate p-rest"><div class="wn">Dinlenme</div><p class="pm" style="margin-bottom:0">${nxt?'Sıradaki antrenman: '+esc(nxt)+'.':'Programa henüz gün atanmamış.'}</p></div>`}
-${suppCard()}${dailyCard()}${goalBar(sc)}${cardioWeek()}<div class="hd lab"><span>Bu hafta${planOn()?', ertelemeyle düzenlendi':''}</span><span>${planOn()?'<button class="lnk" data-a="unplan" style="margin-right:14px">Sıfırla</button>':''}<button class="lnk" data-a="wplan">Haftalık plan</button></span></div>${strip(sc,td,-1)}
-${(()=>{const st=weekStatus(sc),mi=st.map((s,i)=>s=='miss'?i:-1).filter(i=>i>=0);return mi.length?`<p class="mut small">Kaçırılan: ${mi.map(i=>esc(sc[i])+' ('+DAYL[i]+')').join(', ')}. ${td<6?`Bu hafta yapmak istersen <button class="lnk" data-a="mvmiss" data-i="${mi[0]}" style="padding:0">başka güne taşı</button>.`:''}</p>`:''})()}
+${suppCard()}${dailyCard()}<div class="hd lab"><span>Bu hafta</span><span>${planOn()?'<button class="lnk" data-a="unplan" style="margin-right:14px">Sıfırla</button>':''}<button class="lnk" data-a="wplan">Haftalık plan</button></span></div>
+<div class="card wkc">${goalBar(sc)}${cardioWeek()}${strip(sc,td,-1)}${planOn()?'<p class="mut small">Ertelemeyle düzenlendi.</p>':''}
+${(()=>{const st=weekStatus(sc),mi=st.map((s,i)=>s=='miss'?i:-1).filter(i=>i>=0);return mi.length?`<p class="mut small">Kaçırılan: ${mi.map(i=>esc(sc[i])+' ('+DAYL[i]+')').join(', ')}. ${td<6?`Bu hafta yapmak istersen <button class="lnk" data-a="mvmiss" data-i="${mi[0]}" style="padding:0">başka güne taşı</button>.`:''}</p>`:''})()}</div>
 ${last?`<div class="lab">Son antrenman</div><div class="list"><div class="row"><div class="grow"><b>${esc(last.w)}</b><span class="sub">${when(last)}</span></div><span class="v">${last.dur?dur(last.dur):''}</span></div></div>`:''}`}
 
 async function shareFile(name,text,type,title){const blob=new Blob([text],{type});
@@ -1276,8 +1289,8 @@ function icsSupp(){const T={...STIMES0,...S.stimes},BY=['MO','TU','WE','TH','FR'
  return['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Antrenman//TR','CALSCALE:GREGORIAN',...ev,'END:VCALENDAR'].join('\r\n')}
 function setV(){const pl=S.plates||[25,20,15,10,5,2.5,1.25],lb=S.lastBk?Math.floor((Date.now()-S.lastBk)/864e5):null;
 return`<div class="hd"><button class="lnk back" data-a="home">‹ Geri</button></div><h1 class="pt">Ayarlar</h1>${msg()}
-<div class="lab">Plaka hesabı</div><label class="mut" for="bar" style="font-size:13px">Bar ağırlığı (kg)</label><input id="bar" data-k="bar" type="number" inputmode="decimal" step="0.5" value="${S.bar??20}" style="margin:4px 0 12px">
-<span class="mut" style="font-size:13px">Salondaki plakalar (kg)</span><div class="toggles" style="margin-top:6px">${PLATES_ALL.map(p=>`<button class="${pl.includes(p)?'on':''}" data-a="plt" data-v="${p}" aria-pressed="${pl.includes(p)}">${fnum(p)}</button>`).join('')}</div>
+<div class="lab">Plaka hesabı</div><label class="sl" for="bar" style="margin-top:0">Bar ağırlığı (kg)</label><input id="bar" data-k="bar" type="number" inputmode="decimal" step="0.5" value="${S.bar??20}" style="margin:4px 0 12px">
+<span class="sl">Salondaki plakalar (kg)</span><div class="toggles" style="margin-top:6px">${PLATES_ALL.map(p=>`<button class="${pl.includes(p)?'on':''}" data-a="plt" data-v="${p}" aria-pressed="${pl.includes(p)}">${fnum(p)}</button>`).join('')}</div>
 <p class="mut small">Bar hareketlerinde kilo önerileri en küçük plakana göre ${fnum(barStep())} kg adımla yuvarlanır${barStep()<2.5?'; ağırlık artışları da yaklaşık %2 olacak şekilde küçülür (mikro yükleme)':'. 0,5 ya da 0,25 kg plakaları seçersen artışlar küçülür (mikro yükleme)'}.</p>
 <div class="lab">Program haftası</div><div class="list"><button class="li" data-a="awk"><span>Her pazartesi haftayı otomatik ilerlet</span><b>${S.autoWk===false?'Kapalı':'Açık'}</b></button></div>
 <div class="lab">Takvim hatırlatması</div><div class="inl"><input id="ct" data-k="ctime" type="time" value="${S.ctime||'18:00'}" aria-label="Antrenman saati"><button class="btn alt" data-a="ics">Takvime ekle</button></div>
@@ -1285,14 +1298,14 @@ return`<div class="hd"><button class="lnk back" data-a="home">‹ Geri</button><
 ${suppList().length?`<div class="lab">Takviye hatırlatması</div><div class="list">${Object.entries(suppSlots()).map(([k,ns])=>`<div class="row"><div class="grow"><span>${SLOTL[k]}</span><span class="sub">${esc([...new Set(ns)].join(', '))}</span></div>${k=='Ant'?`<span class="v mut" style="font-size:13px">antrenmandan 45 dk önce</span>`:`<input type="time" data-k="stime" data-s="${k}" value="${({...STIMES0,...S.stimes})[k]}" aria-label="${SLOTL[k]} saati" style="width:auto">`}</div>`).join('')}</div>
 <button class="btn alt" data-a="icss" style="margin-top:10px">Takviyeleri takvime ekle</button><p class="mut small">Aynı saatteki takviyeler tek hatırlatmada toplanır ve her gün tekrarlar. Antrenman öncesi olanlar sadece antrenman günlerinde, yukarıdaki antrenman saatinden 45 dakika önce gelir. Listeyi değiştirirsen eski etkinlikleri Takvim'den silip yeniden ekle.</p>`:''}
 <div class="lab">Antrenman öncesi</div><div class="list"><button class="li" data-a="nochk"><span>Başlarken sabah kontrolü sor</span><b>${S.noChk?'Kapalı':'Açık'}</b></button><button class="li" data-a="nowarm"><span>Başlarken ısınma rutini</span><b>${S.noWarm?'Kapalı':'Açık'}</b></button><button class="li" data-a="nosplash"><span>Hızlı açılış (kaydırma ekranını atla)</span><b>${S.noSplash?'Açık':'Kapalı'}</b></button></div>
-<div class="lab">Görünüm</div><span class="mut" style="font-size:13px;display:block;margin-bottom:6px">Tema</span><div class="segm sm" role="group" aria-label="Tema" style="margin-bottom:6px">${THEMES.map(([k,l])=>`<button class="${(S.theme||'sys')==k?'on':''}" data-a="thm" data-v="${k}" aria-pressed="${(S.theme||'sys')==k}">${l}</button>`).join('')}</div>
+<div class="lab">Görünüm</div><span class="sl">Tema</span><div class="segm sm" role="group" aria-label="Tema" style="margin-bottom:6px">${THEMES.map(([k,l])=>`<button class="${(S.theme||'sys')==k?'on':''}" data-a="thm" data-v="${k}" aria-pressed="${(S.theme||'sys')==k}">${l}</button>`).join('')}</div>
 <p class="mut small" style="margin:0 0 14px">Siyah, iPhone'un OLED ekranında tam siyah zemin kullanır; karanlık salonda gözü daha az yorar ve pil harcar.</p>
-<span class="mut" style="font-size:13px;display:block;margin-bottom:6px">Vurgu rengi (butonlar ve vurgular)</span><div class="toggles">${Object.entries(ACC).map(([k,[l,c]])=>`<button class="${(S.accent||'ink')==k?'on':''}" data-a="acc" data-v="${k}" aria-pressed="${(S.accent||'ink')==k}"><i class="sw" style="background:${c||'var(--ink)'}"></i>${l}</button>`).join('')}</div>
+<span class="sl">Vurgu rengi (butonlar ve vurgular)</span><p class="mut small" style="margin:-2px 0 8px">Günün rengi: butonlar, sekme çizgisi ve haftalık hedef o günün antrenman kartının rengini alır; dinlenme günü nötr kalır.</p><div class="toggles">${Object.entries(ACC).map(([k,[l,c]])=>`<button class="${(S.accent||'day')==k?'on':''}" data-a="acc" data-v="${k}" aria-pressed="${(S.accent||'day')==k}"><i class="sw" style="background:${c||'var(--ink)'}"></i>${l}</button>`).join('')}</div>
 <div class="list" style="margin-top:10px"><button class="li" data-a="bigm"><span>Salon modu (antrenmanda büyük yazı ve butonlar)</span><b>${S.big?'Açık':'Kapalı'}</b></button><button class="li" data-a="smrest"><span>Akıllı dinlenme (zor setten sonra uzat)</span><b>${S.noSmartRest?'Kapalı':'Açık'}</b></button><button class="li" data-a="logwarm"><span>Isınma setlerini de kaydet (rekora ve hacme sayılmaz)</span><b>${S.logWarm?'Açık':'Kapalı'}</b></button></div>
 <div class="lab">Salonunda olmayan ekipman</div><div class="toggles">${EQ.map(([q])=>`<button class="${(S.noEq||[]).includes(q)?'on':''}" data-a="eq" data-v="${q}" aria-pressed="${(S.noEq||[]).includes(q)}">${q}</button>`).join('')}</div><p class="mut small">İşaretlediğin ekipmanı kullanan hareketler, programdaki alternatiflerden uygun olanına kendiliğinden geçer.</p>
 <div class="lab">Haftalık kardiyo hedefi</div><input data-k="cgoal" type="number" inputmode="numeric" value="${S.cgoal||''}" placeholder="Dakika, örneğin 150 (boş bırakırsan hedef yok)" aria-label="Haftalık kardiyo hedefi"><p class="mut small">Sağlık kuruluşları haftada en az 150 dakika orta tempolu kardiyo önerir.</p>
 <div class="lab">Vücut ve güç seviyesi</div><div class="inl"><input data-k="bw" type="number" inputmode="decimal" step="0.1" value="${S.bw||''}" placeholder="Vücut ağırlığı (kg)" aria-label="Vücut ağırlığı"><button class="btn alt" data-a="sex">${S.sex=='k'?'Kadın':'Erkek'} standartları</button></div>
-<span class="mut" style="font-size:13px;display:block;margin:10px 0 6px">Ağrıyan bölgeler</span><div class="toggles">${PAIN.map(([b])=>`<button class="${(S.pain||[]).includes(b)?'on':''}" data-a="pain" data-v="${b}" aria-pressed="${(S.pain||[]).includes(b)}">${b}</button>`).join('')}</div>
+<span class="sl">Ağrıyan bölgeler</span><div class="toggles">${PAIN.map(([b])=>`<button class="${(S.pain||[]).includes(b)?'on':''}" data-a="pain" data-v="${b}" aria-pressed="${(S.pain||[]).includes(b)}">${b}</button>`).join('')}</div>
 ${healthSet()}
 <div class="lab">Yardım</div><div class="list">${nav('guide','Rehberi yeniden göster')}</div>
 <div class="lab">Yedek</div><div class="list">${nav('exp','Şimdi yedekle')}${nav('imp','Yedeği geri yükle')}</div><p class="mut small">${lb==null?'Henüz yedek almadın.':`Son yedek ${lb?lb+' gün önce':'bugün'}.`} Yedekle'ye dokununca paylaşım menüsünden "Dosyalar'a kaydet" ile iCloud Drive'a kaydedebilirsin. Uygulama 7 günde bir hatırlatır.</p>`}
@@ -1398,9 +1411,9 @@ function prsOf(log,before){const out=[];for(const l of log){if(l.cardio||out.som
  const mk=Math.max(...prev.map(x=>best(x).kg)),me=Math.max(...prev.map(e1)),ce=e1(l);
  if(b.kg>mk)out.push(`${l.n}: en ağır ${fnum(b.kg)} kg (önceki ${fnum(mk)} kg)`);else if(ce>me+0.01)out.push(`${l.n}: tahmini 1RM ${fnum(ce)} kg (önceki ${fnum(me)} kg)`)}return out}
 function prsV(){const m=new Map();S.log.forEach(h=>h.log.forEach(l=>{if(l.cardio)return;const b=best(l);if(!b)return;const o=m.get(l.n)||{kg:0,e:0};
- if(b.kg>o.kg||b.kg==o.kg&&b.r>(o.r||0)){o.kg=b.kg;o.r=b.r;o.kd=h.d}const v=e1(l);if(v>o.e){o.e=v;o.ed=h.d}m.set(l.n,o)}));
+ if(b.kg>o.kg||b.kg==o.kg&&b.r>(o.r||0)){o.kg=b.kg;o.r=b.r;o.kd=h.d;o.kw=h.w}const v=e1(l);if(v>o.e){o.e=v;o.ed=h.d}m.set(l.n,o)}));
  const rows=[...m].sort((a,b)=>a[0].localeCompare(b[0],'tr'));
- return`<div class="hd"><button class="lnk back" data-a="home">‹ Geri</button></div><h1 class="pt">Rekorlar</h1><p style="margin-top:-6px"><button class="lnk" data-a="orm" style="padding:0">1RM ve yüzde tablosu hesapla</button></p>${strengthV()}<div class="lab">Hareket rekorları</div>`+(rows.length?`<div class="list">${rows.map(([n,o])=>`<div class="row at"><div class="grow"><b>${exl(n)}</b><span class="sub">En ağır: ${fnum(o.kg)} kg × ${o.r}, ${dshort(o.kd)}</span></div><span class="v"><b class="n">${fnum(o.e)} kg</b><span class="sub">tahmini 1RM</span></span></div>`).join('')}</div><p class="mut small">Tahmini 1RM, en iyi setten Epley formülüyle hesaplanır.</p>`:emptyV('Henüz rekor yok','Bir hareketi ilk kaydettiğin gün rekorun da oluşur. Sonraki antrenmanlarda onu geçtiğinde burada ve antrenman sonunda görürsün.'))}
+ return`<div class="hd"><button class="lnk back" data-a="home">‹ Geri</button></div><h1 class="pt">Rekorlar</h1><p style="margin-top:-6px"><button class="lnk" data-a="orm" style="padding:0">1RM ve yüzde tablosu hesapla</button></p>${strengthV()}<div class="lab">Hareket rekorları</div>`+(rows.length?`<div class="list">${rows.map(([n,o])=>`<div class="row at"><div class="grow"><b>${exl(n)}</b><span class="sub">En ağır: ${fnum(o.kg)} kg × ${o.r}, ${dshort(o.kd)}${o.kw?`, <i class="kq k-${pc(o.kw)}" style="margin:0 4px 0 2px" aria-hidden="true"></i>${esc(o.kw)}`:''}</span></div><span class="v"><b class="n">${fnum(r05(o.e))} kg</b><span class="sub">tahmini 1RM</span></span></div>`).join('')}</div><p class="mut small">Tahmini 1RM, en iyi setten Epley formülüyle hesaplanır.</p>`:emptyV('Henüz rekor yok','Bir hareketi ilk kaydettiğin gün rekorun da oluşur. Sonraki antrenmanlarda onu geçtiğinde burada ve antrenman sonunda görürsün.'))}
 // Paylaşım görseli: 1080×1350 PNG, bitmiş antrenmanın özeti ve rekorları.
 async function shareImg(src){const r=src||V.run;if(!r||!src&&!r.done)return;try{await document.fonts.load('800 60px Archivo')}catch(e){}
  const W=1080,H=1350,c=document.createElement('canvas');c.width=W;c.height=H;const g=c.getContext('2d'),F='Archivo, system-ui, sans-serif';
@@ -1659,12 +1672,14 @@ ${ss.length?`<div class="lab">Geçmiş</div><div class="list">${ss.slice(-20).re
 function goalBar(sc){const plan=sc.filter(x=>x&&S.w[x]).length;if(!plan)return'';const k=wkKey(Date.now()),done=new Set(S.log.filter(h=>wkKey(h.d)==k&&!h.part&&h.w!='Kardiyo').map(h=>new Date(h.d).toDateString())).size;
  return`<div class="goalbar"><div class="hd"><span><b>${Math.min(done,plan)}/${plan}</b> antrenman</span><span class="mut">${done>=plan?'Haftalık hedef tamam':`${plan-done} kaldı`}</span></div><div class="segs">${[...Array(plan)].map((_,i)=>`<i class="${i<done?'on':''}"></i>`).join('')}</div></div>`}
 // ---- Tema rengi: birincil butonlar ve vurgulu kartlar seçilen plaka rengini alır ----
-const ACC={ink:['Siyah',null,null],red:['Kırmızı','#C4122F','#fff'],blue:['Mavi','#1C4E9D','#fff'],yel:['Sarı','#F0BE00','#15171A'],grn:['Yeşil','#1B7A47','#fff']};
+// "Günün rengi" (varsayılan): vurgular o günün antrenmanının plaka rengini alır; dinlenme günü nötr kalır.
+const ACC={day:['Günün rengi','conic-gradient(#C4122F 0 25%,#1C4E9D 0 50%,#F0BE00 0 75%,#1B7A47 0)',null],ink:['Siyah',null,null],red:['Kırmızı','#C4122F','#fff'],blue:['Mavi','#1C4E9D','#fff'],yel:['Sarı','#F0BE00','#15171A'],grn:['Yeşil','#1B7A47','#fff']};
 // Tema: sistem, açık, koyu ya da OLED siyah. Durum çubuğu rengi (theme-color) seçilen zemine uyar.
 const THEMES=[['sys','Sistem'],['light','Açık'],['dark','Koyu'],['oled','Siyah']],TCOL={light:'#E9EAEC',dark:'#111315',oled:'#000000'};
 function applyTheme(){const t=S&&S.theme||'sys',root=document.documentElement;if(t=='sys')delete root.dataset.theme;else root.dataset.theme=t;
  document.querySelectorAll('meta[name=theme-color]').forEach(m=>{const light=/light/.test(m.media);m.content=t=='sys'?(light?TCOL.light:TCOL.dark):TCOL[t]})}
-function applyAccent(){applyTheme();const a=ACC[S&&S.accent]||ACC.ink,st=document.documentElement.style;if(a[1]){st.setProperty('--pri',a[1]);st.setProperty('--onpri',a[2])}else{st.removeProperty('--pri');st.removeProperty('--onpri')}}
+function dayAcc(){if(!PROF||!S.w)return ACC.ink;const w=eff()[today()];return S.w[w]&&ACC[pc(w)]||ACC.ink}
+function applyAccent(){applyTheme();const k=S&&S.accent||'day',a=k=='day'?dayAcc():ACC[k]||ACC.ink,st=document.documentElement.style;if(a[1]){st.setProperty('--pri',a[1]);st.setProperty('--onpri',a[2])}else{st.removeProperty('--pri');st.removeProperty('--onpri')}}
 // ---- Akıllı dinlenme: setin zorluğuna göre programdaki dinlenme süresini uzatır ya da kısaltır ----
 function smartRest(e,base,rpe,reps){if(S.noSmartRest||isTimed(e))return{sec:base,why:''};const rg=repRange(e.reps);let d=0,w='';
  if(rpe>=10){d=30;w='Tükenişe giden bir setti'}else if(rpe==9){d=15;w='Zor bir setti'}else if(rg&&reps&&reps<rg[0]){d=30;w='Hedef tekrarın altında kaldın'}else if(rpe&&rpe<=7&&base>60){d=-15;w='Rahat bir setti'}
@@ -1721,7 +1736,7 @@ function perfV(){const P2=perfScores();if(P2.length<6)return'';const grp=(f,orde
  // Uyku kayıtları tarihe göre bir kez haritalanır (her antrenman için tüm listeyi taramamak için).
  const slp=new Map();(S.health||[]).forEach(y=>{if(y.sleep){const k=new Date(y.d).toDateString();if(!slp.has(k))slp.set(k,y)}});
  const sl=grp(x=>{const s=slp.get(new Date(x.h.d).toDateString());const c=x.h.chk&&x.h.chk.sl;return s?(s.sleep<6?'Uyku 6 saatten az':s.sleep<7.5?'Uyku 6-7,5 saat':'Uyku 7,5 saatten fazla'):c?{iyi:'Uykum iyi dedim',orta:'Uykum orta dedim',kotu:'Uykum kötü dedim'}[c]:''},['Uyku 6 saatten az','Uyku 6-7,5 saat','Uyku 7,5 saatten fazla','Uykum kötü dedim','Uykum orta dedim','Uykum iyi dedim']);
- const rows=a=>a.map(([k,v,n])=>`<div class="row"><span>${k}<span class="sub">${n} antrenman</span></span><span class="v"><b class="n">%${fnum(v*100)}</b></span></div>`).join('');
+ const rows=a=>a.map(([k,v,n])=>`<div class="row"><span>${k}<span class="sub">${n} antrenman</span></span><span class="v"><b class="n">%${Math.round(v*100)}</b></span></div>`).join('');
  if(hr.length<2&&sl.length<2)return'';return`<div class="lab">Ne zaman daha güçlüsün?</div><div class="list">${hr.length>1?rows(hr):''}${sl.length>1?rows(sl):''}</div><p class="mut small">Yüzde, o antrenmandaki hareketlerin tahmini 1RM'inin, o güne kadarki en iyiye oranının ortalaması. %100'e yakın olmak, en iyi halindesin demek.</p>`}
 // ---- Geçmiş kaydı düzenleme ve elle kayıt ----
 function heditV(){const h=S.log[V.hi];if(!h)return'';const dv=new Date(h.d),loc=new Date(dv.getTime()-dv.getTimezoneOffset()*6e4).toISOString().slice(0,16);
@@ -1809,6 +1824,10 @@ const perLab=(mode,k)=>mode=='w'?new Date(k).toLocaleDateString('tr-TR',{day:'nu
 const perOf=(mode,d)=>mode=='w'?wkKey(d):moKey(d);
 function agg(mode){const m=new Map();for(const h of S.log){const k=perOf(mode,h.d);let a=m.get(k);if(!a)m.set(k,a={n:0,sets:0,vol:0,dur:0,car:0});a.n++;a.dur+=h.dur||0;
 for(const l of h.log){if(l.cardio){a.car+=l.sec||0;continue}for(const x of l.s)if(!x.skip){a.sets++;a.vol+=num(x.kg)*num(x.r)}}}return m}
+// Hacmin antrenman türüne (plaka rengine) göre dağılımı: dönem → {renk: hacim}, renk → o renkteki antrenman adları.
+const KORD=['red','blue','yel','grn','rest'];
+function aggC(mode,keys){const ks=new Set(keys),m=new Map(),nm={};for(const h of S.log){const k=perOf(mode,h.d);if(!ks.has(k))continue;let v=0;
+ for(const l of h.log)if(!l.cardio)for(const x of l.s)if(!x.skip)v+=num(x.kg)*num(x.r);if(!v)continue;const c=pc(h.w),o=m.get(k)||{};o[c]=(o[c]||0)+v;m.set(k,o);(nm[c]=nm[c]||new Set()).add(h.w)}return{m,nm}}
 function perBest(mode,k){const m=new Map();for(const h of S.log){if(perOf(mode,h.d)!=k)continue;for(const l of h.log){const v=e1(l);if(l.cardio||!v)continue;const o=m.get(l.n);if(!o||v>o.v)m.set(l.n,{v,b:best(l)})}}return m}
 const fk=n=>Math.round(n).toLocaleString('tr-TR');
 const niceMax=v=>{if(v<=0)return 1;const p=Math.pow(10,Math.floor(Math.log10(v))),m=v/p;return(m<=1?1:m<=2?2:m<=2.5?2.5:m<=5?5:10)*p};
@@ -1817,8 +1836,11 @@ const t=pct?'%'+Math.abs(Math.round(d/p*100)):fnum(Math.abs(d));return d>0?`<spa
 function colChart(items,aria){const W=440,H=196,L=48,R=8,T=24,B=26,pw=W-L-R,ph=H-T-B,max=niceMax(Math.max(0,...items.map(i=>i.val))),band=pw/items.length,bw=Math.min(24,band*.6);
 let g='';for(let t=0;t<=4;t++){const y=T+ph-ph*t/4;g+=`<line x1="${L}" x2="${W-R}" y1="${y}" y2="${y}" class="gl"/><text x="${L-6}" y="${y+4}" class="yt">${fk(max*t/4)}</text>`}
 items.forEach((it,i)=>{const cx=L+band*i+band/2,h=ph*it.val/max,x=cx-bw/2,y=T+ph-h,rr=Math.min(4,h);
-const d=h>0?`M${x},${T+ph}V${y+rr}Q${x},${y} ${x+rr},${y}H${x+bw-rr}Q${x+bw},${y} ${x+bw},${y+rr}V${T+ph}Z`:'';
-g+=`<g class="bar ${it.cur?'cur':''}" tabindex="0" data-tip="${esc(it.tip)}"><rect x="${L+band*i}" y="${T}" width="${band}" height="${ph+B}" fill="transparent"/>${d?`<path d="${d}"/>`:''}<text x="${cx}" y="${H-8}" class="xl">${esc(it.lab)}</text>${it.cur&&it.val?`<text x="${cx}" y="${y-7}" class="vl">${fk(it.val)}</text>`:''}</g>`});
+let d=h>0?`<path d="M${x},${T+ph}V${y+rr}Q${x},${y} ${x+rr},${y}H${x+bw-rr}Q${x+bw},${y} ${x+bw},${y+rr}V${T+ph}Z"/>`:'';
+// Katmanlı sütun: parçalar tabandan yukarı sabit sırayla, aralarında 2px yüzey boşluğu; sadece en üst parçanın köşeleri yuvarlak.
+if(it.parts&&h>0){d='';let y0=T+ph;const ps=it.parts.filter(p=>p.v>0);ps.forEach((p,j)=>{const top=y0-ph*p.v/max,yb=y0-(j?2:0),last=j==ps.length-1;if(yb-top>0.5){const r=last?Math.min(4,yb-top):0;
+ d+=`<path class="k-${p.c}" style="fill:var(--kc)" d="M${x},${yb}V${top+r}${r?`Q${x},${top} ${x+r},${top}H${x+bw-r}Q${x+bw},${top} ${x+bw},${top+r}`:`H${x+bw}`}V${yb}Z"/>`}y0=top})}
+g+=`<g class="bar ${it.cur?'cur':''}" tabindex="0" data-tip="${esc(it.tip)}"><rect x="${L+band*i}" y="${T}" width="${band}" height="${ph+B}" fill="transparent"/>${d}<text x="${cx}" y="${H-8}" class="xl${it.parts&&it.cur?' xc':''}">${esc(it.lab)}</text>${it.cur&&it.val?`<text x="${cx}" y="${y-7}" class="vl">${fk(it.val)}</text>`:''}</g>`});
 return`<svg viewBox="0 0 ${W} ${H}" class="svg" role="img" aria-label="${esc(aria)}">${g}</svg>`}
 function lineChart(pts,aria){const W=440,H=196,L=48,R=46,T=16,B=26,pw=W-L-R,ph=H-T-B,vs=pts.map(p=>p.val),mn=Math.min(...vs),mx=Math.max(...vs),sp=(mx-mn)||Math.max(mx*.2,5);
 const st=(v=>{const p=Math.pow(10,Math.floor(Math.log10(v))),m=v/p;return(m<=1?1:m<=2?2:m<=2.5?2.5:m<=5?5:10)*p})(Math.max(sp*1.4/3,.5)),lo=Math.max(0,Math.floor((mn-sp*.2)/st)*st),hi=Math.max(lo+st,Math.ceil((mx+sp*.2)/st)*st),X=i=>L+(pts.length>1?pw*i/(pts.length-1):pw/2),Y=v=>T+ph-ph*(v-lo)/((hi-lo)||1);
@@ -1843,7 +1865,9 @@ function musV(mode,k,kp,pc1,pc2){const cnt=key=>{const m={};S.log.forEach(h=>{if
 function rep(){const mode=V.rp||'w',N=mode=='w'?8:6,m=agg(mode),keys=perKeys(mode,N),Z={n:0,sets:0,vol:0,dur:0,car:0},cur=m.get(keys[N-1])||Z,prv=m.get(keys[N-2])||Z;
 const [pc1,pc2,pc3]=mode=='w'?['Bu hafta','geçen hafta','Son 8 hafta']:['Bu ay','geçen ay','Son 6 ay'];
 const row=(t,c,p,f,pct)=>`<div class="row"><span>${t}</span><span class="v"><b class="n">${f(c)}</b><span class="sub">${delta(c,p,pct)}</span></span></div>`;
-const items=keys.map((k,i)=>{const a=m.get(k)||Z;return{lab:perLab(mode,k),val:a.vol,cur:i==N-1,tip:`${mode=='w'?perLab(mode,k)+' haftası':perLab(mode,k)}: ${fk(a.vol)} kg hacim, ${a.n} antrenman, ${a.sets} set`}});
+const {m:mc,nm:cn}=aggC(mode,keys),cs=KORD.filter(c=>cn[c]),cl=c=>c=='rest'?'Diğer':[...cn[c]].slice(0,2).join(', '),multi=cs.length>1;
+const items=keys.map((k,i)=>{const a=m.get(k)||Z,o=mc.get(k)||{};return{lab:perLab(mode,k),val:a.vol,cur:i==N-1,parts:multi?cs.map(c=>({c,v:o[c]||0})):null,
+ tip:`${mode=='w'?perLab(mode,k)+' haftası':perLab(mode,k)}: ${fk(a.vol)} kg hacim, ${a.n} antrenman, ${a.sets} set${multi&&a.vol?' ('+cs.filter(c=>o[c]).map(c=>cl(c)+' '+fk(o[c])).join(', ')+')':''}`}});
 const cb=perBest(mode,keys[N-1]),pb=perBest(mode,keys[N-2]);
 const names=[];for(let i=S.log.length-1;i>=0;i--)for(const l of S.log[i].log)if(!l.cardio&&best(l)&&!names.includes(l.n))names.push(l.n);
 const sel=V.rx&&names.includes(V.rx)?V.rx:names[0];const pts=[];
@@ -1852,7 +1876,7 @@ return`<div class="hd"><button class="lnk back" data-a="home">‹ Geri</button><
 <div class="segm" role="group" aria-label="Dönem"><button class="${mode=='w'?'on':''}" data-a="rp" data-v="w" aria-pressed="${mode=='w'}">Haftalık</button><button class="${mode=='m'?'on':''}" data-a="rp" data-v="m" aria-pressed="${mode=='m'}">Aylık</button></div>
 ${S.log.length?`<div class="lab">${pc1}, ${pc2} ile kıyasla</div><div class="list">${row('Antrenman',cur.n,prv.n,x=>x)}${row('Tamamlanan set',cur.sets,prv.sets,x=>x,1)}${row('Toplam hacim',cur.vol,prv.vol,x=>fk(x)+' kg',1)}${row('Antrenman süresi',cur.dur,prv.dur,x=>x?dur(x):'0 dk',1)}${row('Kardiyo',cur.car,prv.car,x=>x?dur(x):'0 dk',1)}</div>
 <p class="mut small">${pc1} henüz bitmedi; dönem sonunda kıyas netleşir. Hacim, tüm setlerde ağırlık × tekrar toplamıdır.</p>
-<div class="lab">Toplam hacim (kg), ${pc3.toLocaleLowerCase('tr')}</div><div class="list"><figure class="fig"><p class="ro" aria-live="polite">${esc(items[N-1].tip)}</p>${colChart(items,pc3+' toplam hacim')}</figure>${table(['Dönem','Hacim (kg)','Antrenman','Set'],keys.map(k=>{const a=m.get(k)||Z;return[perLab(mode,k),fk(a.vol),a.n,a.sets]}))}</div>
+<div class="lab">Toplam hacim (kg), ${pc3.toLocaleLowerCase('tr')}</div><div class="list"><figure class="fig">${multi?`<div class="lg">${cs.map(c=>`<span><i class="kq k-${c}"></i>${esc(cl(c))}</span>`).join('')}</div>`:''}<p class="ro" aria-live="polite">${esc(items[N-1].tip)}</p>${colChart(items,pc3+' toplam hacim'+(multi?', antrenman türüne göre: '+cs.map(cl).join('; '):''))}</figure>${table(['Dönem','Hacim (kg)',...(multi?cs.map(cl):[]),'Antrenman','Set'],keys.map(k=>{const a=m.get(k)||Z,o=mc.get(k)||{};return[perLab(mode,k),fk(a.vol),...(multi?cs.map(c=>fk(o[c]||0)):[]),a.n,a.sets]}))}</div>
 ${cb.size?`<div class="lab">${pc1} hareketler, ${pc2} ile kıyasla</div><div class="list">${[...cb].map(([n,o])=>{const p=pb.get(n);return`<div class="row at"><div class="grow"><span>${esc(n)}</span><span class="tr">${p?arrow(Math.round((o.v-p.v)*2)/2,'kg tahmini 1RM','aynı'):'<span class="dl eq">'+pc2+' yok</span>'}</span></div><span class="v">${fnum(o.b.kg)}×${o.b.r}</span></div>`}).join('')}</div>`:''}
 ${healthRep()}${perfV()}${musV(mode,keys[N-1],keys[N-2],pc1,pc2)}
 <div class="lab">Hareket gelişimi</div><select id="rx" data-a="rx" aria-label="Hareket">${names.map(n=>`<option value="${esc(n)}" ${n==sel?'selected':''}>${esc(n)}</option>`).join('')}</select>
