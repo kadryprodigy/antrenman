@@ -252,6 +252,11 @@ body.tabs #tabs{display:block}
 // Her kişinin verisi ayrı anahtarda: ulppl_v1:<isim>. Kişi listesi PKEY'de.
 const LEGACY='ulppl_v1',PKEY='antrenman_kisiler';let PROF='',KEY='';const DAYS=['Pzt','Sal','Çar','Per','Cum','Cmt','Paz'],DAYL=['Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi','Pazar'];
 const X=(n,sets,reps,rest,rir,note)=>({n,sets,reps,rest,rir,note});
+const CALF_NOTE='Her tekrarın altında 2-3 sn bekle, baldırı tam gerilmiş tut; sadece bilekten yukarı çıkmak yerine parmak uçlarına odaklan.',
+SLDL_NOTE='Sırtını düz tut, dizlerde sadece hafif bükülme olsun. Arka bacağın kısaysa sırtın düz kalabildiği yere kadar in (gerekirse diz hizası) ve kiloyu hafif tut; esneklik arttıkça açıklık kendiliğinden artar.',
+HYPER_NOTE='Kalçadan menteşe yap; inerken sırtını düz tut, kalkarken gövdenle bacağın düz bir çizgi olana kadar çık, beli geriye bükme. Kalça ve arka bacakla kaldır.',
+SIDE_NOTE='Dirsek omzun altında, vücut baştan topuğa düz bir çizgi. Kalçanı düşürme, nefesini tutma. Zorsa dizler yerde başla. Her tarafa ayrı süre.',
+BIRD_NOTE='Dört ayak üstü. Karşı kol ve bacağı uzat, 3 sn tut, belini kaydırmadan geri dön. Belin dönmesin, kalçan yere paralel kalsın.';
 const DEF={
 Upper:[
 X('Machine Chest Press',2,'4-6',150,[1,2],'Her tekrarın altında 1 sn bekle, göğüste gerilimi koru.'),
@@ -271,18 +276,23 @@ X('Single-Leg Leg Extension',1,'20',90,[1],'Koltuğu olabildiğince geri al; tut
 X('Machine Lateral Raise',1,'10',90,[0],'Her tekrarda negatife direnç göster, altta bekleme.'),
 X('Machine Lateral Raise',1,'20',90,[0],'Her tekrarda negatife direnç göster, altta bekleme.'),
 X('Cable Flye',2,'10-12',90,[0,1],'Her tekrarın altında göğüste derin bir gerilme hissetmeye odaklan.'),
-X('Triceps Pressdown',2,'4-6',90,[0,1],'İp ya da bar aparatı kullanabilirsin, hangisi rahatsa.')],
+X('Triceps Pressdown',2,'4-6',90,[0,1],'İp ya da bar aparatı kullanabilirsin, hangisi rahatsa.'),
+X('Side Plank',2,'20-30 sn/taraf',45,[1,1],SIDE_NOTE),
+X('Bird Dog',2,'6/taraf',45,[2,2],BIRD_NOTE)],
 Lower:[
 X('Seated Leg Curl',3,'6-8',90,[0,1,1],'Makinede öne doğru eğilerek hamstringde maksimum gerilme yakala.'),
 X('Hack Squat',2,'4-6',180,[2,3],'Kontrollü negatif (serbest düşme yok), sonra pozitifte patla.'),
 X('Leg Extension',2,'6-8',90,[0,1],'Koltuğu olabildiğince geri al; tutamaklardan çekerek kalçanı koltuğa bastır (kayış yardımcı olabilir).'),
 X('Leg Extension',1,'20',90,[1],'Koltuğu olabildiğince geri al; tutamaklardan çekerek kalçanı koltuğa bastır.'),
 X('DB Walking Lunge',1,'10/bacak',90,[1],'Orta boy adımlar at, arka bacağın katkısını en aza indir.'),
-X('Standing Calf Raise',3,'10-12',90,[0,1,1],'Her tekrarın altında 1-2 sn bekle; sadece bilekten yukarı çıkmak yerine parmak uçlarına odaklan.'),
-X('Glute Kickback',1,'30',90,[1],'Kalça odağı için Glute Kickback, alt sırt ve hamstring odağı için 45° Hyperextension yap.')],
+X('Standing Calf Raise',3,'10-12',90,[0,1,1],CALF_NOTE),
+// Bel desteği için: Glute Kickback yerine 45° Hyperextension, sonunda gövde dayanıklılığı bloğu (yan plank, kuş-köpek).
+X('45° Hyperextension',1,'12-15',90,[1],HYPER_NOTE),
+X('Side Plank',2,'20-30 sn/taraf',45,[1,1],SIDE_NOTE),
+X('Bird Dog',2,'6/taraf',45,[2,2],BIRD_NOTE)],
 Pull:[
 X('Pull-Up (Wide Grip)',3,'4-6',150,[1,2,2],'Yavaş 2-3 sn negatif. Aşağı inerken lat\'larının ayrıldığını hisset.'),
-X('Stiff-Leg Deadlift',2,'6-8',150,[2,3],'Sırtını düz tut, dizlerde sadece hafif bir bükülme olsun.'),
+X('Stiff-Leg Deadlift',2,'6-8',150,[2,3],SLDL_NOTE),
 X('Close-Grip Lat Pulldown',1,'10',150,[1],'~10° geriye yaslan, dirsekleri aşağı sür, kürek kemiklerini birleştir.'),
 X('Close-Grip Lat Pulldown',1,'20',150,[1],'~10° geriye yaslan, dirsekleri aşağı sür, kürek kemiklerini birleştir.'),
 X('Chest-Supported Machine Row',2,'4-6',150,[1,1],'Dirsekleri yaklaşık 45° aç, üstte kürek kemiklerini sık.'),
@@ -290,16 +300,16 @@ X('1-Arm Reverse Pec Deck',1,'20',90,[0],'Ağırlığı mümkün olan en geniş 
 X('1-Arm Reverse Pec Deck',1,'10',90,[0],'Ağırlığı mümkün olan en geniş yarım daireyle dışa doğru sür.'),
 X('Preacher Hammer Curl',2,'6-8',90,[0,1],'Pürüzsüz, kontrollü tekrarlar.'),
 X('Cable Crunch',2,'6-8',90,[0,1],'Alt sırtını yuvarla ve sık; karın kasıyla bağlantı kur.')]};
-const WR={Upper:[[0,0],[0],[0],[0],[0,0],[0,0],[0,0,0],[0,0],[0,0]],Lower:[[0,0,0],[1,2],[0,0],[0],[0],[0,0,0],[0]],Push:[[0,1],[0],[0],[0],[0],[0],[0,0],[0,0]],Pull:[[0,1,1],[1,2],[0],[0],[0,0],[0],[0],[0,0],[0,0]]};
+const WR={Upper:[[0,0],[0],[0],[0],[0,0],[0,0],[0,0,0],[0,0],[0,0]],Lower:[[0,0,0],[1,2],[0,0],[0],[0],[0,0,0],[1],[2,2],[2,2]],Push:[[0,1],[0],[0],[0],[0],[0],[0,0],[0,0],[2,2],[2,2]],Pull:[[0,1,1],[1,2],[0],[0],[0,0],[0],[0],[0,0],[0,0]]};
 const TECH={Upper:{4:'M',5:'M'},Lower:{0:'D',5:'H'},Push:{0:'D',6:'D',7:'M'},Pull:{4:'M',7:'M',8:'D'}};
 const LBL={D:['Two Drop Sets (~%25)','Failure\'a gelince ağırlığı ~%25 düşür, tekrar failure\'a kadar git; bunu iki kez yap.'],M:['Myo-reps','Failure\'a yakın bir set yap, sonra kısa dinlenmelerle (birkaç nefes) küçük tekrar serileri ekle.'],H:['Weighted Static Hold (30 sn)','Tekrarlar bitince ağırlığı gerilmiş pozisyonda 30 sn sabit tut.']};
 const FOCUS={'Machine Chest Press':'Göğüs (orta), ön omuz, triceps','Machine Lat Pullover':'Lat (sırt kanatları)','Pec Deck':'Göğüs (iç ve orta kısım)','Chest-Supported T-Bar Row':'Orta sırt, lat, arka omuz','Incline DB Y-Raise':'Alt trapez, yan ve arka omuz','EZ-Bar Cheat Curl':'Biceps','EZ-Bar Skull Crusher':'Triceps (özellikle uzun baş)',
 'Machine Shoulder Press':'Ön ve yan omuz, triceps','DB Bench Press':'Göğüs, ön omuz, triceps','Single-Leg Leg Extension':'Quadriceps (ön bacak)','Machine Lateral Raise':'Yan omuz','Cable Flye':'Göğüs (gerilmiş pozisyonda)','Triceps Pressdown':'Triceps (yan ve iç baş)',
-'Seated Leg Curl':'Hamstring (arka bacak)','Hack Squat':'Quadriceps, kalça','Leg Extension':'Quadriceps (ön bacak)','DB Walking Lunge':'Quadriceps ve kalça (öndeki bacak)','Standing Calf Raise':'Baldır (gastrocnemius)','Glute Kickback':'Kalça (gluteus maximus)',
+'Seated Leg Curl':'Hamstring (arka bacak)','Hack Squat':'Quadriceps, kalça','Leg Extension':'Quadriceps (ön bacak)','DB Walking Lunge':'Quadriceps ve kalça (öndeki bacak)','Standing Calf Raise':'Baldır (gastrocnemius)','Glute Kickback':'Kalça (gluteus maximus)','45° Hyperextension':'Bel kasları, kalça, arka bacak','Side Plank':'Yan karın, gövde dengesi (bel desteği)','Bird Dog':'Gövde dengesi, bel kasları, kalça',
 'Pull-Up (Wide Grip)':'Lat, üst sırt, biceps','Stiff-Leg Deadlift':'Hamstring, kalça, alt sırt','Close-Grip Lat Pulldown':'Lat (alt kısım), orta sırt','Chest-Supported Machine Row':'Orta sırt, lat, arka omuz','1-Arm Reverse Pec Deck':'Arka omuz','Preacher Hammer Curl':'Brachialis, ön kol, biceps','Cable Crunch':'Karın (rectus abdominis)'};
 const ALT={'Machine Chest Press':['Smith Machine Bench Press','DB Bench Press'],'Machine Lat Pullover':['DB Lat Pullover','Cable Lat Pullover'],'Pec Deck':['DB Flye','Cable Flye'],'Chest-Supported T-Bar Row':['Chest-Supported Machine Row','Chest-Supported DB Row'],'Incline DB Y-Raise':['Cable Y-Raise','Machine Lateral Raise'],'EZ-Bar Cheat Curl':['DB Cheat Curl','DB Curl'],'EZ-Bar Skull Crusher':['DB Skull Crusher','Overhead Cable Triceps Extension'],
 'Machine Shoulder Press':['Seated DB Shoulder Press','Seated Smith Machine Shoulder Press'],'DB Bench Press':['Smith Machine Bench Press','Machine Chest Press'],'Single-Leg Leg Extension':['Reverse Nordic','Sissy Squat'],'Machine Lateral Raise':['High-Cable Lateral Raise','DB Lateral Raise'],'Cable Flye':['Pec Deck','DB Flye'],'Triceps Pressdown':['Cable Triceps Kickback','DB Triceps Kickback'],
-'Seated Leg Curl':['Lying Leg Curl','Nordic Ham Curl'],'Hack Squat':['Smith Machine Squat','Leg Press'],'Leg Extension':['Reverse Nordic','Sissy Squat'],'DB Walking Lunge':['Smith Machine Split Squat','DB Reverse Lunge'],'Standing Calf Raise':['Donkey Calf Raise','Leg Press Calf Press'],'Glute Kickback':['45° Hyperextension','Cable Pull-Through'],
+'Seated Leg Curl':['Lying Leg Curl','Nordic Ham Curl'],'Hack Squat':['Smith Machine Squat','Leg Press'],'Leg Extension':['Reverse Nordic','Sissy Squat'],'DB Walking Lunge':['Smith Machine Split Squat','DB Reverse Lunge'],'Standing Calf Raise':['Donkey Calf Raise','Leg Press Calf Press'],'Glute Kickback':['45° Hyperextension','Cable Pull-Through'],'45° Hyperextension':['Glute Kickback','Cable Pull-Through'],'Side Plank':['Pallof Press','Suitcase Carry'],'Bird Dog':['Dead Bug','Plank'],
 'Pull-Up (Wide Grip)':['Lat Pulldown (Wide Grip)','1-Arm Cable Pulldown'],'Stiff-Leg Deadlift':['DB RDL','Barbell RDL'],'Close-Grip Lat Pulldown':['Close-Grip Pull-Up','Close-Grip Seated Cable Row'],'Chest-Supported Machine Row':['Smith Machine Row','DB Row'],'1-Arm Reverse Pec Deck':['Lying Reverse DB Flye','Reverse Cable Crossover'],'Preacher Hammer Curl':['DB Preacher Curl','DB Hammer Curl'],'Cable Crunch':['Weighted Crunch','Machine Crunch']};
 // Alternatifler: hazır programlarda hareketin kendi listesi (e.alt), ULPPL'de ALT tablosu.
 const altOf=e=>Array.isArray(e.alt)?e.alt:(ALT[e.n]||[]);
@@ -1107,9 +1117,16 @@ function autoWeek(){if(S.autoWk===false||nWk()<2)return;if(!S.wkAt){S.wkAt=monTi
  if(S.week!=old){regen();S.plan=null;V.msg=`Yeni hafta: ${wLab(S.week)}.`+(isU()&&S.week==7?' Tanıtım (deload) haftası; daha hafif çalış.':'')+((PROG().wnotes||{})[S.week]?' '+PROG().wnotes[S.week]:'')}
  else if(old==nWk()){S.pdone=1;V.msg='Programın son haftasını tamamladın.'}save()}
 function mig(s){if(!s.prog)s.prog='ulppl';if(!s.v)['Upper','Push'].forEach(k=>{if(!s.w[k])s.w[k]=clone(DEF[k])});
-if((s.v||0)<3){(s.w.Upper||[]).forEach(e=>{if(e.n=='EZ-Bar Cheat Curl (süperset 1)'){e.n='EZ-Bar Cheat Curl';e.ss=1}if(e.n=='EZ-Bar Skull Crusher (süperset 1)')e.n='EZ-Bar Skull Crusher'});s.week=1;s.v=3}return s}
+if((s.v||0)<3){(s.w.Upper||[]).forEach(e=>{if(e.n=='EZ-Bar Cheat Curl (süperset 1)'){e.n='EZ-Bar Cheat Curl';e.ss=1}if(e.n=='EZ-Bar Skull Crusher (süperset 1)')e.n='EZ-Bar Skull Crusher'});s.week=1;s.v=3}
+// v4: bel desteği. Kayıtlı ULPPL'de (aktif ya da S.ps'de saklı) Glute Kickback → 45° Hyperextension, Lower ve Push sonuna yan plank ve kuş-köpek;
+// baldır ve stiff-leg ipuçları güncellenir. Kişinin kendi eklediği hareketlere dokunulmaz, aynı hareket zaten varsa tekrar eklenmez.
+if((s.v||0)<4){const fix=w=>{if(!w)return;const L=w.Lower,Pu=w.Push,core=()=>[clone(DEF.Lower[7]),clone(DEF.Lower[8])];
+  if(L){const k=L.findIndex(e=>e.n=='Glute Kickback');if(k>=0)L[k]={...clone(DEF.Lower[6]),...(L[k].ss?{ss:L[k].ss}:{})};if(!L.some(e=>/side plank|bird dog/i.test(e.n)))L.push(...core());L.forEach(e=>{if(e.n=='Standing Calf Raise')e.note=CALF_NOTE})}
+  if(Pu&&!Pu.some(e=>/side plank|bird dog/i.test(e.n)))Pu.push(...core());if(w.Pull)w.Pull.forEach(e=>{if(e.n=='Stiff-Leg Deadlift')e.note=SLDL_NOTE})};
+ if((s.prog||'ulppl')=='ulppl')fix(s.w);if(s.ps&&s.ps.ulppl)fix(s.ps.ulppl.w);s.v=4}
+return s}
 function load(){try{const s=KEY&&JSON.parse(localStorage.getItem(KEY));if(s&&s.w)return mig(s)}catch(e){}
-return{_new:1,v:3,prog:'ulppl',week:1,sched:['Upper','Lower','','Push','Pull','',''],w:clone(DEF),last:{},log:[]}}
+return{_new:1,v:4,prog:'ulppl',week:1,sched:['Upper','Lower','','Push','Pull','',''],w:clone(DEF),last:{},log:[]}}
 function save(){if(!KEY)return;try{S.run=V.run&&V.view=='run'&&(!V.run.done||V.run.mode)?V.run:null;localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 const today=()=>(new Date().getDay()+6)%7;
 let S=load(),V={view:'splash',day:today(),run:null},actx=null,P={list:[],last:''};
@@ -1540,11 +1557,12 @@ deadbug:{t:'Sırt üstü, bir kol tavana, diğer kol başın gerisine; bir diz b
 ham:{t:'Sırt üstü, bir bacak düz şekilde havluyla yukarı kaldırılmış, diğer bacak yerde',h:[36,104],b:['50,112 108,113','108,113 148,115 190,117','50,112 64,100 78,90'],a:['108,113 120,80 132,46'],d:['78,90 132,46']},
 hipflex:{t:'Tek diz yerde, öndeki ayak yerde; gövde dik, kalça öne itiliyor',h:[98,24],b:['100,84 62,84 60,119','100,84 98,36','98,44 112,60 104,76','116,119 156,119'],a:['100,84 116,119'],r:[[124,98,104,98]]},
 fig4:{t:'Sırt üstü, bir ayak bileği diğer dizin üstünde, alttaki bacak göğse çekiliyor',h:[36,104],b:['50,112 108,113','108,113 104,78 134,76','50,112 78,96 100,84'],a:['108,113 142,100 108,80'],r:[[96,62,80,58,66,70]]},
+calf:{t:'Yerde oturmuş, bacaklar önde düz; havlu ayağın ön kısmında, parmak uçları kendine çekiliyor',h:[66,52],b:['60,117 68,66','68,72 90,84 112,90','60,117 116,117'],a:['116,117 160,117','160,117 168,98'],d:['112,90 168,98'],r:[[182,100,180,86,170,84]]},
 h90:{t:'Sırt üstü, bir uyluk dik tutuluyor, diz hafif bükük şekilde yavaşça açılıyor; diğer bacak yerde',h:[36,104],b:['50,112 108,113','108,113 148,115 190,117','50,112 74,96 106,84'],a:['108,113 110,78','110,78 142,62'],r:[[150,92,164,80,154,66]]},
 floss:{t:'Sırt üstü, uyluk dik; diz açılırken ayak ucu uzanıyor, bükülürken kendine çekiliyor. Kesikli çizgi dizin bükük hali',h:[36,104],b:['50,112 108,113','108,113 148,115 190,117','50,112 74,96 106,84'],a:['108,113 110,78','110,78 142,62'],d:['110,78 136,98'],r:[[146,54,158,58]]},
 rock:{t:'Sırt üstü, dizler bükülü, ayaklar yerde; dizler birlikte yavaşça sağa sola yatırılıyor',h:[38,104],b:['52,112 108,113','52,112 76,116 100,117'],a:['108,113 134,84 160,119'],r:[[116,66,134,54,152,66]]},
 child:{t:'Dizler yerde, kalça topuklarda, gövde öne uzanmış, kollar önde yerde',h:[74,112],b:['110,119 152,119','146,104 110,119','86,106 54,117 22,117'],a:['146,104 86,106'],r:[[124,90,150,90]]}};
-const figOf=n=>/bükük dizle/i.test(n)?'h90':/düz bacak/i.test(n)?'ham':/sinir/i.test(n)?'floss':/yana sallama/i.test(n)?'rock':/diz-göğüs/i.test(n)?'knee':/pelvik/i.test(n)?'pelvic':/kedi/i.test(n)?'cat':/kuş/i.test(n)?'birddog':/köprü/i.test(n)?'bridge':/dead bug/i.test(n)?'deadbug':/arka bacak/i.test(n)?'ham':/kalça önü/i.test(n)?'hipflex':/figür/i.test(n)?'fig4':/çocuk/i.test(n)?'child':'';
+const figOf=n=>/baldır/i.test(n)?'calf':/bükük dizle/i.test(n)?'h90':/düz bacak/i.test(n)?'ham':/sinir/i.test(n)?'floss':/yana sallama/i.test(n)?'rock':/diz-göğüs/i.test(n)?'knee':/pelvik/i.test(n)?'pelvic':/kedi/i.test(n)?'cat':/kuş/i.test(n)?'birddog':/köprü/i.test(n)?'bridge':/dead bug/i.test(n)?'deadbug':/arka bacak/i.test(n)?'ham':/kalça önü/i.test(n)?'hipflex':/figür/i.test(n)?'fig4':/çocuk/i.test(n)?'child':'';
 function figV(k){const f=FIG[k];if(!f)return'';const pl=(c,p)=>`<polyline class="${c}" points="${p}"/>`,ar=r=>{const [x1,y1]=r,[x2,y2]=r.slice(-2),[kx,ky]=r.length>4?[r[2],r[3]]:[x1,y1],an=Math.atan2(y2-ky,x2-kx),L=8,
  h=`${x2},${y2} ${(x2-L*Math.cos(an-0.5)).toFixed(1)},${(y2-L*Math.sin(an-0.5)).toFixed(1)} ${(x2-L*Math.cos(an+0.5)).toFixed(1)},${(y2-L*Math.sin(an+0.5)).toFixed(1)}`;
  return`<path class="ar" d="M${x1},${y1}${r.length>4?` Q${kx},${ky} ${x2},${y2}`:` L${x2},${y2}`}"/><polygon class="ah" points="${h}"/>`};
@@ -1564,6 +1582,8 @@ function mobE(){const H=hamHold(),G='Gerginlik 10 üzerinden 3-4 olsun; acıtır
 ['Düz bacak esnetme (havlu), sağ',H,'Aynısını sağ bacakla yap. '+G],
 ['Düz bacak esnetme (havlu), sol, 2. tur',H,'Sol bacakla bir tur daha. Genelde ikinci turda bacak biraz daha yukarı çıkar; zorlamadan gelebildiği yere kadar.'],
 ['Düz bacak esnetme (havlu), sağ, 2. tur',H,'Sağ bacakla bir tur daha.'],
+['Havluyla baldır esnetme, sol',H,'Yerde otur, bacakların önde düz. Havluyu sol ayağının ön kısmına geçir ve dizini düz tutarak parmak uçlarını kendine doğru çek; baldırında gerginlik hissedilir. '+G],
+['Havluyla baldır esnetme, sağ',H,'Aynısını sağ ayakla yap. '+G],
 ['Köprü',45,'Sırt üstü, dizler bükülü, ayaklar yerde. Kalçanı sıkarak kaldır, 2 saniye tut, indir. 10 tekrar. Güçlü kalça kası beli rahatlatır.']]}
 const ROUT={kolay:{n:'Arka bacak rutini',get s(){return mobE()}},tam:{n:'Tam rutin',s:MOB}};
 const mobMin=k=>Math.round(ROUT[k].s.reduce((a,x)=>a+x[1],0)/60),mobS=()=>ROUT[V.mob&&V.mob.k||'kolay'].s;
@@ -1951,7 +1971,7 @@ g+=`<text x="${X(0)}" y="${H-8}" class="xl" style="text-anchor:start">${esc(pts[
 return`<svg viewBox="0 0 ${W} ${H}" class="svg" role="img" aria-label="${esc(aria)}">${g}</svg>`}
 const table=(head,rows)=>`<details class="tv"><summary>Tablo olarak göster</summary><div style="overflow-x:auto"><table class="tb"><tr>${head.map((h,i)=>`<th class="${i?'n':''}">${h}</th>`).join('')}</tr>${rows.map(r=>`<tr>${r.map((c,i)=>`<td class="${i?'n':''}">${c}</td>`).join('')}</tr>`).join('')}</table></div></details>`;
 // Kas grubu: hareket adındaki anahtar kelimelerden birincil kas grubu (sıra önemli: "leg curl" "curl"dan önce gelir).
-const MUS=[['Baldır',/calf/i],['Karın',/crunch|leg raise|plank|sit-up|rollout|ab wheel/i],['Trapez',/shrug/i],['Arka bacak',/leg curl|ham curl|rdl|romanian|stiff-leg|good morning|glute-ham|hyperextension|back extension|deadlift/i],
+const MUS=[['Baldır',/calf/i],['Karın',/crunch|leg raise|plank|sit-up|rollout|ab wheel|bird dog|dead bug|pallof|suitcase/i],['Trapez',/shrug/i],['Arka bacak',/leg curl|ham curl|rdl|romanian|stiff-leg|good morning|glute-ham|hyperextension|back extension|deadlift/i],
 ['Kalça',/hip thrust|glute|abduction|pull-through|reverse hyper/i],['İç bacak',/adduction/i],['Ön bacak',/squat|leg press|leg extension|lunge|step-up|sissy|reverse nordic|split/i],['Triceps',/tricep|skull|pressdown|kickback|french|jm press|close-grip (bench|push|db)|diamond|dip\b|floor press|pin press/i],
 ['Biceps',/curl/i],['Omuz',/shoulder|overhead|military|lateral|y-raise|face ?pull|reverse pec|rear delt|reverse (cable|db|dumbbell)|upright|arnold|pull-apart|pike/i],['Sırt',/row|pulldown|pull-up|pullup|chin-?up|pullover|pull-in|pull-around/i],['Göğüs',/bench|chest|pec|fly|flye|push-up|crossover|incline|dip|jug press|flat (db|dumbbell) press/i]];
 const musOf=n=>(MUS.find(([,re])=>re.test(n))||['Diğer'])[0];
