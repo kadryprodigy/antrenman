@@ -49,6 +49,13 @@ box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:en
 :root[data-theme="dark"]{--bg:#111315;--sf:#1B1E22;--ink:#ECEEF0;--mut:#A3AAB3;--line:#30353B;--pri:#ECEEF0;--onpri:#111315;--err:#FF7A7A;--rest:#4A5058;--up:#5BC98A;--bar:#6B727C;--c-red:#C42F48;--c-blue:#5585D6;--c-yel:#B58A00;--c-grn:#2BA884;--c-rest:#6B727C;color-scheme:dark}
 /* OLED: tam siyah zemin, yüzeyler hafif kalkık */
 :root[data-theme="oled"]{--bg:#000;--sf:#121416;--ink:#ECEEF0;--mut:#9DA4AD;--line:#2A2E33;--pri:#ECEEF0;--onpri:#000;--err:#FF7A7A;--rest:#4A5058;--up:#5BC98A;--bar:#6B727C;--c-red:#C42F48;--c-blue:#5585D6;--c-yel:#B58A00;--c-grn:#2BA884;--c-rest:#6B727C;color-scheme:dark}
+/* Renk paleti "Kırmızı tonları" (varsayılan): gün renkleri kırmızı ailesinde, açıklıkla ayrışır: Upper kırmızı, Lower bordo, Push kiremit, Pull vişne.
+   --fill: "dolu / yapıldı" dolguları (kas haritası, takviye kareleri, su). İlerleme oklarındaki yeşil-kırmızı anlamı korunur (--up). */
+:root{--fill:var(--up)}
+:root[data-pal="red"]{--blue:#7B1730;--yel:#D1451B;--grn:#A3195B;--fill:var(--red);--c-red:#C4122F;--c-blue:#6B1027;--c-yel:#E8603C;--c-grn:#B8336A}
+@media (prefers-color-scheme:dark){:root[data-pal="red"]:not([data-theme="light"]){--c-red:#E0405A;--c-blue:#B0455E;--c-yel:#F08A5D;--c-grn:#D9578E;--fill:#E0405A}}
+:root[data-pal="red"][data-theme="dark"],:root[data-pal="red"][data-theme="oled"]{--c-red:#E0405A;--c-blue:#B0455E;--c-yel:#F08A5D;--c-grn:#D9578E;--fill:#E0405A}
+:root[data-pal="red"] .p-yel{--po:#fff;--pl:rgba(255,255,255,.3)}
 .k-red{--kc:var(--c-red)}.k-blue{--kc:var(--c-blue)}.k-yel{--kc:var(--c-yel)}.k-grn{--kc:var(--c-grn)}.k-rest{--kc:var(--c-rest)}
 .kq{display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--kc);margin-right:7px;vertical-align:0;flex:none}
 .lg{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:13px;color:var(--mut);margin:0 0 6px}.lg span{display:inline-flex;align-items:center}
@@ -138,7 +145,7 @@ details.up{margin-top:24px}.up summary{display:flex;justify-content:space-betwee
 .sp small{display:block;font-size:12px;font-weight:400;color:var(--mut);margin-top:2px}.sp em{margin-left:auto;font-style:normal;font-size:12px;font-weight:700;color:var(--err)}
 #stime{flex:none;max-width:42%}
 .daily .segm{margin-top:8px}.wbtn{display:flex;gap:6px;flex:none;margin-left:10px;align-self:center}.wbtn .btn{width:auto;margin:0;padding:0 14px;min-height:44px}.wbtn input{width:72px}
-.dots{display:flex;gap:3px;margin-top:6px}.dots i{width:10px;height:10px;border-radius:2px;background:var(--line)}.dots i.on{background:var(--up)}
+.dots{display:flex;gap:3px;margin-top:6px}.dots i{width:10px;height:10px;border-radius:2px;background:var(--line)}.dots i.on{background:var(--fill)}
 .rtl .li{justify-content:flex-start}.rtl .grow{flex:1}.rtl .li.cur{font-weight:700}
 .ck{flex:none;width:22px;height:22px;margin-right:10px;border-radius:50%;border:2px solid var(--mut);display:grid;place-items:center;font-weight:800;font-size:13px}.ck.on{background:var(--up);border-color:var(--up);color:#fff}
 .fgr{display:block;width:100%;max-width:320px;height:auto;margin:8px auto 4px;background:var(--sf);border-radius:6px}
@@ -181,6 +188,10 @@ details.up{margin-top:24px}.up summary{display:flex;justify-content:space-betwee
 .toggles{display:flex;flex-wrap:wrap;gap:6px}.toggles button{background:none;border:0;box-shadow:inset 0 0 0 1.5px var(--line);border-radius:6px;padding:8px 12px;font-weight:700;color:var(--mut)}.toggles .on{box-shadow:inset 0 0 0 1.5px var(--ink);color:var(--ink)}
 .vmod{position:fixed;inset:0;z-index:20;background:rgba(0,0,0,.72);display:grid;place-items:center;padding:16px}.vbox{background:var(--sf);color:var(--ink);border-radius:8px;padding:12px;width:min(100%,560px)}
 .vbox .hd b{font-size:15px}.vfr{aspect-ratio:16/9;margin:8px 0 6px;background:#000;border-radius:6px;overflow:hidden}.vfr iframe{width:100%;height:100%;border:0;display:block}
+.nxc{background:var(--sf);border-radius:6px;padding:12px 14px;margin:6px 0 12px;display:flex;flex-direction:column;gap:4px;box-shadow:inset 3px 0 0 var(--pc,var(--pri))}
+.nxl{font-size:12px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.04em}.nxn{font-size:19px;font-stretch:80%;font-weight:800;line-height:1.2}
+.nxg{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:15px}.nxg b{font-size:20px}.nxs{font-size:14px}
+.qc{margin:14px 0 4px;padding:14px 16px;border-radius:6px;background:var(--sf)}.qc q{display:block;font-size:17px;line-height:1.45;quotes:'“' '”'}.qc .qa{display:block;margin-top:8px;font-weight:800;font-size:14px}.qc .qw{display:block;font-size:13px;color:var(--mut);margin-top:2px}.qc .lnk{font-size:13px;padding:6px 0 0}
 .mch{display:flex;align-items:center;gap:10px;margin:6px 0 2px}.mch>span{font-size:13px;font-weight:700}.mch .segm.sm{margin:0;flex:1}.mch .segm.sm button{padding:7px 8px;font-size:14px}
 .fbh,.fbm{display:grid;grid-template-columns:76px 1fr 1fr;gap:6px;align-items:center}.fbh{font-size:12px;color:var(--mut);font-weight:700;margin-bottom:2px}.fbm{padding:6px 0;border-top:1px solid var(--line)}.fbm b{font-size:14px}.fbm .segm.sm{margin:0;flex-wrap:nowrap}.fbm .segm.sm button{padding:7px 0;font-size:13px;min-width:0}
 .mi{width:92px;flex:none;text-align:right}
@@ -1150,9 +1161,11 @@ if((s.v||0)<4){const fix=w=>{if(!w)return;const L=w.Lower,Pu=w.Push,core=()=>[cl
 if((s.v||0)<5){if(!s.cz)s.cz=czDef(s.sched);s.v=5}
 // v6: salondaki makine markaları (kablo: Matrix, Life Fitness; makineler: Hammer Strength, Life Fitness).
 if((s.v||0)<6){if(!s.mbr)s.mbr={[s.gym||'Salon']:{cable:['Matrix','Life Fitness'],mach:['Hammer Strength','Life Fitness']}};s.v=6}
+// v7: takviyelere magnezyum (akşam yemeğiyle; ZMA'dan ayrı saatte). Liste hiç oluşmadıysa varsayılan listeden gelir.
+if((s.v||0)<7){if(Array.isArray(s.supp)&&!s.supp.some(x=>/magnez/i.test(x.n)))s.supp.push({id:'smg',n:'Magnezyum',t:'Akşam yemeğiyle'});s.v=7}
 return s}
 function load(){try{const s=KEY&&JSON.parse(localStorage.getItem(KEY));if(s&&s.w)return mig(s)}catch(e){}
-const sched=['Upper','Lower','','Push','Pull','',''];return{_new:1,v:6,prog:'ulppl',week:1,sched,cz:czDef(sched),mbr:{Salon:{cable:['Matrix','Life Fitness'],mach:['Hammer Strength','Life Fitness']}},w:clone(DEF),last:{},log:[]}}
+const sched=['Upper','Lower','','Push','Pull','',''];return{_new:1,v:7,prog:'ulppl',week:1,sched,cz:czDef(sched),mbr:{Salon:{cable:['Matrix','Life Fitness'],mach:['Hammer Strength','Life Fitness']}},w:clone(DEF),last:{},log:[]}}
 function save(){if(!KEY)return;cbDirty=1;try{S.run=V.run&&V.view=='run'&&(!V.run.done||V.run.mode)?V.run:null;localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 const today=()=>(new Date().getDay()+6)%7;
 let S=load(),V={view:'splash',day:today(),run:null},actx=null,P={list:[],last:''};
@@ -1373,8 +1386,10 @@ ${pushBase()?(pushOn()?`<div class="list"><div class="row"><span>Kilitliyken bil
 <div class="lab">Antrenman öncesi</div><div class="list"><button class="li" data-a="nochk"><span>Başlarken sabah kontrolü sor</span><b>${S.noChk?'Kapalı':'Açık'}</b></button><button class="li" data-a="nowarm"><span>Başlarken ısınma rutini</span><b>${S.noWarm?'Kapalı':'Açık'}</b></button><button class="li" data-a="nosplash"><span>Hızlı açılış (kaydırma ekranını atla)</span><b>${S.noSplash?'Açık':'Kapalı'}</b></button></div>
 <div class="lab">Görünüm</div><span class="sl">Tema</span><div class="segm sm" role="group" aria-label="Tema" style="margin-bottom:6px">${THEMES.map(([k,l])=>`<button class="${(S.theme||'sys')==k?'on':''}" data-a="thm" data-v="${k}" aria-pressed="${(S.theme||'sys')==k}">${l}</button>`).join('')}</div>
 <p class="mut small" style="margin:0 0 14px">Siyah, iPhone'un OLED ekranında tam siyah zemin kullanır; karanlık salonda gözü daha az yorar ve pil harcar.</p>
-<span class="sl">Vurgu rengi (butonlar ve vurgular)</span><p class="mut small" style="margin:-2px 0 8px">Günün rengi: butonlar, sekme çizgisi ve haftalık hedef o günün antrenman kartının rengini alır; dinlenme günü nötr kalır.</p><div class="toggles">${Object.entries(ACC).map(([k,[l,c]])=>`<button class="${(S.accent||'day')==k?'on':''}" data-a="acc" data-v="${k}" aria-pressed="${(S.accent||'day')==k}"><i class="sw" style="background:${c||'var(--ink)'}"></i>${l}</button>`).join('')}</div>
-<div class="list" style="margin-top:10px"><button class="li" data-a="bigm"><span>Salon modu (antrenmanda büyük yazı ve butonlar)</span><b>${S.big?'Açık':'Kapalı'}</b></button><button class="li" data-a="nomob"><span>Bugün sekmesinde bel ve arka bacak rutini</span><b>${S.noMob?'Kapalı':'Açık'}</b></button><button class="li" data-a="smrest"><span>Akıllı dinlenme (zor setten sonra uzat)</span><b>${S.noSmartRest?'Kapalı':'Açık'}</b></button><button class="li" data-a="logwarm"><span>Isınma setlerini de kaydet (rekora ve hacme sayılmaz)</span><b>${S.logWarm?'Açık':'Kapalı'}</b></button></div>
+<span class="sl">Renk paleti</span><div class="segm sm" role="group" aria-label="Renk paleti" style="margin-bottom:6px">${PALS.map(([k,l])=>`<button class="${(palRed()?'red':'classic')==k?'on':''}" data-a="pal" data-v="${k}" aria-pressed="${(palRed()?'red':'classic')==k}">${l}</button>`).join('')}</div>
+<p class="mut small" style="margin:0 0 14px">Kırmızı tonları: Upper kırmızı, Lower bordo, Push kiremit, Pull vişne; dinlenme ve esneme sayaçları da bu renklerde. Klasik: kırmızı, mavi, sarı, yeşil.</p>
+<span class="sl">Vurgu rengi (butonlar ve vurgular)</span><p class="mut small" style="margin:-2px 0 8px">Günün rengi: butonlar, sekme çizgisi ve haftalık hedef o günün antrenman kartının rengini alır; dinlenme günü nötr kalır.</p><div class="toggles">${Object.keys(ACC).map(k=>{const [l,c]=accOf(k);return`<button class="${(S.accent||'day')==k?'on':''}" data-a="acc" data-v="${k}" aria-pressed="${(S.accent||'day')==k}"><i class="sw" style="background:${c||'var(--ink)'}"></i>${l}</button>`}).join('')}</div>
+<div class="list" style="margin-top:10px"><button class="li" data-a="bigm"><span>Salon modu (antrenmanda büyük yazı ve butonlar)</span><b>${S.big?'Açık':'Kapalı'}</b></button><button class="li" data-a="nomob"><span>Bugün sekmesinde bel ve arka bacak rutini</span><b>${S.noMob?'Kapalı':'Açık'}</b></button><button class="li" data-a="nopos"><span>Bugün sekmesinde postür rutini</span><b>${S.noPos?'Kapalı':'Açık'}</b></button><button class="li" data-a="noquote"><span>Dinlenmede söz göster</span><b>${S.noQuote?'Kapalı':'Açık'}</b></button><button class="li" data-a="smrest"><span>Akıllı dinlenme (zor setten sonra uzat)</span><b>${S.noSmartRest?'Kapalı':'Açık'}</b></button><button class="li" data-a="logwarm"><span>Isınma setlerini de kaydet (rekora ve hacme sayılmaz)</span><b>${S.logWarm?'Açık':'Kapalı'}</b></button></div>
 <div class="lab">Antrenman yerleri</div>${(gymInit(),'')}<div class="toggles">${Object.keys(S.gyms).map(k=>`<button class="${S.gym==k?'on':''}" data-a="gym" data-v="${esc(k)}" aria-pressed="${S.gym==k}">${esc(k)}</button>`).join('')}</div>
 <div class="inl" style="margin-top:8px"><input id="gyn" placeholder="Yeni yer, örneğin Ev ya da Otel" aria-label="Yeni antrenman yeri adı"><select id="gyp" aria-label="Başlangıç ekipmanı"><option value="bos">Tam salon</option><option value="dmb">Sadece dambıl</option><option value="yok">Ekipmansız</option></select></div><button class="btn alt" data-a="gymadd" style="margin-top:8px">Ekle</button>
 <p class="mut small">Seçili yer: <b>${esc(S.gym)}</b>. Yer değişince hareketler o yerdeki ekipmana uygun alternatiflere geçer; antrenmana başlarken de seçebilirsin.${Object.keys(S.gyms).length>1?` <button class="lnk danger" data-a="gymdel" style="padding:0">${esc(S.gym)} yerini sil</button>`:''}</p>
@@ -1450,6 +1465,78 @@ const rows=ex.map((e,i)=>{const s=(r.log.find(l=>l.ei==i)||{s:[]}).s,n=s.length,
 return`<div class="row pr ${st}"><span>${esc(nm(e))}</span><span class="v">${st=='ok'?'bitti':st=='sk'?'atlandı':st=='cur'?(r.phase=='rest'?'sıradaki':'şimdi')+`, ${n}/${e.sets}`:n?`${n}/${e.sets} set`:`${e.sets}×${esc(e.reps)}`}</span></div>`}).join('');
 return`<details class="up" ${V.plo?'open':''}><summary data-a="plo"><span>Antrenman planı</span><span class="mut">${left} hareket kaldı</span></summary><div class="list">${rows}</div></details>`}
 function nextOf(r){const n=r.nx;return`${nm(RX(r)[n.ei])}, set ${n.si+1}`}
+// ---- Dinlenmede söz: her dinlenmede bir söz, sahibi ve kaynağıyla. Kaynağı belli olanlar seçildi; yaygın ama sahte atıflar alınmadı.
+// Cihazdaki deste (P.qd) bitene kadar söz tekrarlanmaz. [söz, kim, kim olduğu ve kaynak]
+const QUOTES=[
+['Eyleme engel olan şey eylemi ilerletir. Yolun önünde duran, yolun kendisi olur.','Marcus Aurelius','Roma imparatoru ve Stoacı filozof (121-180). Kendime Düşünceler, V.20. Bu kitabı sefer çadırında, kendisi için yazdı.'],
+['Dışarıdaki bir şey seni üzüyorsa, acıyı veren o şey değil, onun hakkındaki yargındır; o yargıyı silmek de senin elinde.','Marcus Aurelius','Kendime Düşünceler, VIII.47.'],
+['İyi bir insanın nasıl olması gerektiğini tartışarak vakit kaybetme. İyi insan ol.','Marcus Aurelius','Kendime Düşünceler, X.16.'],
+['Sabah kalkmakta isteksizsen kendine şunu söyle: Bir insanın işini yapmak için kalkıyorum.','Marcus Aurelius','Kendime Düşünceler, V.1. Dünyanın en güçlü adamının da yataktan çıkmakta zorlandığını gösterir.'],
+['En iyi intikam, sana kötülük yapan gibi olmamaktır.','Marcus Aurelius','Kendime Düşünceler, VI.6.'],
+['Yaşamayı öğrenmek bütün bir ömür ister.','Seneca','Romalı Stoacı filozof, imparator Neron\'un hocası (MÖ 4 - MS 65). Hayatın Kısalığı Üzerine.'],
+['Bize kısa bir ömür verilmedi; biz onu kısa kılıyoruz.','Seneca','Hayatın Kısalığı Üzerine. Zamanı boşa harcamanın ömrü kısalttığını anlatır.'],
+['Gerçekte olduğundan çok, hayalimizde acı çekeriz.','Seneca','Lucilius\'a Mektuplar, 13. Seneca bu mektupları ömrünün son yıllarında arkadaşı Lucilius\'a yazdı.'],
+['Her yerde olan, hiçbir yerde değildir.','Seneca','Lucilius\'a Mektuplar, 2. Çok sayıda kitaba dağılmak yerine az sayıda iyi yazarı derinlemesine okumayı öğütler.'],
+['Kader isteyene yol gösterir, istemeyeni sürükler.','Seneca','Lucilius\'a Mektuplar, 107. Seneca bu dizeyi Stoacı filozof Kleanthes\'ten aktarır.'],
+['Bazen yaşamak bile cesarettir.','Seneca','Lucilius\'a Mektuplar, 78. Ağır hastalığı sırasında yazdığı bir mektuptan.'],
+['İnsanları rahatsız eden olaylar değil, olaylar hakkındaki yargılarıdır.','Epiktetos','Köle olarak doğmuş, sonra özgür kalan Stoacı filozof (yak. 50-135). Enkheiridion, 5. Bugünkü bilişsel terapinin dayandığı fikirlerden biridir.'],
+['Hiçbir büyük şey birden oluşmaz; bir salkım üzüm ya da incir bile. Önce çiçek açsın, sonra meyve versin, sonra olgunlaşsın.','Epiktetos','Söylevler, I.15.'],
+['Bazı şeyler bizim elimizdedir, bazıları değildir.','Epiktetos','Enkheiridion\'un ilk cümlesi. Stoacılığın temeli: yalnızca elindekiyle uğraş.'],
+['Sorgulanmamış bir hayat yaşanmaya değmez.','Sokrates','Atinalı filozof (MÖ 470-399). Ölüm cezası aldığı davadaki savunmasından; Platon, Sokrates\'in Savunması.'],
+['Bir insanın, bedeninin ulaşabileceği güç ve güzelliği hiç görmeden yaşlanması yazıktır.','Sokrates','Öğrencisi Ksenofon\'un Sokrates\'ten Anılar\'da (III.12) aktardığı düşüncenin özeti. Antik Yunan\'da beden eğitimi, yurttaşlığın parçası sayılırdı.'],
+['Ben de bir şey bilmiyorum; ama bildiğimi de sanmıyorum.','Sokrates','Platon, Sokrates\'in Savunması, 21d. "Bildiğim tek şey hiçbir şey bilmediğimdir" diye bilinen sözün asıl hali.'],
+['Adil davranarak adil, ölçülü davranarak ölçülü, cesur davranarak cesur oluruz.','Aristoteles','Yunan filozof (MÖ 384-322), Büyük İskender\'in hocası. Nikomakhos\'a Etik, II.1. Erdem, tekrarla kazanılan bir alışkanlıktır.'],
+['Bir kırlangıçla bahar gelmez; bir günle de.','Aristoteles','Nikomakhos\'a Etik, I.7. İyi bir hayat, tek bir günle değil bir ömürle ölçülür.'],
+['Aynı nehirde iki kez yıkanılmaz.','Herakleitos','Efesli filozof (MÖ yak. 535-475). Her şeyin sürekli değiştiğini savundu. Efes bugün İzmir\'in Selçuk ilçesindedir.'],
+['Bana bir dayanak noktası verin, dünyayı yerinden oynatayım.','Arşimet','Sirakuzalı matematikçi ve mühendis (MÖ 287-212). Kaldıraç ilkesini anlatırken söylediği aktarılır. Salondaki makinelerin çoğu bu ilkeyle çalışır.'],
+['Hayat kısa, sanat uzun.','Hipokrat','Tıbbın babası sayılan Yunan hekim (MÖ yak. 460-370). Aforizmalar\'ın ilk cümlesi; "sanat" burada hekimliği öğrenmek demektir.'],
+['Damla damla su taşı deler.','Ovidius','Romalı şair (MÖ 43 - MS 17). Karadeniz kıyısındaki Tomis\'e (bugün Romanya\'da Köstence) sürgündeyken yazdığı mektuplardan.'],
+['Sağlam bir bedende sağlam bir akıl için dua etmelisin.','Juvenalis','Romalı hiciv şairi (1-2. yy). Hicivler, X. Ünlü "mens sana in corpore sano" sözü aslında insanın neyi dilemesi gerektiğine dair bir öğüttür.'],
+['Geldim, gördüm, yendim.','Jül Sezar','Roma generali ve devlet adamı (MÖ 100-44). MÖ 47\'de Zela\'da kazandığı hızlı zaferi Roma\'ya böyle bildirdi. Zela bugün Tokat\'ın Zile ilçesidir.'],
+['Gölge etme, başka ihsan istemem.','Diyojen','Sinoplu filozof (MÖ yak. 412-323). Büyük İskender ne dilediğini sorunca güneşlenirken böyle dediği anlatılır (Plutarkhos).'],
+['Bin millik yolculuk tek bir adımla başlar.','Lao Tzu','Taoculuğun kurucusu sayılan Çinli düşünür (MÖ 6. yy). Tao Te Ching, 64.'],
+['Hata yapıp düzeltmemek, asıl hatadır.','Konfüçyüs','Çinli düşünür (MÖ 551-479). Konuşmalar (Analektler), XV.30.'],
+['Düşmanını tanır ve kendini tanırsan, yüz savaşta tehlikeye düşmezsin.','Sun Tzu','Çinli general ve strateji yazarı (MÖ 5. yy). Savaş Sanatı, III.'],
+['En büyük ustalık, hiç savaşmadan düşmanın direncini kırmaktır.','Sun Tzu','Savaş Sanatı, III.'],
+['Bin günlük çalışmaya alıştırma, on bin günlük çalışmaya arıtma denir.','Miyamoto Musaşi','Japon kılıç ustası (1584-1645); altmıştan fazla düelloda yenilmedi. Beş Halka Kitabı.'],
+['Sevilmek mi korkulmak mı daha iyidir? İkisi birden olsa iyi olur; ama ikisi bir arada zor olduğundan, seçmek gerekirse korkulmak çok daha güvenlidir.','Niccolò Machiavelli','Floransalı diplomat ve düşünür (1469-1527). Hükümdar, 17. bölüm. Siyaset bilimini ahlaktan ayırarak inceleyen ilk eserlerden.'],
+['Talih, yaptıklarımızın yarısının hakemidir; öteki yarısını ya da ona yakınını yönetmeyi bize bırakır.','Niccolò Machiavelli','Hükümdar, 25. bölüm.'],
+['Talihi coşkun bir nehre benzetirim; ama sakin zamanlarda insanlar setler ve bentler kurarak önlem alabilir.','Niccolò Machiavelli','Hükümdar, 25. bölüm. Hazırlığın talihe karşı tek savunma olduğunu anlatır.'],
+['Bir hükümdarın aklı hakkındaki ilk fikir, çevresindeki insanlara bakılarak edinilir.','Niccolò Machiavelli','Hükümdar, 22. bölüm.'],
+['Mağlup, galibi taklide meraklıdır.','İbn Haldun','Tunuslu tarihçi ve düşünür (1332-1406), sosyolojinin öncülerinden sayılır. Mukaddime.'],
+['İlim ilim bilmektir, ilim kendin bilmektir; sen kendini bilmezsin, ya nice okumaktır.','Yunus Emre','Anadolu\'nun büyük halk şairi (yak. 1240-1320). Türkçeyi şiir dili olarak kullanan ilk büyük şairlerden.'],
+['Demir kullanılmayınca paslanır, durgun su bozulur; hareketsizlik de zihnin gücünü öyle tüketir.','Leonardo da Vinci','Rönesans ressamı, mühendisi ve anatomisti (1452-1519). Defterlerinden. İnsan kaslarını kadavralar üzerinde ayrıntılı çizen ilk kişilerdendir.'],
+['Bilgi güçtür.','Francis Bacon','İngiliz filozof ve devlet adamı (1561-1626). Deneye dayalı bilimsel yöntemin öncülerinden.'],
+['Daha ileriyi görebildiysem, devlerin omuzlarında durduğum içindir.','Isaac Newton','İngiliz fizikçi (1643-1727). 1675\'te Robert Hooke\'a yazdığı mektuptan.'],
+['Bütün değerli şeyler, ender oldukları kadar zordur.','Baruch Spinoza','Hollandalı filozof (1632-1677). Etika\'nın son cümlesi.'],
+['Aklını kullanma cesaretini göster!','Immanuel Kant','Alman filozof (1724-1804). "Aydınlanma Nedir?" (1784) yazısının şiarı; Latincesi "Sapere aude", Romalı şair Horatius\'tan.'],
+['Bilmek yetmez, uygulamak gerekir; istemek yetmez, yapmak gerekir.','Johann Wolfgang von Goethe','Alman şair ve yazar (1749-1832), Faust\'un yazarı. Wilhelm Meister\'in Gezi Yılları.'],
+['Bir dirhem önlem, bir okka tedaviye bedeldir.','Benjamin Franklin','ABD\'nin kurucularından, mucit ve yazar (1706-1790). 1735\'te Philadelphia\'da yangınlara karşı önlem çağrısı yaparken yazdı.'],
+['Beni öldürmeyen şey beni güçlendirir.','Friedrich Nietzsche','Alman filozof (1844-1900). Putların Alacakaranlığı (1888).'],
+['Yaşamak için bir nedeni olan, hemen her nasıla katlanabilir.','Friedrich Nietzsche','Putların Alacakaranlığı. Viktor Frankl toplama kampı anılarında bu sözü sık anar.'],
+['İnsan her şeye alışan bir yaratıktır; bence insanın en iyi tanımı budur.','Fyodor Dostoyevski','Rus romancı (1821-1881). Sibirya\'daki sürgününü anlattığı Ölüler Evinden Anılar.'],
+['Dâhilik yüzde bir ilham, yüzde doksan dokuz terdir.','Thomas Edison','ABD\'li mucit (1847-1931); binden fazla patenti vardı.'],
+['Hayat bisiklete binmek gibidir; dengeni korumak için hareket etmeye devam etmelisin.','Albert Einstein','Fizikçi (1879-1955). 1930\'da oğlu Eduard\'a yazdığı mektuptan.'],
+['Takdir eleştirene değil, gerçekten arenada olana, yüzü toz, ter ve kanla kaplanmış olana aittir.','Theodore Roosevelt','ABD başkanı (1858-1919). 1910\'da Paris Sorbonne\'da yaptığı "Cumhuriyette Yurttaşlık" konuşması; "arenadaki adam" diye bilinir.'],
+['Zirveye doğru verilen mücadele bile bir insan yüreğini doldurmaya yeter. Sisifos\'u mutlu düşlemek gerekir.','Albert Camus','Fransız yazar, 1957 Nobel Edebiyat Ödülü (1913-1960). Sisifos Söyleni\'nin son satırları.'],
+['İnsandan her şey alınabilir, tek bir şey hariç: koşullar ne olursa olsun kendi tavrını seçme özgürlüğü.','Viktor Frankl','Avusturyalı psikiyatrist (1905-1997); Auschwitz\'ten sağ çıktı. İnsanın Anlam Arayışı.'],
+['Dünyada her şey için, medeniyet için, hayat için, başarı için en gerçek yol gösterici bilimdir, fendir.','Mustafa Kemal Atatürk','1924\'te Samsun\'da öğretmenlerle konuşmasından. Aslı: "En hakiki mürşit ilimdir, fendir."'],
+['Yaşamak bir ağaç gibi tek ve hür ve bir orman gibi kardeşçesine, bu hasret bizim.','Nazım Hikmet','Şair (1902-1963). "Davet" şiirinden.'],
+['Kası büyüten son üç dört tekrardır. Bu acı bölgesi, şampiyonu şampiyon olmayandan ayırır.','Arnold Schwarzenegger','Yedi kez Mr. Olympia (1970-75 ve 1980), sonra aktör ve Kaliforniya valisi. 1977 belgeseli Pumping Iron\'dan.'],
+['Herkes vücut geliştirmeci olmak istiyor ama kimse o ağır ağırlıkları kaldırmak istemiyor.','Ronnie Coleman','Sekiz kez Mr. Olympia (1998-2005). Yarışırken bir yandan da Teksas\'ta polis memuruydu.'],
+['Yeah buddy! Light weight, baby!','Ronnie Coleman','En ağır setlerinden önce bağırdığı ünlü sözü: "Hafif ağırlık bebeğim!" Antrenman videolarından.'],
+['Uyar, yok etme.','Lee Haney','Sekiz kez Mr. Olympia (1984-1991). "Stimulate, don\'t annihilate": antrenman, toparlanabileceğin kadar yorucu olmalı. Hacim ayarı da bu fikre dayanır.'],
+['Egzersiz kraldır, beslenme kraliçedir; ikisini bir araya getirirsen bir krallığın olur.','Jack LaLanne','ABD\'li sporcu ve televizyoncu (1914-2011), "fitness\'ın babası" diye anılır; 1950\'lerde televizyonda egzersiz programı yapan ilk kişilerden.'],
+['Herkesin bir planı vardır, ta ki ağzına yumruğu yiyene kadar.','Mike Tyson','20 yaşında dünya ağır siklet şampiyonu oldu (1986); bu unvanı alan en genç boksör.']];
+function quoteNext(){P.qd=Array.isArray(P.qd)?P.qd.filter(i=>i<QUOTES.length):[];if(!P.qd.length){P.qd=[...QUOTES.keys()];for(let i=P.qd.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[P.qd[i],P.qd[j]]=[P.qd[j],P.qd[i]]}}const q=P.qd.pop();saveP();return q}
+// Aynı dinlenme boyunca (süre ekleme vb. yeniden çizimlerde) söz değişmez; bir sonraki dinlenmede yenisi gelir.
+function quoteCard(){if(S.noQuote)return'';const r=V.run,key=r&&r.nx?r.nx.ei+'-'+r.nx.si+'-'+r.ei:'x';if(!r)return'';if(r.qk!==key||r.qi==null||!QUOTES[r.qi]){r.qi=quoteNext();r.qk=key}
+ const [q,a,w]=QUOTES[r.qi];return`<figure class="qc"><q>${esc(q)}</q><figcaption><span class="qa">${esc(a)}</span><span class="qw">${esc(w)}</span><button class="lnk" data-a="qnext">Başka söz</button></figcaption></figure>`}
+// Dinlenmede sıradaki set: hareket, kaçıncı set, hedef tekrar ve zorluk, önerilen kilo; hareket değişiyorsa geçen seferki sonuç.
+function nextCard(r){const n=r.nx;if(!n)return'';const e=RX(r)[n.ei];if(!e)return'';const same=n.ei==r.ei,cn=mcn(r,n.ei,e),pv=prevOf(cn,S.log.length,tgtR(e)),sg=suggest(e,cn,n.si,pv);
+ return`<div class="nxc"><span class="nxl">${same?'Sıradaki set':'Sıradaki hareket'}</span><b class="nxn">${esc(cn)}</b>
+<div class="nxg"><span><b class="n">${n.si+1}</b> / ${e.sets} set</span><span>Hedef <b class="n">${esc(e.reps)}</b>${isTimed(e)?(/\d$/.test(e.reps)?' sn':''):' tekrar'}${esc(target(r.w,n.ei,e,n.si))}</span></div>
+${sg?`<span class="nxs">Öneri: <b>${fnum(sg.kg)} kg${sg.rp?' × '+sg.rp:''}</b></span>`:''}${!same&&pv?`<span class="nxs mut">Geçen sefer: ${lr(pv.l)}</span>`:''}${!same&&e.note?`<span class="nxs mut">${esc(e.note)}</span>`:''}</div>`}
 
 function pickV(){const mine=(S.cxl||[]).filter(c=>!CARDIO.includes(c)),li=c=>`<button class="li" data-a="cpick" data-v="${esc(c)}"><span>${esc(c)}</span><span class="chev" aria-hidden="true">›</span></button>`;
 return`<div class="hd"><button class="lnk back" data-a="ccancel">‹ Geri</button></div><h1 class="pt">Kardiyo ekle</h1>${mine.length?`<div class="lab">Senin eklediklerin</div><div class="list">${mine.map(li).join('')}</div>`:''}${CARDIO_G.map(g=>`<div class="lab">${esc(g[0])}</div><div class="list">${g[1].map(li).join('')}</div>`).join('')}
@@ -1510,7 +1597,7 @@ function prsV(){const m=new Map();S.log.forEach(h=>h.log.forEach(l=>{if(l.cardio
 // Paylaşım görseli: 1080×1350 PNG, bitmiş antrenmanın özeti ve rekorları.
 async function shareImg(src){const r=src||V.run;if(!r||!src&&!r.done)return;try{await document.fonts.load('800 60px Archivo')}catch(e){}
  const W=1080,H=1350,c=document.createElement('canvas');c.width=W;c.height=H;const g=c.getContext('2d'),F='Archivo, system-ui, sans-serif';
- const col={red:'#C4122F',blue:'#1C4E9D',yel:'#F0BE00',grn:'#1B7A47',rest:'#6B727C'}[pc(r.w)]||'#C4122F';
+ const col=(palRed()?{red:'#C4122F',blue:'#7B1730',yel:'#D1451B',grn:'#A3195B',rest:'#6B727C'}:{red:'#C4122F',blue:'#1C4E9D',yel:'#F0BE00',grn:'#1B7A47',rest:'#6B727C'})[pc(r.w)]||'#C4122F';
  g.fillStyle='#111315';g.fillRect(0,0,W,H);g.fillStyle=col;g.fillRect(0,0,W,24);
  g.fillStyle='#A3AAB3';g.font=`600 34px ${F}`;g.fillText(new Date(r.d||Date.now()).toLocaleDateString('tr-TR',{day:'numeric',month:'long',year:'numeric'})+(PROF?', '+PROF:''),72,110);
  g.fillStyle='#ECEEF0';g.font=`800 110px ${F}`;g.fillText(r.w.slice(0,18),72,230);
@@ -1586,14 +1673,14 @@ ${one?`<div class="ready" style="margin-top:16px"><div class="hd"><span>Tahmini 
 <div class="list" style="margin-top:12px">${P.map(p=>{const w=rnd(one*p/100),rp=p==100?1:Math.max(1,Math.round(30*(100/p-1)));return`<div class="row at"><div class="grow"><span><b class="n">%${p}</b>  ${fnum(w)} kg</span>${bar&&w>=(S.bar??20)?`<span class="sub">Her tarafa: ${plateList(w)}</span>`:''}</div><span class="v"><b class="n">~${rp}</b><span class="sub">tekrar</span></span></div>`}).join('')}</div>
 <p class="mut small">Epley formülü: kg × (1 + tekrar / 30). Tekrar sayıları yaklaşık; aynı yüzdede herkesin yapabildiği tekrar farklıdır. ${bar?`Kilolar en küçük plakana göre ${fnum(barStep())} kg adımla yuvarlandı.`:''}</p>`:''}`}
 // ---- Kas haritası: önden ve arkadan basit vücut çizimi, kas grubu set sayısına göre renklenir ----
-function musMap(m,full=20,cap=''){const f=k=>{const v=m[k]||0;return v?`fill="var(--up)" fill-opacity="${(0.25+0.75*Math.min(1,v/full)).toFixed(2)}"`:'fill="var(--line)"'},T=k=>`<title>${k}: ${m[k]||0} set</title>`;
+function musMap(m,full=20,cap=''){const f=k=>{const v=m[k]||0;return v?`fill="var(--fill)" fill-opacity="${(0.25+0.75*Math.min(1,v/full)).toFixed(2)}"`:'fill="var(--line)"'},T=k=>`<title>${k}: ${m[k]||0} set</title>`;
  const N='fill="var(--sf)" stroke="var(--line)" stroke-width="1.5"',R=(k,x,y,w,h,r=8)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}" ${f(k)}>${T(k)}</rect>`,E=(k,cx,cy,rx,ry)=>`<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" ${f(k)}>${T(k)}</ellipse>`;
  const base=o=>`<g transform="translate(${o},0)"><circle cx="100" cy="26" r="18" ${N}/><rect x="92" y="42" width="16" height="12" ${N}/><rect x="42" y="124" width="14" height="44" rx="7" ${N}/><rect x="144" y="124" width="14" height="44" rx="7" ${N}/><rect x="76" y="244" width="20" height="54" rx="9" ${N}/><rect x="104" y="244" width="20" height="54" rx="9" ${N}/></g>`;
  const front=`<g>${E('Omuz',56,70,12,12)}${E('Omuz',144,70,12,12)}${R('Göğüs',70,58,29,32)}${R('Göğüs',101,58,29,32)}${R('Biceps',46,84,16,38)}${R('Biceps',138,84,16,38)}${R('Karın',78,94,44,54)}<rect x="74" y="150" width="52" height="16" rx="6" fill="var(--sf)" stroke="var(--line)" stroke-width="1.5"/>${R('Ön bacak',72,168,24,72,10)}${R('Ön bacak',104,168,24,72,10)}${R('İç bacak',96,170,8,44,4)}</g>`;
  const back=`<g transform="translate(200,0)"><path d="M100 46 L72 62 L100 94 L128 62 Z" ${f('Trapez')}>${T('Trapez')}</path>${E('Omuz',56,70,12,12)}${E('Omuz',144,70,12,12)}<path d="M74 70 L98 98 L98 142 L80 132 L70 92 Z" ${f('Sırt')}>${T('Sırt')}</path><path d="M126 70 L102 98 L102 142 L120 132 L130 92 Z" ${f('Sırt')}>${T('Sırt')}</path>${R('Triceps',46,84,16,38)}${R('Triceps',138,84,16,38)}${E('Kalça',87,160,14,14)}${E('Kalça',113,160,14,14)}${R('Arka bacak',73,178,23,62,10)}${R('Arka bacak',104,178,23,62,10)}${E('Baldır',86,264,10,22)}${E('Baldır',114,264,10,22)}</g>`;
  const ks=Object.keys(m).filter(k=>k!='Diğer'&&m[k]);
  return`<figure class="fig mm"><svg viewBox="0 0 400 320" class="svg" role="img" aria-label="Kas haritası${cap?', '+cap:''}: ${ks.map(k=>k+' '+m[k]+' set').join(', ')||'set yok'}">${base(0)}${base(200)}${front}${back}<text x="100" y="316" text-anchor="middle" font-size="13" fill="var(--mut)">Ön</text><text x="300" y="316" text-anchor="middle" font-size="13" fill="var(--mut)">Arka</text></svg>
-<figcaption class="mut small">Koyu yeşil daha çok set demek (${full} set ve üstü en koyu); gri kaslar ${cap||'bu dönemde'} hiç çalışmıyor.</figcaption></figure>`}
+<figcaption class="mut small">Koyu renk daha çok set demek (${full} set ve üstü en koyu); gri kaslar ${cap||'bu dönemde'} hiç çalışmıyor.</figcaption></figure>`}
 // ---- Bel ve arka bacak rutini: sabah ya da akşam ~10 dk; süreli, hareket hareket ilerler. S.mobLog gün başına tamamlandı bilgisi. ----
 const MOB=[['Diz-göğüs, sol bacak',30,'Sırt üstü yat, sol dizini iki elinle göğsüne doğru çek. Belin yere yaslı kalsın, nefesini tutma.'],
 ['Diz-göğüs, sağ bacak',30,'Aynısını sağ bacakla yap.'],
@@ -1625,8 +1712,15 @@ calf:{t:'Yerde oturmuş, bacaklar önde düz; havlu ayağın ön kısmında, par
 h90:{t:'Sırt üstü, bir uyluk dik tutuluyor, diz hafif bükük şekilde yavaşça açılıyor; diğer bacak yerde',h:[36,104],b:['50,112 108,113','108,113 148,115 190,117','50,112 74,96 106,84'],a:['108,113 110,78','110,78 142,62'],r:[[150,92,164,80,154,66]]},
 floss:{t:'Sırt üstü, uyluk dik; diz açılırken ayak ucu uzanıyor, bükülürken kendine çekiliyor. Kesikli çizgi dizin bükük hali',h:[36,104],b:['50,112 108,113','108,113 148,115 190,117','50,112 74,96 106,84'],a:['108,113 110,78','110,78 142,62'],d:['110,78 136,98'],r:[[146,54,158,58]]},
 rock:{t:'Sırt üstü, dizler bükülü, ayaklar yerde; dizler birlikte yavaşça sağa sola yatırılıyor',h:[38,104],b:['52,112 108,113','52,112 76,116 100,117'],a:['108,113 134,84 160,119'],r:[[116,66,134,54,152,66]]},
-child:{t:'Dizler yerde, kalça topuklarda, gövde öne uzanmış, kollar önde yerde',h:[74,112],b:['110,119 152,119','146,104 110,119','86,106 54,117 22,117'],a:['146,104 86,106'],r:[[124,90,150,90]]}};
-const figOf=n=>/baldır/i.test(n)?'calf':/bükük dizle/i.test(n)?'h90':/düz bacak/i.test(n)?'ham':/sinir/i.test(n)?'floss':/yana sallama/i.test(n)?'rock':/diz-göğüs/i.test(n)?'knee':/pelvik/i.test(n)?'pelvic':/kedi/i.test(n)?'cat':/kuş/i.test(n)?'birddog':/köprü/i.test(n)?'bridge':/dead bug/i.test(n)?'deadbug':/arka bacak/i.test(n)?'ham':/kalça önü/i.test(n)?'hipflex':/figür/i.test(n)?'fig4':/çocuk/i.test(n)?'child':'';
+child:{t:'Dizler yerde, kalça topuklarda, gövde öne uzanmış, kollar önde yerde',h:[74,112],b:['110,119 152,119','146,104 110,119','86,106 54,117 22,117'],a:['146,104 86,106'],r:[[124,90,150,90]]},
+// Postür rutini çizimleri
+pec:{t:'Ayakta, ön kol kapı kasasına dayalı, bir adım öne atılmış; göğsün önü esniyor. Kesikli çizgi kapı kasası',h:[118,24],d:['84,6 84,120'],b:['116,34 120,80','120,80 138,100 142,119','120,80 106,100 100,119'],a:['116,42 92,44 88,20'],r:[[128,54,146,54]]},
+wall:{t:'Önden görünüş: sırt duvarda, kollar W şeklinde; kesikli çizgi kolların duvardan ayrılmadan Y şekline kaydığı hali',h:[110,20],b:['110,30 110,80','110,80 98,119','110,80 122,119'],a:['110,40 86,46 82,22','110,40 134,46 138,22'],d:['110,40 92,22 84,4','110,40 128,22 136,4'],r:[[66,44,66,24],[154,44,154,24]]},
+chin:{t:'Dik duruş; baş eğilmeden çene düz bir çizgide geriye çekiliyor',h:[108,24],b:['106,34 108,80','108,80 104,119','108,80 116,119','106,42 110,64 114,82'],a:['106,33 106,42'],r:[[134,26,120,26]]},
+prone:{t:'Yüzüstü yatmış, kollar Y şeklinde önde ve yerden hafifçe kaldırılmış; kesikli çizgi kolların yerdeki hali',h:[42,106],b:['54,112 110,114','110,114 190,117'],a:['56,108 34,98 12,92'],d:['56,110 34,114 12,116'],r:[[24,114,24,98]]},
+tspine:{t:'Sırt üstü, dizler bükülü; havlu rulo kürek kemiklerinin altında, eller başın arkasında, göğüs yukarı açılıyor',h:[36,110],b:['50,106 70,104 108,113','108,113 134,84 160,119'],a:['50,104 42,90 34,102'],p:[['d','M62,113 a6,6 0 1,0 12,0 a6,6 0 1,0 -12,0']],r:[[82,94,82,78]]},
+openbook:{t:'Yan yatmış, dizler bükülü; üstteki kol tavana ve arkaya doğru açılıyor, göğüs dönüyor. Kesikli çizgi kolun başladığı yer',h:[40,106],b:['54,112 108,113','108,113 132,98 156,112','56,110 90,104'],a:['56,106 60,80 72,62'],d:['56,108 88,100'],r:[[92,74,70,46,46,62]]}};
+const figOf=n=>/kapı kasası/i.test(n)?'pec':/duvar meleği/i.test(n)?'wall':/çene/i.test(n)?'chin':/yüzüstü/i.test(n)?'prone':/havlu rulo/i.test(n)?'tspine':/kitap açma/i.test(n)?'openbook':/baldır/i.test(n)?'calf':/bükük dizle/i.test(n)?'h90':/düz bacak/i.test(n)?'ham':/sinir/i.test(n)?'floss':/yana sallama/i.test(n)?'rock':/diz-göğüs/i.test(n)?'knee':/pelvik/i.test(n)?'pelvic':/kedi/i.test(n)?'cat':/kuş/i.test(n)?'birddog':/köprü/i.test(n)?'bridge':/dead bug/i.test(n)?'deadbug':/arka bacak/i.test(n)?'ham':/kalça önü/i.test(n)?'hipflex':/figür/i.test(n)?'fig4':/çocuk/i.test(n)?'child':'';
 function figV(k){const f=FIG[k];if(!f)return'';const pl=(c,p)=>`<polyline class="${c}" points="${p}"/>`,ar=r=>{const [x1,y1]=r,[x2,y2]=r.slice(-2),[kx,ky]=r.length>4?[r[2],r[3]]:[x1,y1],an=Math.atan2(y2-ky,x2-kx),L=8,
  h=`${x2},${y2} ${(x2-L*Math.cos(an-0.5)).toFixed(1)},${(y2-L*Math.sin(an-0.5)).toFixed(1)} ${(x2-L*Math.cos(an+0.5)).toFixed(1)},${(y2-L*Math.sin(an+0.5)).toFixed(1)}`;
  return`<path class="ar" d="M${x1},${y1}${r.length>4?` Q${kx},${ky} ${x2},${y2}`:` L${x2},${y2}`}"/><polygon class="ah" points="${h}"/>`};
@@ -1687,32 +1781,59 @@ function mobE(){const H=hamHold(),G='Gerginlik 10 üzerinden 3-4 olsun; acıtır
 ['Havluyla baldır esnetme, sol',H,'Yerde otur, bacakların önde düz. Havluyu sol ayağının ön kısmına geçir ve dizini düz tutarak parmak uçlarını kendine doğru çek; baldırında gerginlik hissedilir. '+G],
 ['Havluyla baldır esnetme, sağ',H,'Aynısını sağ ayakla yap. '+G],
 ['Köprü',45,'Sırt üstü, dizler bükülü, ayaklar yerde. Kalçanı sıkarak kaldır, 2 saniye tut, indir. 10 tekrar. Güçlü kalça kası beli rahatlatır.']]}
-const ROUT={kolay:{n:'Arka bacak rutini',get s(){return mobE()}},tam:{n:'Tam rutin',s:MOB}};
+// Postür rutini: öne devrik kalça (anterior pelvik tilt) ve öne düşük omuzlar için. Kalça önünü ve göğsü esnetir, kalça, karın, orta-üst sırt
+// ve derin boyun kaslarını çalıştırır. Kısa ~5 dk, uzun ~10 dk. Bel rutininden ayrı kayıt tutar (S.posLog).
+const PB='Önce karnını hafifçe sıkıp belini yere bastır, sonra kalçanı kaldır; tepede kaburgaların aşağıda kalsın, bel çukurlaşmasın.';
+const POS1=[['Kalça önü esnetme, sol',40,'Sol diz yerde, sağ ayak önde. Önce kuyruk sokumunu aşağı-içe devir (kalçanı sık), sonra hafifçe öne kay; sol kasığın önünde gerginlik hissedilir. Belini çukurlaştırma.'],
+['Kalça önü esnetme, sağ',40,'Taraf değiştir: sağ diz yerde. Kalçanı sıkılı tut.'],
+['Köprü, pelvis geriye devrik',45,PB+' 2 saniye tut, indir. 10 tekrar.'],
+['Kapı kasasında göğüs esnetme',45,'Ön kollarını kapı kasasına koy, dirsekler omuz hizasında. Bir adım öne at; göğsünün önünde gerginlik hissedilir. Omuzlarını kulaklarına kaldırma, belini çukurlaştırma.'],
+['Duvar meleği',45,'Sırtın, başın ve kalçan duvarda, ayaklar bir adım önde. Kolları W şeklinde duvara yasla, duvardan ayırmadan yavaşça yukarı Y\'ye kaydır, geri gel. 10 tekrar. Bel duvardan kopmasın; zorsa kolları daha az kaldır.'],
+['Yüzüstü Y kaldırma',45,'Yüzüstü yat, kollar Y şeklinde önde, başparmaklar yukarı. Kürek kemiklerini aşağı-geri çekerek kolları yerden birkaç santim kaldır, 2 saniye tut. 10 tekrar. Boynunu uzat, başını kaldırma.'],
+['Çene geri çekme',30,'Dik dur ya da otur. Başını eğmeden çeneni düz bir çizgide geriye çek (çift çene yapar gibi), 3 saniye tut, bırak. 10 tekrar. Ense uzar, boynun önü hafifçe çalışır.']];
+const POS2=[['Kedi-deve',45,'Dört ayak üstü. Nefes verirken sırtını yukarı yuvarla, alırken hafifçe çukurlaştır. Yavaş ve ağrısız aralıkta, 10 tekrar.'],
+['Pelvik tilt',45,'Sırt üstü, dizler bükülü. Karnını hafifçe sıkıp belini yere bastır, 3 saniye tut, bırak. 10 tekrar. Kalçanın öne devrikliğini fark etmeyi öğretir.'],
+POS1[0],POS1[1],POS1[2],
+['Dead bug',60,'Sırt üstü, kollar tavana, dizler 90 derece. Belini yerden ayırmadan karşı kol ve bacağı yavaşça uzatıp geri getir. Her tarafa 8 tekrar. Bel kalkıyorsa daha az uzat.'],
+['Havlu rulo üstünde göğüs açma',55,'Sırt üstü, dizler bükülü. Rulo yapılmış havluyu kürek kemiklerinin altına yatay koy. Ellerini başının arkasında kenetle, göğsünü açarak başını yavaşça yere doğru indir, 3 nefes tut. Havluyu biraz yukarı kaydırıp tekrarla. Belini kaldırma.'],
+POS1[3],
+['Kitap açma, sol',40,'Sola yan yat, dizler 90 derece, kollar önde üst üste. Üstteki kolu tavana ve arkaya doğru açarak göğsünü çevir, gözlerin elini izlesin; dizler ayrılmasın. Yavaşça geri gel, 5 tekrar.'],
+['Kitap açma, sağ',40,'Sağa yan yat, aynısını yap.'],
+POS1[4],
+['Yüzüstü Y-T kaldırma',70,'Yüzüstü yat. Önce kollar Y şeklinde önde: kürek kemiklerini aşağı-geri çekip kolları kaldır, 2 saniye tut, 5 tekrar. Sonra kollar T şeklinde yana, başparmaklar yukarı, 5 tekrar. Boynunu uzat.'],
+POS1[6]];
+const ROUT={kolay:{n:'Arka bacak rutini',get s(){return mobE()}},tam:{n:'Tam rutin',s:MOB},pk:{n:'Postür, kısa',s:POS1,lg:'posLog'},pu:{n:'Postür, uzun',s:POS2,lg:'posLog'}};
 const mobMin=k=>Math.round(ROUT[k].s.reduce((a,x)=>a+x[1],0)/60),mobS=()=>ROUT[V.mob&&V.mob.k||'kolay'].s;
-// Seri: bugünden (bugün yapılmadıysa dünden) geriye kesintisiz yapılan gün sayısı.
-function mobStreak(){const ml=S.mobLog||{};let n=0,i=ml[dkey()]?0:1;while(ml[dayK(i)]){n++;i++}return n}
+// Seri: bugünden (bugün yapılmadıysa dünden) geriye kesintisiz yapılan gün sayısı. lg: hangi rutinin kaydı (bel: mobLog, postür: posLog).
+function mobStreak(lg='mobLog'){const ml=S[lg]||{};let n=0,i=ml[dkey()]?0:1;while(ml[dayK(i)]){n++;i++}return n}
+function posCard(){if(S.noPos)return'';const ml=S.posLog||{},td=!!ml[dkey()],n7=[...Array(7)].map((_,i)=>dayK(i)).filter(k=>ml[k]).length,st=mobStreak('posLog');
+ return`<div class="card" style="margin-top:10px"><b>Postür: kalça ve omuzlar</b><span class="sub">${td?'Bugün yapıldı. ':''}${st>1?`${st} gündür üst üste. `:''}Son 7 günde ${n7} gün.</span>
+<span class="sub">Öne devrik kalça (anterior pelvik tilt) ve öne düşük omuzlar için: kalça önü ve göğüs esnetme, kalça, karın ve sırt güçlendirme.</span>
+<div class="two" style="margin-top:4px"><button class="btn ${td?'alt':''}" data-a="mob" data-v="pk">Kısa, ${mobMin('pk')} dk</button><button class="btn alt" data-a="mob" data-v="pu">Uzun, ${mobMin('pu')} dk</button></div></div>`}
 // Haftalık acısız test: sırt üstü, uyluk dik; dizi ne kadar açılabiliyor (0-3).
 const HAMT=['Yarıdan az','Yarıya kadar','Neredeyse düz','Tamamen düz'];
-function mobCard(){if(S.noMob)return'';const ml=S.mobLog||{},td=!!ml[dkey()],n7=[...Array(7)].map((_,i)=>dayK(i)).filter(k=>ml[k]).length,st=mobStreak();
+function mobCard(){if(S.noMob){const p=posCard();return p?'<div class="lab">Esneme</div>'+p:''}const ml=S.mobLog||{},td=!!ml[dkey()],n7=[...Array(7)].map((_,i)=>dayK(i)).filter(k=>ml[k]).length,st=mobStreak();
  return`<div class="lab">Esneme</div><div class="card"><b>Bel ve arka bacak</b><span class="sub">${td?'Bugün yapıldı. ':''}${st>1?`${st} gündür üst üste. `:''}Son 7 günde ${n7} gün.</span>
 <span class="sub">${hamStage()}</span>${flexLine()}
 <div class="two" style="margin-top:4px"><button class="btn ${td?'alt':''}" data-a="mob" data-v="kolay">Arka bacak, ${mobMin('kolay')} dk</button><button class="btn alt" data-a="mob" data-v="tam">Tam, ${mobMin('tam')} dk</button></div>
-${td?'':'<p class="mut small">İpucu: her gün aynı ana bağla, örneğin dişini fırçaladıktan sonra yatağında. Arka bacak rutini yatakta da yapılır.</p>'}</div>`}
-function mobV(){const m=V.mob;if(!m)return'';const L=mobS(),ml=S.mobLog||{},n7=[...Array(7)].map((_,i)=>dayK(i)).filter(k=>ml[k]).length;
- if(m.fin){const wk=wkKey(Date.now()),T=S.hamT||{},tv=T[wk],prev=Object.keys(T).map(Number).filter(k=>k<wk).sort((a,b)=>b-a)[0],st=mobStreak();
-  return`<h1 class="pt" style="margin-top:14px">Rutin bitti</h1><p class="lead">${m.done.length}/${L.length} hareket, ${dur(Math.round((Date.now()-m.t0)/1000))}. ${st>1?`${st} gündür üst üste.`:`Son 7 günde ${n7} gün.`}</p>
+${td?'':'<p class="mut small">İpucu: her gün aynı ana bağla, örneğin dişini fırçaladıktan sonra yatağında. Arka bacak rutini yatakta da yapılır.</p>'}</div>${posCard()}`}
+function mobV(){const m=V.mob;if(!m)return'';const L=mobS(),lg=ROUT[m.k].lg||'mobLog',ml=S[lg]||{},n7=[...Array(7)].map((_,i)=>dayK(i)).filter(k=>ml[k]).length;
+ if(m.fin){const st=mobStreak(lg),head=`<h1 class="pt" style="margin-top:14px">Rutin bitti</h1><p class="lead">${m.done.length}/${L.length} hareket, ${dur(Math.round((Date.now()-m.t0)/1000))}. ${st>1?`${st} gündür üst üste.`:`Son 7 günde ${n7} gün.`}</p>`;
+  if(lg=='posLog')return`${head}<div class="card"><b>Gün içinde de hatırla</b><p>Duruş en çok uzun oturmalarda bozulur. Saatte bir kalkıp 3-4 kez çene geri çekme ve kapı kasasında göğüs esnetme yapmak, rutinin etkisini artırır. Fark genellikle birkaç haftada hissedilir.</p></div>
+<button class="btn" data-a="home" style="margin-top:14px">Bugün'e dön</button>`;
+  return`${head}
 <div class="card"><b>Esneklik ölçümü</b>${flexLine()}<p>Rutinden hemen sonra, telefonu kaval kemiğine koyarak düz bacak kaldırma açını ölç. İki haftada bir yeterli; hep rutinden sonra ölçersen sayılar kıyaslanabilir.</p><button class="btn alt" data-a="flex" style="margin-top:6px">Telefonla ölç (2 dk)</button></div>
 <button class="btn" data-a="home" style="margin-top:14px">Bugün'e dön</button>`}
  const it=L[m.i],rem=Math.max(0,Math.ceil((m.end-Date.now())/1000)),f=Math.max(0,Math.min(1,rem/it[1]));
  return`<div class="hd"><button class="lnk" data-a="mobx">Bitir</button><span class="mut">${esc(ROUT[m.k].n)}, ${m.i+1}/${L.length}</span></div>
 <h1 class="xt">${esc(it[0])}</h1>${figV(figOf(it[0]))}<p class="focus">${esc(it[2])}</p>
-<div class="ring" style="--pc:var(--c-grn)" role="timer" aria-label="Kalan süre"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="rb" cx="50" cy="50" r="45"/><circle class="rf" id="mtb" cx="50" cy="50" r="45" stroke-dasharray="282.74" style="stroke-dashoffset:${(282.74*(1-f)).toFixed(2)}"/></svg><div class="timer" id="mt">${fmt(rem)}</div></div>
+<div class="ring" style="--pc:var(--red)" role="timer" aria-label="Kalan süre"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="rb" cx="50" cy="50" r="45"/><circle class="rf" id="mtb" cx="50" cy="50" r="45" stroke-dasharray="282.74" style="stroke-dashoffset:${(282.74*(1-f)).toFixed(2)}"/></svg><div class="timer" id="mt">${fmt(rem)}</div></div>
 <p class="nx">Sıradaki: <b>${m.i+1<L.length?esc(L[m.i+1][0]):'bitiş'}</b></p>
 <div class="two"><button class="btn alt" data-a="mobp" ${m.i?'':'disabled'}>‹ Önceki</button><button class="btn" data-a="mobn">${m.i+1<L.length?'Sonraki ›':'Bitir'}</button></div>
 <div class="lab">Rutin, ${m.done.length}/${L.length} tamam</div><div class="list rtl">${L.map((x,i)=>{const ok=m.done.includes(i);return`<button class="li ${i==m.i?'cur':''}" data-a="mobgo" data-i="${i}" ${i==m.i?'aria-current="step"':''}><span class="ck ${ok?'on':''}" aria-hidden="true">${ok?'✓':''}</span><span class="grow">${esc(x[0])}${ok?'<span class="sr"> (tamam)</span>':''}</span><span class="mut">${x[1]} sn</span></button>`}).join('')}</div>
 <p class="mut small">Esneme hafif gerginlik hissettirmeli, ağrı değil; yaylanma yapma, nefesini tutma. Sabah yapıyorsan kalktıktan sonra yarım saat kadar bekle. Ağrı artarsa, bacağa yayılan ağrı, uyuşma ya da güçsüzlük olursa bırak ve bir hekime ya da fizyoterapiste danış.</p>`}
 function mobStep(dir=1){const m=V.mob,L=mobS();if(dir>0&&!m.done.includes(m.i))m.done.push(m.i);const ni=m.i+dir;if(ni>=L.length){mobEnd();return}m.i=Math.max(0,ni);m.end=Date.now()+L[m.i][1]*1000;render()}
-function mobEnd(){const m=V.mob;m.fin=true;if(m.done.length>=Math.ceil(mobS().length/2)){S.mobLog=S.mobLog||{};S.mobLog[dkey()]=m.k=='tam'?2:1;prune(S.mobLog,120);save()}render();window.scrollTo(0,0)}
+function mobEnd(){const m=V.mob,lg=ROUT[m.k].lg||'mobLog';m.fin=true;if(m.done.length>=Math.ceil(mobS().length/2)){S[lg]=S[lg]||{};S[lg][dkey()]=m.k=='tam'||m.k=='pu'?2:1;prune(S[lg],120);save()}render();window.scrollTo(0,0)}
 // Esneme hatırlatması: her gün seçilen saatte takvim etkinliği.
 function icsMob(){const [hh,mm]=(S.mobT||'21:30').split(':').map(Number),p2=n=>String(n).padStart(2,'0'),d=new Date(),stamp=d.toISOString().replace(/[-:]/g,'').slice(0,15)+'Z';
  return['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Antrenman//TR','CALSCALE:GREGORIAN','BEGIN:VEVENT',`UID:esneme-${PROF}@antrenman`,`DTSTAMP:${stamp}`,`DTSTART:${d.getFullYear()}${p2(d.getMonth()+1)}${p2(d.getDate())}T${p2(hh)}${p2(mm)}00`,'DURATION:PT10M','RRULE:FREQ=DAILY','SUMMARY:Esneme: arka bacak rutini','DESCRIPTION:Uygulamada Bugün > Esneme > Arka bacak','BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:Esneme vakti','TRIGGER:PT0M','END:VALARM','END:VEVENT','END:VCALENDAR'].join('\r\n')}
@@ -1796,7 +1917,7 @@ ${dates.length>=2?`<div class="lab">Karşılaştır</div><div class="segm sm" ro
 <div class="phcmp"><select data-a="pha" aria-label="Soldaki tarih">${opt(A)}</select><select data-a="phb" aria-label="Sağdaki tarih">${opt(B)}</select>${img(A)}${img(B)}</div>`:dates.length?'<p class="mut small">Karşılaştırma ikinci ölçüm gününden sonra açılır.</p>':''}
 ${ph.length?`<button class="btn alt" data-a="phsh" style="margin-top:12px">Fotoğrafları Fotoğraflar'a kaydet (${ph.length})</button>`:''}`}
 // ---- Takviye takibi: ana ekranda günlük işaretlenen liste. S.supp listeyi, S.suppLog gün başına işaretlenenleri tutar. ----
-const SUPP0=[['D3 vitamini','Sabah, yağlı öğünle'],['Omega-3','Sabah, yağlı öğünle'],['B12','Sabah'],['Kreatin','Her gün, 3-5 g'],['Berberin','Kahvaltı, yemeğin başında'],['Berberin','Akşam yemeğinin başında'],['Kolajen','Antrenmandan 30-60 dk önce'],['C vitamini','Kolajenle birlikte'],['ZMA','Yatmadan önce, aç karnına']];
+const SUPP0=[['D3 vitamini','Sabah, yağlı öğünle'],['Omega-3','Sabah, yağlı öğünle'],['B12','Sabah'],['Kreatin','Her gün, 3-5 g'],['Berberin','Kahvaltı, yemeğin başında'],['Berberin','Akşam yemeğinin başında'],['Kolajen','Antrenmandan 30-60 dk önce'],['C vitamini','Kolajenle birlikte'],['ZMA','Yatmadan önce, aç karnına'],['Magnezyum','Akşam yemeğiyle']];
 const STIME=['Sabah','Öğle','Akşam','Antrenmandan önce','Yatmadan önce'];
 function suppList(){if(!S.supp)S.supp=SUPP0.map(([n,t],i)=>({id:'s'+i,n,t}));return S.supp}
 function suppCard(){const L=suppList(),dn=(S.suppLog||{})[dkey()]||[],ed=V.sedit;
@@ -1825,7 +1946,7 @@ function dailyCard(){const wm=(S.water||{})[dkey()]||0,g=waterGoal(),sl=todayH('
 <div class="row at"><div class="grow"><span>Bu sabah bel gerginliği${bk!=null?` <b class="n">${bk}/10</b>`:''}</span><div class="segm sm bk" role="group" aria-label="Bel gerginliği, 0 yok, 10 çok fazla">${[...Array(11)].map((_,v)=>`<button class="${bk===v?'on':''}" data-a="bck" data-v="${v}" aria-pressed="${bk===v}">${v}</button>`).join('')}</div>
 <div class="hd mut" style="font-size:12px;margin-top:4px"><span>0 hiç yok</span><span>10 çok fazla</span></div>${bk>=7?`<span class="sub" style="color:var(--err)">Bel bugün çok gergin. Menteşe hareketlerinde (stiff-leg, RDL, hyperextension) kiloyu azalt ya da alternatifine geç; ağrı bacağa yayılıyorsa bırak.</span>`:''}${backHint()}</div></div>
 <div class="row at"><div class="grow"><span>Dün gece uyku${sl?` <b class="n">${fnum(sl.sleep)} saat</b>`:''}</span><div class="segm sm" role="group" aria-label="Uyku süresi, saat">${[5,6,7,8,9].map(v=>`<button class="${sv==v?'on':''}" data-a="slp" data-v="${v}" aria-pressed="${sv==v}">${v==5?'5 ve az':v==9?'9+':v}</button>`).join('')}</div></div></div>
-<div class="row at"><div class="grow"><span>Su <b class="n">${fnum(wm/1000)}</b> / ${fnum(g/1000)} L</span><div class="mbar"><i style="width:${Math.min(100,wm/g*100)}%${wm>=g?';background:var(--up)':''}"></i></div></div><span class="wbtn"><button class="btn alt" data-a="wat" data-v="-250" aria-label="250 ml geri al" ${wm?'':'disabled'}>−</button><button class="btn alt" data-a="wat" data-v="250">+250 ml</button></span></div>
+<div class="row at"><div class="grow"><span>Su <b class="n">${fnum(wm/1000)}</b> / ${fnum(g/1000)} L</span><div class="mbar"><i style="width:${Math.min(100,wm/g*100)}%${wm>=g?';background:var(--fill)':''}"></i></div></div><span class="wbtn"><button class="btn alt" data-a="wat" data-v="-250" aria-label="250 ml geri al" ${wm?'':'disabled'}>−</button><button class="btn alt" data-a="wat" data-v="250">+250 ml</button></span></div>
 <div class="row at"><div class="grow"><span>Kilo${bw?` <b class="n">${fnum(bw.bw)} kg</b> <span class="mut">bugün</span>`:''}</span>${tr?`<span class="sub">${tr}</span>`:'<span class="sub">Her sabah aynı koşulda tartıl; gidişat birkaç kayıttan sonra çıkar.</span>'}</div><span class="wbtn"><input id="bwq" inputmode="decimal" placeholder="kg" aria-label="Bugünkü kilo"><button class="btn alt" data-a="bwq">Kaydet</button></span></div></div>`}
 // ---- Bel günlüğü: S.back[gün] = sabah bel gerginliği 0-10. Her puan bir önceki gün yapılanlarla eşleştirilir. ----
 function backPairs(){const B=S.back||{};return Object.keys(B).map(k=>{const p=new Date(k);p.setDate(p.getDate()-1);const pk=p.toDateString(),hs=S.log.filter(h=>new Date(h.d).toDateString()==pk);
@@ -1860,7 +1981,7 @@ function dailyRep(){let o='';const SL=S.suppLog||{},L=suppList(),ks=Object.keys(
  if(L.length&&ks.length){const first=Math.min(...ks.map(k=>new Date(k).getTime())),n=Math.min(30,Math.floor((new Date(dkey())-first)/864e5)+1);
   const rows=L.map(x=>{let c=0;for(let i=0;i<n;i++)if((SL[dayK(i)]||[]).includes(x.id))c++;return{x,c}}),miss=rows.filter(r=>r.c<n*0.7).sort((a,b)=>a.c-b.c);
   o+=`<div class="lab">Takviye uyumu, son ${n} gün</div><div class="list">${rows.map(({x,c})=>`<div class="row at"><div class="grow"><span>${esc(x.n)}<span class="sub">${esc(x.t)}</span></span><span class="dots" aria-hidden="true">${[...Array(Math.min(14,n))].map((_,i)=>`<i class="${(SL[dayK(Math.min(14,n)-1-i)]||[]).includes(x.id)?'on':''}"></i>`).join('')}</span></div><span class="v"><b class="n">${c}/${n}</b><span class="sub">gün</span></span></div>`).join('')}</div>
-<p class="mut small">Kareler son ${Math.min(14,n)} günü soldan sağa gösterir; yeşil aldığın günler.${miss.length?` En sık unuttukların: ${miss.slice(0,3).map(r=>esc(r.x.n+' ('+r.x.t.toLocaleLowerCase('tr')+')')).join(', ')}.`:''}</p>`}
+<p class="mut small">Kareler son ${Math.min(14,n)} günü soldan sağa gösterir; dolu kareler aldığın günler.${miss.length?` En sık unuttukların: ${miss.slice(0,3).map(r=>esc(r.x.n+' ('+r.x.t.toLocaleLowerCase('tr')+')')).join(', ')}.`:''}</p>`}
  const ml=S.mobLog||{},hT=S.hamT||{};if(Object.keys(ml).length||Object.keys(hT).length){const wks=perKeys('w',8),cnt=k=>Object.keys(ml).filter(d=>wkKey(d)==k).length,last=wks.filter(k=>hT[k]!=null);
   o+=`<div class="lab">Esneme, son 8 hafta</div><div class="list"><div class="row"><span>Bu hafta</span><span class="v"><b class="n">${cnt(wks[7])} gün</b><span class="sub">${mobStreak()>1?mobStreak()+' gündür üst üste':'seri yok'}</span></span></div>${last.length?`<div class="row at"><div class="grow"><span>Arka bacak testi</span><span class="sub">${last.map(k=>perLab('w',k)+': '+HAMT[hT[k]]).join(', ')}</span></div><span class="v"><b class="n">${HAMT[hT[last[last.length-1]]]}</b><span class="sub">son test</span></span></div>`:''}${table(['Hafta','Gün','Test'],wks.map(k=>[perLab('w',k),cnt(k),hT[k]!=null?HAMT[hT[k]]:'-']))}</div>
 <p class="mut small">Test, sırt üstü yatıp uyluk dikken dizin ne kadar açıldığı. Esneklik haftalar içinde yavaş artar; düzenli yaptığın sürece küçük adımlar da ilerlemedir.</p>`}
@@ -1955,7 +2076,7 @@ function readiness(){if(S.log.length<3)return null;const now=Date.now(),d7=now-7
  const sl=[...(S.health||[])].reverse().find(x=>x.sleep&&now-new Date(x.d)<2*864e5);if(sl&&sl.sleep<7){sc-=sl.sleep<6?15:5;why.push(`uyku ${fnum(sl.sleep)} saat`)}
  const last=S.log[S.log.length-1];if(last&&now-new Date(last.d)<20*3600e3&&setCount(last.log)>=20){sc-=8;why.push('dün yoğun bir antrenman yaptın')}
  sc=Math.max(0,Math.min(100,Math.round(sc)));return{sc,lv:sc>=80?'iyi':sc>=60?'orta':'düşük',why}}
-function readyCard(){const r=readiness();if(!r)return'';return`<div class="ready"><div class="hd"><span>Hazır olma</span><b>${r.sc}<small>/100</small></b></div><div class="mbar"><i style="width:${r.sc}%;background:${r.sc>=80?'var(--up)':r.sc>=60?'var(--yel)':'var(--err)'}"></i></div>
+function readyCard(){const r=readiness();if(!r)return'';return`<div class="ready"><div class="hd"><span>Hazır olma</span><b>${r.sc}<small>/100</small></b></div><div class="mbar"><i style="width:${r.sc}%;background:${r.sc>=80?'var(--fill)':r.sc>=60?'var(--yel)':'var(--err)'};opacity:${r.sc>=80?1:r.sc>=60?.75:.5}"></i></div>
 <p class="mut small">${r.why.length?r.why.join('; ')+'.':'Yorgunluk belirtisi yok, normal antrenman yapabilirsin.'}${r.sc<60?' Bugün hafif çalışmayı düşün.':''}</p>${r.sc<60&&!dlOn()?'<button class="btn alt" data-a="dlon" style="margin-top:8px">Bu haftayı hafif (deload) yap</button>':''}</div>`}
 // ---- Haftalık plan: her günün antrenmanı ve haftanın kas grubu başına planlanan set sayısı ----
 function wplanV(){const sc=eff(),tot={};const days=DAYL.map((dn,i)=>{const w=sc[i],cz=czOn(i)?`Kardiyo ${S.cz.min} dk, nabız ${S.cz.lo}-${S.cz.hi}`:'';if(!w||!S.w[w])return`<div class="row"><span class="mut">${dn}</span><span class="v">${cz||'Dinlenme'}</span></div>`;const aw=adjEx(w),m=musLoad(aw);Object.entries(m).forEach(([k,v])=>tot[k]=(tot[k]||0)+v);
@@ -1997,12 +2118,16 @@ function goalBar(sc){const plan=sc.filter(x=>x&&S.w[x]).length;if(!plan)return''
 // ---- Tema rengi: birincil butonlar ve vurgulu kartlar seçilen plaka rengini alır ----
 // "Günün rengi" (varsayılan): vurgular o günün antrenmanının plaka rengini alır; dinlenme günü nötr kalır.
 const ACC={day:['Günün rengi','conic-gradient(#C4122F 0 25%,#1C4E9D 0 50%,#F0BE00 0 75%,#1B7A47 0)',null],ink:['Siyah',null,null],red:['Kırmızı','#C4122F','#fff'],blue:['Mavi','#1C4E9D','#fff'],yel:['Sarı','#F0BE00','#15171A'],grn:['Yeşil','#1B7A47','#fff']};
+// Kırmızı tonları paletinde gün renklerinin karşılıkları (varsayılan palet). S.pal=='classic' eski dört rengi kullanır.
+const ACC_R={day:['Günün rengi','conic-gradient(#C4122F 0 25%,#7B1730 0 50%,#D1451B 0 75%,#A3195B 0)',null],blue:['Bordo','#7B1730','#fff'],yel:['Kiremit','#D1451B','#fff'],grn:['Vişne','#A3195B','#fff']};
+const palRed=()=>!S||S.pal!='classic',accOf=k=>(palRed()&&ACC_R[k])||ACC[k];
+const PALS=[['red','Kırmızı tonları'],['classic','Klasik (4 renk)']];
 // Tema: sistem, açık, koyu ya da OLED siyah. Durum çubuğu rengi (theme-color) seçilen zemine uyar.
 const THEMES=[['sys','Sistem'],['light','Açık'],['dark','Koyu'],['oled','Siyah']],TCOL={light:'#E9EAEC',dark:'#111315',oled:'#000000'};
-function applyTheme(){const t=S&&S.theme||'sys',root=document.documentElement;if(t=='sys')delete root.dataset.theme;else root.dataset.theme=t;
+function applyTheme(){const t=S&&S.theme||'sys',root=document.documentElement;if(t=='sys')delete root.dataset.theme;else root.dataset.theme=t;if(palRed())root.dataset.pal='red';else delete root.dataset.pal;
  document.querySelectorAll('meta[name=theme-color]').forEach(m=>{const light=/light/.test(m.media);m.content=t=='sys'?(light?TCOL.light:TCOL.dark):TCOL[t]})}
-function dayAcc(){if(!PROF||!S.w)return ACC.ink;const w=eff()[today()];return S.w[w]&&ACC[pc(w)]||ACC.ink}
-function applyAccent(){applyTheme();const k=S&&S.accent||'day',a=k=='day'?dayAcc():ACC[k]||ACC.ink,st=document.documentElement.style;if(a[1]){st.setProperty('--pri',a[1]);st.setProperty('--onpri',a[2])}else{st.removeProperty('--pri');st.removeProperty('--onpri')}}
+function dayAcc(){if(!PROF||!S.w)return ACC.ink;const w=eff()[today()];return S.w[w]&&accOf(pc(w))||ACC.ink}
+function applyAccent(){applyTheme();const k=S&&S.accent||'day',a=k=='day'?dayAcc():accOf(k)||ACC.ink,st=document.documentElement.style;if(a[1]){st.setProperty('--pri',a[1]);st.setProperty('--onpri',a[2])}else{st.removeProperty('--pri');st.removeProperty('--onpri')}}
 // ---- Akıllı dinlenme: setin zorluğuna göre programdaki dinlenme süresini uzatır ya da kısaltır ----
 function smartRest(e,base,rpe,reps){if(S.noSmartRest||isTimed(e))return{sec:base,why:''};const rg=repRange(e.reps);let d=0,w='';
  if(rpe>=10){d=30;w='Tükenişe giden bir setti'}else if(rpe>=9.5){d=20;w='Tükenişe çok yakın bir setti'}else if(rpe>=9){d=15;w='Zor bir setti'}else if(rg&&reps&&reps<rg[0]){d=30;w='Hedef tekrarın altında kaldın'}else if(rpe&&rpe<=7&&base>60){d=-15;w='Rahat bir setti'}
@@ -2239,7 +2364,7 @@ if(r.done){const n=setCount(r.log),pr=prsOf(r.log,r.li??S.log.length);return`<h1
 ${(()=>{const st=stalled(r.log,r.li??S.log.length);return st.length?`<div class="card" style="margin:0 0 14px"><b>İlerlemeyen hareket${st.length>1?'ler':''}</b><p>${st.map(esc).join(', ')}: son 3 antrenmandır ne kilo ne tekrar arttı. Birkaç gün daha iyi dinlenmeyi, bir hafif hafta (deload) yapmayı ya da bu hareket için alternatiflerden birini denemeyi düşün.</p></div>`:''})()}
 <button class="btn alt" data-a="shimg" style="margin:0 0 14px">Özeti görsel olarak paylaş</button><div class="list">${r.log.map(l=>`<div class="row at"><div class="grow"><b>${esc(l.n)}</b>${trend(l,r.li)}</div><span class="v">${lr(l)}</span></div>`).join('')}</div><p class="mut" style="font-size:13px">Oklar her hareketin en iyi setini, o hareketin bir önceki yapılışıyla kıyaslar.</p><button class="btn alt" data-a="cool">Soğuma ve esneme rutini (5 dk)</button><button class="btn alt" data-a="hpaste">Nabız verisini yapıştır (Kestirme)</button><button class="btn alt" data-a="pick">Kardiyo ekle</button><button class="btn" data-a="home">Ana ekrana dön</button>`}
 const head=`<div class="rh"><button class="lnk" data-a="quit">Bitir</button><span class="clk">${r.t0?`<span id="el">${fmtE(elapsed(r))}</span>`:''}</span><span class="rn">${r.ei+1}/${ex.length}</span></div><div class="prog ${p}"><i style="width:${r.ei/ex.length*100}%"></i></div>`;
-if(r.phase=='rest'){const rem=Math.ceil((r.end-Date.now())/1000);return head+`<div class="lab">Dinlenme</div>${r.rwhy?`<p class="mut small" style="margin:-4px 0 0">${esc(r.rwhy)}.</p>`:''}<div class="ring ${p}" role="timer" aria-label="Kalan dinlenme"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="rb" cx="50" cy="50" r="45"/><circle class="rf" id="tb" cx="50" cy="50" r="45" stroke-dasharray="282.74" style="stroke-dashoffset:${(282.74*(1-(r.rt?Math.max(0,Math.min(1,rem/r.rt)):0))).toFixed(2)}"/></svg><div class="timer" id="t">${fmt(rem)}</div></div><p class="nx">Sıradaki: <b>${esc(nextOf(r))}</b></p><div class="two"><button class="btn alt" data-a="add" data-v="-15">−15 sn</button><button class="btn alt" data-a="add" data-v="15">+15 sn</button></div><button class="btn" data-a="skip">Dinlenmeyi geç</button>${planList(r)}`}
+if(r.phase=='rest'){const rem=Math.ceil((r.end-Date.now())/1000);return head+`<div class="lab">Dinlenme</div>${r.rwhy?`<p class="mut small" style="margin:-4px 0 0">${esc(r.rwhy)}.</p>`:''}<div class="ring ${p}" role="timer" aria-label="Kalan dinlenme"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="rb" cx="50" cy="50" r="45"/><circle class="rf" id="tb" cx="50" cy="50" r="45" stroke-dasharray="282.74" style="stroke-dashoffset:${(282.74*(1-(r.rt?Math.max(0,Math.min(1,rem/r.rt)):0))).toFixed(2)}"/></svg><div class="timer" id="t">${fmt(rem)}</div></div>${nextCard(r)}<div class="two"><button class="btn alt" data-a="add" data-v="-15">−15 sn</button><button class="btn alt" data-a="add" data-v="15">+15 sn</button></div><button class="btn" data-a="skip">Dinlenmeyi geç</button>${quoteCard()}${planList(r)}`}
 const cn=mcn(r,r.ei,e),pv=prevOf(cn,S.log.length,tgtR(e)),lw=S.last[cn+'|'+e.reps]||S.last[cn]||{},tq=techNow(r.w,r.ei,e,r.si),sg=suggest(e,cn,r.si,pv),kv=r.dkg??(sg?String(sg.kg):lw.kg)??'';
 return head+msg()+`<h1 class="xt">${exl(cn)}</h1>${FOCUS[e.n]?`<p class="focus">Odak: ${esc(FOCUS[e.n])}</p>`:''}${vidL(cn)}${mPick(r,e)}${chips(e)}
 <p class="goal"><b>${r.si+1}. set</b><span class="of">/ ${e.sets}</span><span class="tg">Hedef ${esc(e.reps)}${isTimed(e)?(/\d$/.test(e.reps)?' sn':''):' tekrar'}${esc(target(r.w,r.ei,e,r.si))}</span></p>
@@ -2547,6 +2672,10 @@ if(a=='eq'){const l=S.noEq||[];S.noEq=l.includes(d.v)?l.filter(x=>x!=d.v):[...l,
 if(a=='gym'){gymUse(d.v);save();render();return}
 if(a=='va'||a=='build'){V.view=a;if(a=='build')V.bd=V.bd||bdDef();render();window.scrollTo(0,0);return}
 if(a=='vid'){vidOpen(d.v,d.n,d.c);return}
+if(a=='pal'){S.pal=d.v;save();render();return}
+if(a=='qnext'){if(V.run){V.run.qi=quoteNext();save()}render();return}
+if(a=='noquote'){S.noQuote=!S.noQuote;save();render();return}
+if(a=='nopos'){S.noPos=!S.noPos;save();render();return}
 if(a=='mch'){const r=V.run;if(!r)return;const e=RX(r)[r.ei];r.mb=r.mb||{};r.mb[r.ei]=d.v;S.mlast=S.mlast||{};S.mlast[S.gym+'|'+nm(e)]=d.v;
  const l=r.log.find(x=>x.ei==r.ei);if(l)l.n=mcn(r,r.ei,e);delete r.dkg;delete r.drp;save();render();return}
 if(a=='massign'){const n=d.n,b=d.v;let c=0;S.log.forEach(h=>h.log.forEach(l=>{if(!l.cardio&&l.n==n){l.n=n+MSEP+b;c++}}));V.exn=n+MSEP+b;V.msg=`${c} eski kayıt ${b} makinesine atandı.`;save();render();return}
