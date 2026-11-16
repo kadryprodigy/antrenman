@@ -1163,9 +1163,11 @@ if((s.v||0)<5){if(!s.cz)s.cz=czDef(s.sched);s.v=5}
 if((s.v||0)<6){if(!s.mbr)s.mbr={[s.gym||'Salon']:{cable:['Matrix','Life Fitness'],mach:['Hammer Strength','Life Fitness']}};s.v=6}
 // v7: takviyelere magnezyum (akşam yemeğiyle; ZMA'dan ayrı saatte). Liste hiç oluşmadıysa varsayılan listeden gelir.
 if((s.v||0)<7){if(Array.isArray(s.supp)&&!s.supp.some(x=>/magnez/i.test(x.n)))s.supp.push({id:'smg',n:'Magnezyum',t:'Akşam yemeğiyle'});s.v=7}
+// v8: glisin (uyku için, yatmadan 30-60 dk önce 3 g).
+if((s.v||0)<8){if(Array.isArray(s.supp)&&!s.supp.some(x=>/glisin|glycine/i.test(x.n)))s.supp.push({id:'sgl',n:'Glisin',t:'Yatmadan 30-60 dk önce, 3 g'});s.v=8}
 return s}
 function load(){try{const s=KEY&&JSON.parse(localStorage.getItem(KEY));if(s&&s.w)return mig(s)}catch(e){}
-const sched=['Upper','Lower','','Push','Pull','',''];return{_new:1,v:7,prog:'ulppl',week:1,sched,cz:czDef(sched),mbr:{Salon:{cable:['Matrix','Life Fitness'],mach:['Hammer Strength','Life Fitness']}},w:clone(DEF),last:{},log:[]}}
+const sched=['Upper','Lower','','Push','Pull','',''];return{_new:1,v:8,prog:'ulppl',week:1,sched,cz:czDef(sched),mbr:{Salon:{cable:['Matrix','Life Fitness'],mach:['Hammer Strength','Life Fitness']}},w:clone(DEF),last:{},log:[]}}
 function save(){if(!KEY)return;cbDirty=1;try{S.run=V.run&&V.view=='run'&&(!V.run.done||V.run.mode)?V.run:null;localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 const today=()=>(new Date().getDay()+6)%7;
 let S=load(),V={view:'splash',day:today(),run:null},actx=null,P={list:[],last:''};
@@ -1183,9 +1185,9 @@ const same=(w,i,e)=>DEF[w]&&DEF[w][i]&&DEF[w][i].n==e.n;
 const rirOf=(w,i,e)=>isU()&&phase()&&WR[w]&&same(w,i,e)?WR[w][i]:e.rir;
 const techOf=(w,i,e)=>isU()?(phase()==2&&TECH[w]&&same(w,i,e)?TECH[w][i]||'':''):(e.tech||'');
 // Set hedefi: ULPPL'de RIR, diğer programlarda RPE ("erken|son" biçiminde) ve varsa %1RM.
-function target(w,i,e,si){if(isU()){const rr=rirOf(w,i,e);return rr&&rr[si]!=null?', RIR '+rr[si]:''}
+function target(w,i,e,si){if(rtOn())return', RIR '+RT_RIR[rtWk()-1];if(isU()){const rr=rirOf(w,i,e);return rr&&rr[si]!=null?', RIR '+rr[si]:''}
  const pr=(e.rpe||'').split('|'),v=pr.length>1?(si==e.sets-1?pr[1]:pr[0]):pr[0];return(v?', RPE '+v:'')+(e.pct?', 1RM\'in %'+e.pct+'\'i':'')}
-const techNow=(w,i,e,si)=>isU()?(si==e.sets-1?techOf(w,i,e):''):(e.tech&&(e.techAll||si==e.sets-1)?e.tech:'');
+const techNow=(w,i,e,si)=>rtOn()?'':isU()?(si==e.sets-1?techOf(w,i,e):''):(e.tech&&(e.techAll||si==e.sets-1)?e.tech:'');
 const fmt=s=>{s=Math.max(0,s);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
 const fmtE=s=>{s=Math.max(0,Math.floor(s));const h=Math.floor(s/3600);return h?h+':'+String(Math.floor(s%3600/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0'):fmt(s)};
 const dur=s=>{if(!s)return'';const m=Math.max(1,Math.round(s/60));return m<60?m+' dk':Math.floor(m/60)+' sa '+(m%60)+' dk'};
@@ -1330,7 +1332,7 @@ return`<div class="hd"><span class="date">${today8()}</span>${nWk()>1?`<select i
 <button class="lnk" data-a="progs" style="padding:2px 0 6px;text-align:left">${esc(PROG().name)}</button>
 ${wks()}${isU()&&S.week%6==1?'<p class="wkn">Tanıtım haftası.</p>':''}${(PROG().wnotes||{})[S.week]?`<p class="wkn">${esc(PROG().wnotes[S.week])}</p>`:''}${msg()}
 ${S.log.length&&(!S.lastBk||Date.now()-S.lastBk>7*864e5)?`<div class="tip hd" style="margin-top:14px"><span>${S.lastBk?`Son yedeğin ${Math.floor((Date.now()-S.lastBk)/864e5)} gün önce.`:'Henüz yedek almadın.'} Kayıtların sadece bu telefonda.</span><button class="lnk" data-a="exp">Yedekle</button></div>`:''}
-${dlOn()?`<div class="card"><div class="hd"><b>Bu hafta hafif (deload) hafta</b><button class="lnk" data-a="dloff">İptal</button></div><p>Her hareketten bir set eksik yapılır, kilo önerileri normalin %85'i olur. Gelecek pazartesi kendiliğinden normale döner.</p></div>`:''}${S.pdone?`<div class="card"><div class="hd"><b>${esc(PROG().name)} bitti</b><button class="lnk" data-a="pdok">Kapat</button></div><p>${nWk()} haftanın hepsini tamamladın. Devam etmek için sana uygun programlar aşağıda; istersen haftayı başa alıp aynı programı tekrarlayabilirsin.</p>${sugV('Sıradaki program için öneriler')}</div>`:''}${readyCard()}${vaCard()}${checkinCard()}${bodyCard()}${summaryCard()}${recovery(sc,td)}
+${rtCard()}${dlOn()?`<div class="card"><div class="hd"><b>Bu hafta hafif (deload) hafta</b><button class="lnk" data-a="dloff">İptal</button></div><p>Her hareketten bir set eksik yapılır, kilo önerileri normalin %85'i olur. Gelecek pazartesi kendiliğinden normale döner.</p></div>`:''}${S.pdone?`<div class="card"><div class="hd"><b>${esc(PROG().name)} bitti</b><button class="lnk" data-a="pdok">Kapat</button></div><p>${nWk()} haftanın hepsini tamamladın. Devam etmek için sana uygun programlar aşağıda; istersen haftayı başa alıp aynı programı tekrarlayabilirsin.</p>${sugV('Sıradaki program için öneriler')}</div>`:''}${readyCard()}${vaCard()}${checkinCard()}${bodyCard()}${summaryCard()}${recovery(sc,td)}
 ${S.dlSeen!=monKey()&&needDeload()?`<div class="card"><div class="hd"><b>Hafif hafta (deload) önerisi</b><button class="lnk" data-a="dlok">Tamam</button></div><p>Son bir haftada hareketlerinin çoğu önceki en iyinin altında kaldı; yorgunluk birikmiş olabilir. Bu hafta ağırlıkları yaklaşık %15 azalt, her hareketten bir set eksik yap ve setleri tükenişten 3-4 tekrar önce bırak.</p>${dlOn()?'':'<button class="btn alt" data-a="dlon">Bu haftayı hafif yap</button>'}</div>`:''}
 ${(()=>{const rs=resumable();return rs?`<div class="card"><b>Yarım kalan ${esc(rs.h.w)}</b><p>${esc(nm(S.w[rs.h.w][rs.ei]))}, ${rs.si+1}. setten devam edebilirsin.</p><button class="btn" data-a="resume">Kaldığın yerden devam et</button></div>`:''})()}
 <div class="hd lab"><span>Bugün</span>${ex.length?`<button class="lnk" data-a="post" data-i="${td}">Ertele</button>`:''}</div>
@@ -1560,7 +1562,7 @@ const repRange=s=>{const m=String(s).match(/(\d+)\s*[-–]\s*(\d+)/);if(m)return
 const bestE1=n=>Math.max(0,...S.log.flatMap(h=>h.log.filter(l=>!l.cardio&&l.n==n).map(e1)));
 const isBar=n=>/barbell|bench press|back squat|front squat|box squat|anderson|deadlift|rdl|good morning|overhead press|military|pendlay|ez-bar|t-bar|shrug|pin |close-grip bench|skull/i.test(n)&&!/dumbbell|\bdb\b|machine|cable|goblet|bulgarian|smith/i.test(n);
 // Öneri tekrar sayısını da içerir: ağırlık değiştiyse aralığın alt ucu, aynı ağırlıkta bir tekrar fazlası (üst sınıra kadar).
-function suggest(e,cn,si,pv){const s=suggest0(e,cn,si,pv),rg=repRange(e.reps);
+function suggest(e,cn,si,pv){if(!(V.run&&V.run.dl)){const rs=rtSug(e,cn);if(rs)return rs}const s=suggest0(e,cn,si,pv),rg=repRange(e.reps);
  if(s&&V.run&&V.run.dl){s.kg=(isBar(cn)?r25:r05)(s.kg*0.85);s.why='Hafif hafta, normal önerinin %85\'i';if(rg)s.rp=rg[0];return s}
  if(!s||!rg||isTimed(e))return s;
  const ss=pv?pv.l.s.filter(x=>!x.skip):[],ps=ss.length?ss[Math.min(si,ss.length-1)]:null,pk=ps?num(ps.kg):0,pr=ps?num(ps.r):0;
@@ -1919,7 +1921,7 @@ ${dates.length>=2?`<div class="lab">Karşılaştır</div><div class="segm sm" ro
 <div class="phcmp"><select data-a="pha" aria-label="Soldaki tarih">${opt(A)}</select><select data-a="phb" aria-label="Sağdaki tarih">${opt(B)}</select>${img(A)}${img(B)}</div>`:dates.length?'<p class="mut small">Karşılaştırma ikinci ölçüm gününden sonra açılır.</p>':''}
 ${ph.length?`<button class="btn alt" data-a="phsh" style="margin-top:12px">Fotoğrafları Fotoğraflar'a kaydet (${ph.length})</button>`:''}`}
 // ---- Takviye takibi: ana ekranda günlük işaretlenen liste. S.supp listeyi, S.suppLog gün başına işaretlenenleri tutar. ----
-const SUPP0=[['D3 vitamini','Sabah, yağlı öğünle'],['Omega-3','Sabah, yağlı öğünle'],['B12','Sabah'],['Kreatin','Her gün, 3-5 g'],['Berberin','Kahvaltı, yemeğin başında'],['Berberin','Akşam yemeğinin başında'],['Kolajen','Antrenmandan 30-60 dk önce'],['C vitamini','Kolajenle birlikte'],['ZMA','Yatmadan önce, aç karnına'],['Magnezyum','Akşam yemeğiyle']];
+const SUPP0=[['D3 vitamini','Sabah, yağlı öğünle'],['Omega-3','Sabah, yağlı öğünle'],['B12','Sabah'],['Kreatin','Her gün, 3-5 g'],['Berberin','Kahvaltı, yemeğin başında'],['Berberin','Akşam yemeğinin başında'],['Kolajen','Antrenmandan 30-60 dk önce'],['C vitamini','Kolajenle birlikte'],['ZMA','Yatmadan önce, aç karnına'],['Magnezyum','Akşam yemeğiyle'],['Glisin','Yatmadan 30-60 dk önce, 3 g']];
 const STIME=['Sabah','Öğle','Akşam','Antrenmandan önce','Yatmadan önce'];
 function suppList(){if(!S.supp)S.supp=SUPP0.map(([n,t],i)=>({id:'s'+i,n,t}));return S.supp}
 function suppCard(){const L=suppList(),dn=(S.suppLog||{})[dkey()]||[],ed=V.sedit;
@@ -2032,6 +2034,34 @@ function shorten(ex,T){if(!T)return{ex,note:''};const s0=ex.reduce((a,e)=>a+(+e.
  return{ex,note:`${full} dakikadan yaklaşık ${Math.round(E())} dakikaya indirildi: ${parts.join(', ')||'değişiklik yok'}.${E()>T+3?' Daha fazla kısaltmak ana hareketleri bozacağı için burada durdum.':''}`}}
 // ---- Hafif (deload) hafta: bu hafta her hareketten bir set eksik, kilo önerileri %85 ----
 const dlOn=()=>S.dl==monKey();
+// ---- Geri dönüş modu: uzun aradan sonra 4 haftalık kademeli dönüş ----
+// Hafta 1-2: haftada 3 antrenman (1. hafta Üst/Alt/Push, 2. hafta Pull/Alt/Üst), 20 tekrarlık back-off setleri yok, kardiyo haftada 2 gün.
+// Set hacmi %50/%70/%85/%100, hedef RIR 3-4/3/2/1-2, kilo önerisi aradan önceki kilonun %80/%88/%95/%100'ü. Boyun bloğu 3. haftada başlar.
+const RT_PCT=[.8,.88,.95,1],RT_RIR=['3-4','3','2','1-2'],RT_VOL=[.5,.7,.85,1];
+const RT_SCHED=[['Upper','','Lower','','Push','',''],['Pull','','Lower','','Upper','',''],null,null];
+const RT_TXT=['3 antrenman (Üst, Alt, Push), yaklaşık yarı set, tükenişe gitme. Kilolar aradan önceki kilonun %80\'i.','3 antrenman (Pull, Alt, Üst), set hacmi %70. Kilolar %88.','4 antrenman, set hacmi %85, kilolar %95. Boyun bloğu başlar.','4 antrenman, tam hacim, kilolar %100. Sonra normal ilerleme.'];
+const rtRaw=()=>S.rt&&S.rt.on?Math.round((monTime()-S.rt.t0)/(7*864e5))+1:0;
+const rtOn=()=>{const k=rtRaw();return k>=1&&k<=4};
+const rtWk=()=>Math.min(4,Math.max(1,rtRaw()));
+function rtAdj(ex){const k=rtWk()-1,f=RT_VOL[k];let L=ex.map(e=>({...e}));
+ if(k<2)L=L.filter(e=>String(e.reps)!=='20');
+ L.forEach(e=>{if(!isTimed(e)&&!isNeck(e.n))e.sets=Math.max(1,Math.round((+e.sets||1)*f))});return L}
+function rtSug(e,cn){if(!rtOn()||!S.rt.base||isNeck(cn)||isTimed(e)||/bird dog|plank/i.test(cn))return null;
+ const rg=repRange(e.reps),b=num((S.rt.base[cn+'|'+e.reps]||S.rt.base[cn]||{}).kg);if(!b)return null;const p=RT_PCT[rtWk()-1];
+ return{kg:(isBar(cn)?r25:r05)(b*p),why:`Geri dönüş ${rtWk()}. hafta: aradan önceki kilonun %${Math.round(p*100)}'i`,...(rg?{rp:rg[0]}:{})}}
+function rtStart(){S.rt={on:1,t0:monTime(),base:clone(S.last||{}),sched:(S.sched||[]).slice(),cz:S.cz?{d:S.cz.d.slice(),min:S.cz.min}:null};
+ S.week=1;S.wkAt=monTime();S.plan=null;S.dl=null;rtSync()}
+function rtSync(){const r=S.rt;if(!r||!r.on)return;const k=rtRaw();if(k>4||k<1){rtnEnd();return}
+ if(r.ap===k)return;r.ap=k;S.plan=null;
+ if(isU()){const sc=RT_SCHED[k-1];S.sched=(sc||r.sched).slice()}
+ if(S.cz&&r.cz){S.cz.d=k<=2?[0,0,0,0,0,1,1]:r.cz.d.slice();S.cz.min=k<=2?35:r.cz.min}
+ if(k==3&&S.neck)S.neck.t0=Date.now();
+ V.msg=`Geri dönüş modu, ${k}. hafta: `+RT_TXT[k-1];save()}
+function rtnEnd(){const r=S.rt;if(!r)return;if(r.sched)S.sched=r.sched.slice();if(S.cz&&r.cz){S.cz.d=r.cz.d.slice();S.cz.min=r.cz.min}
+ r.on=0;S.plan=null;V.msg='Geri dönüş modu bitti, normal programına döndün.';save()}
+function rtCard(){const gap=S.log.length?Math.floor((Date.now()-new Date(S.log[S.log.length-1].d))/864e5):0;
+ if(rtOn()){const k=rtWk();return`<div class="card"><div class="hd"><b>Geri dönüş modu: ${k}. hafta / 4</b><button class="lnk" data-a="rtoff">Kapat</button></div><p>${RT_TXT[k-1]}</p><p class="mut small">Hedef RIR ${RT_RIR[k-1]}${k<3?'. 20 tekrarlık back-off setleri bu 2 haftada yok, kardiyo haftada 2 gün':''}.</p></div>`}
+ if(isU()&&gap>=14&&S.rtNo!=monKey())return`<div class="card"><div class="hd"><b>${gap} gündür antrenman yok</b><button class="lnk" data-a="rtno">Şimdi değil</button></div><p>Geri dönüş modu 4 haftada set sayısını ve kiloları kademeli artırır; ilk 2 hafta haftada 3 antrenman yaptırır.</p><button class="btn" data-a="rton">Geri dönüş modunu başlat</button></div>`;return''}
 // ---- İleriye dönük kilo tahmini: son 12 haftadaki tahmini 1RM'e doğrusal eğilim ----
 function projV(ss){const now=Date.now(),pts=ss.filter(({h})=>now-new Date(h.d)<84*864e5).slice(-10).map(({h,l})=>[(new Date(h.d)-now)/864e5,e1(l),best(l).r]);
  if(pts.length<4||pts[pts.length-1][0]-pts[0][0]<14)return`<p class="mut small">Kilo tahmini için son 12 haftada bu hareketi en az 4 kez, 2 haftaya yayılmış şekilde yapman gerekiyor.</p>`;
@@ -2192,13 +2222,13 @@ function neckDef(sc){const ds=[0,1,2,3,4,5,6].filter(i=>sc[i]&&S.w[sc[i]]);if(ds
 function neckCfg(){const sc=S.sched||[],ws=[...new Set(sc.filter(w=>w&&S.w[w]))];let c=S.neck;
  if(!c||!Array.isArray(c.w))c=S.neck={on:1,side:0,t0:Date.now(),w:neckDef(sc)};
  c.w=c.w.filter(w=>ws.includes(w));if(c.on&&!c.w.length&&ws.length)c.w=neckDef(sc);return c}
-const neckOn=w=>!!(S.w&&S.w[w]&&neckCfg().on&&neckCfg().w.includes(w));
+const neckOn=w=>!!(S.w&&S.w[w]&&neckCfg().on&&neckCfg().w.includes(w)&&!(rtOn()&&rtWk()<3));
 const neckWk=()=>Math.max(1,Math.floor((Date.now()-(neckCfg().t0||Date.now()))/(7*864e5))+1);
 function neckEx(){const c=neckCfg(),s=neckWk()<=2?1:2,L=[
  {n:'Lying Neck Extension',wu:'',sets:s,reps:'15-25',rpe:'',rir:[2,2],pct:'',rest:0,alt:['Neck Harness Extension','Band Neck Extension'],note:NK_EXT+NK_SAFE,ss:1,tech:''},
  {n:'Lying Neck Flexion',wu:'',sets:s,reps:'15-25',rpe:'',rir:[2,2],pct:'',rest:60,alt:['Band Neck Flexion'],note:NK_FLX+NK_SAFE,ss:0,tech:''}];
  if(c.side)L.push({n:'Side-Lying Neck Lateral Flexion',wu:'',sets:s,reps:'15-20/taraf',rpe:'',rir:[2,2],pct:'',rest:45,alt:[],note:NK_SIDE+NK_SAFE,ss:0,tech:''});return L}
-const dayEx=w=>neckOn(w)?[...adjEx(w),...neckEx()]:adjEx(w);
+const dayEx=w=>{const x=neckOn(w)?[...adjEx(w),...neckEx()]:adjEx(w);return rtOn()?rtAdj(x):x};
 // Boyun kilo önerisi: başın ağırlığıyla (0 kg) başlanır; üst sınıra ulaşınca 1,25 kg plaka, sonra 1,25 kg adımlarla.
 function neckSug(kg,rp,rg){const st=1.25;if(rp>=rg[1])return{kg:Math.round((kg+st)/st)*st,why:kg?`geçen sefer ${fnum(kg)}×${rp}, üst sınıra ulaştın; ${fnum(st)} kg ekle`:`başının ağırlığıyla ${rp} tekrar yaptın; ${fnum(st)} kg plakayla başla (havluyla)`};
  if(!kg)return{kg:0,why:`şimdilik başının ağırlığı yeterli; ${rg[1]} tekrara ulaşınca plaka eklenir`};return{kg,why:`geçen sefer ${fnum(kg)}×${rp}, aynı ağırlıkla bir tekrar fazlasını dene`}}
@@ -2515,7 +2545,7 @@ function chrome(){const tb=document.getElementById('tabs'),top=document.getEleme
  const bk=app.querySelector('.lnk.back');top.firstElementChild.firstElementChild.innerHTML=bk?`<button class="lnk back" tabindex="-1">${esc(bk.textContent)}</button>`:'';
  if(h&&'IntersectionObserver' in window){topObs=new IntersectionObserver(([e])=>top.classList.toggle('on',!e.isIntersecting&&e.boundingClientRect.top<0),{rootMargin:'-46px 0px 0px 0px'});topObs.observe(h)}else top.classList.remove('on')}
 function render(){render0();chrome();keepAwake();pushSync()}
-function render0(){if(PROF&&!V.run){autoWeek();vaWeek()}applyAccent();if(TABOF[V.view])V.tab=TABOF[V.view];app.classList.toggle('bigm',!!S.big&&V.view=='run');if(V.view!='flex'&&fxOn)fxListen(false);app.innerHTML=V.view=='build'?buildV():V.view=='va'?vaV():V.view=='flex'?flexV():V.view=='body'?bodyV():V.view=='mob'?mobV():V.view=='orm'?ormV():V.view=='guides'?guidesV():V.view=='guide1'?guideDV():V.view=='badges'?badgesV():V.view=='wplan'?wplanV():V.view=='ex'?exV():V.view=='karne'?karneV():V.view=='hedit'?heditV():V.view=='cal'?calV():V.view=='guide'?guideV():V.view=='prs'?prsV():V.view=='set'?setV():V.view=='progs'?progs():V.view=='prog'?progV():V.view=='rep'?rep():V.view=='splash'?splash():V.view=='run'?run():V.view=='edit'?edit():V.view=='hist'?hist():V.view=='day'?day():main()}
+function render0(){if(PROF&&!V.run){autoWeek();rtSync();vaWeek()}applyAccent();if(TABOF[V.view])V.tab=TABOF[V.view];app.classList.toggle('bigm',!!S.big&&V.view=='run');if(V.view!='flex'&&fxOn)fxListen(false);app.innerHTML=V.view=='build'?buildV():V.view=='va'?vaV():V.view=='flex'?flexV():V.view=='body'?bodyV():V.view=='mob'?mobV():V.view=='orm'?ormV():V.view=='guides'?guidesV():V.view=='guide1'?guideDV():V.view=='badges'?badgesV():V.view=='wplan'?wplanV():V.view=='ex'?exV():V.view=='karne'?karneV():V.view=='hedit'?heditV():V.view=='cal'?calV():V.view=='guide'?guideV():V.view=='prs'?prsV():V.view=='set'?setV():V.view=='progs'?progs():V.view=='prog'?progV():V.view=='rep'?rep():V.view=='splash'?splash():V.view=='run'?run():V.view=='edit'?edit():V.view=='hist'?hist():V.view=='day'?day():main()}
 
 // iOS ses bağlamını ekran kilitlenince ya da başka uygulamaya geçince askıya alır ("interrupted"); her dokunuşta ve her bipte yeniden başlatılır.
 function unlockA(){try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();if(actx.state!='running')actx.resume().catch(()=>{})}catch(e){}}
@@ -2772,6 +2802,9 @@ if(a=='gdone'){P.guided=1;saveP();V.gp=0;V.view=V.newProf?'progs':'main';render(
 if(a=='guide'){V.gp=0;V.view='guide';render();window.scrollTo(0,0);return}
 if(a=='prs'||a=='set'){V.view=a;render();window.scrollTo(0,0);return}
 if(a=='plt'){const p=+d.v;let l=S.plates||[25,20,15,10,5,2.5,1.25];l=l.includes(p)?l.filter(x=>x!=p):[...l,p];S.plates=l;save();render();return}
+if(a=='rton'){rtStart();save();render();return}
+if(a=='rtoff'){if(S.rt&&S.rt.on)rtnEnd();render();return}
+if(a=='rtno'){S.rtNo=monKey();save();render();return}
 if(a=='awk'){S.autoWk=S.autoWk===false?true:false;S.wkAt=monTime();save();render();return}
 if(a=='ics'){shareFile('antrenman-takvim.ics',icsText(),'text/calendar','Antrenman takvimi');return}
 if(a=='icss'){shareFile('takviye-hatirlatma.ics',icsSupp(),'text/calendar','Takviye hatırlatmaları');return}
@@ -2795,7 +2828,7 @@ else if(a=='csave'||a=='cman'){let sec;if(a=='cman'){const i=document.getElement
 else if(a=='ccancel'){if(r.co&&!r.done){V.run=null;V.view='main'}else{r.mode=null;r.cx=null}}
 else if(a=='edit')V.view='edit';
 else if(a=='home'){V.view='main';V.run=null}
-else if(a=='start'){if(d.i!=null)V.day=+d.i;const w=eff()[V.day];if(!S.w[w])return;V.run={w,ei:0,si:0,phase:'set',log:[],t0:Date.now(),mode:'pre'};const nk=neckOn(w);if(vaMap()[w]||nk)V.run.ex=dayEx(w);if(dlOn()){V.run.ex=[...clone(S.w[w]),...(nk?neckEx():[])];V.run.ex.forEach(e=>e.sets=Math.max(1,(+e.sets||1)-1));V.run.dl=1}V.view='run'}
+else if(a=='start'){if(d.i!=null)V.day=+d.i;const w=eff()[V.day];if(!S.w[w])return;V.run={w,ei:0,si:0,phase:'set',log:[],t0:Date.now(),mode:'pre'};const nk=neckOn(w);if(vaMap()[w]||nk||rtOn())V.run.ex=dayEx(w);if(dlOn()){V.run.ex=[...clone(S.w[w]),...(nk?neckEx():[])];V.run.ex.forEach(e=>e.sets=Math.max(1,(+e.sets||1)-1));V.run.dl=1}V.view='run'}
 else if(a=='hist'){V.view='hist';V.hn=30}
 else if(a=='delh'){S.log.splice(+d.i,1)}
 else if(a=='quit'){if(r.log.length)S.log.push({d:new Date().toISOString(),w:r.w,wk:S.week,pg:S.prog,part:1,dur:Math.round(elapsed(r)),log:r.log});V.view='main';V.run=null}
