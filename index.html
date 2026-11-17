@@ -34,7 +34,7 @@
 <link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait) and (prefers-color-scheme: dark)" href="splash/1242x2208-d.png">
 <link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait) and (prefers-color-scheme: light)" href="splash/750x1334-l.png">
 <link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait) and (prefers-color-scheme: dark)" href="splash/750x1334-d.png">
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Anton&family=Barlow+Condensed:wght@500;600;700&family=Rajdhani:wght@500;600;700&family=Space+Grotesk:wght@400..700&family=Archivo+Black&family=Pacifico&display=swap" rel="stylesheet">
 <style>
 /* Renkler olimpik ağırlık plakalarından: her antrenman günü bir plaka rengi taşır (Upper kırmızı, Lower mavi, Push sarı, Pull yeşil).
    Nötrler beton/çelik grisi. Tek font ailesi Archivo: normal genişlik metin, dar genişlik başlık ve sayılar. */
@@ -273,6 +273,59 @@ body.tabs #tabs{display:block}
 @keyframes tin{from{opacity:0;transform:translate(-50%,12px)}}@keyframes tout{to{opacity:0;transform:translate(-50%,8px)}}@keyframes pop{from{transform:scale(.3)}60%{transform:scale(1.2)}to{transform:scale(1)}}
 .sp.just.on i{animation:pop .25s ease-out}
 @media (prefers-reduced-motion:reduce){.knob,.rbar i,#top,.ring .rf{transition:none}#app.enter,.toast,.toast i,.sp.just.on i{animation:none}}
+/* ---- Görünüm temalari (S.skin): gün gün döner ya da elle seçilir. Atölye varsayilan görünümdür, hiçbir şeyi değiştirmez. ----
+   Temalar renk değişkenlerini, yazi tipini ve şekilleri (köşe, çerçeve, gölge) değiştirir; yerleşim aynı kalir. */
+:root[data-skin]{--fw:800;--fh:var(--f)}
+:root[data-skin] :is(.pt,.xt,.wn,.timer,.brand,.sp-w,.kv b,.two input,.clk,.rn,.lab:not(label)){font-family:var(--fh);font-weight:var(--fw);font-stretch:100%}
+/* Sokak A, görev menüsü: asfalt zemin, altın sarısı, HUD yeşili; Bugün kartı duraklatma menüsü gibi: seçili ilk satır altın, değerler yeşil */
+:root[data-skin="sokaka"]{--bg:#131314;--sf:#1F1F21;--ink:#E9E6DC;--mut:#A8A497;--line:#3A3A3D;--pri:#F5C542;--onpri:#111;--err:#FF8A7A;--up:#9BD66E;--rest:#4A4A4F;--bar:#6B6B70;--fill:#9BD66E;--red:#C8402E;--blue:#3F7D4E;--yel:#A66B00;--grn:#2F6FA3;--c-red:#E5533D;--c-blue:#6FBF7F;--c-yel:#F5C542;--c-grn:#5BA8E6;--c-rest:#6B6B70;--f:"Barlow Condensed",system-ui,sans-serif;--fh:"Anton","Barlow Condensed",system-ui,sans-serif;--fw:400;color-scheme:dark}
+:root[data-skin="sokaka"] body{font-size:17px;background:linear-gradient(180deg,#1B1B1D,#0E0E0F) fixed}
+:root[data-skin="sokaka"] .plate{background:rgba(0,0,0,.6);color:#E9E6DC;border:0;border-top:4px solid #F5C542;border-radius:0;padding:14px 0 16px}
+:root[data-skin="sokaka"] .plate .wn{color:#fff;font-size:76px;margin:0 16px 10px;text-shadow:5px 5px 0 #000;text-transform:uppercase;transform:skewX(-6deg);transform-origin:left}
+:root[data-skin="sokaka"] .pl{font-size:21px;letter-spacing:.04em;font-weight:600}
+:root[data-skin="sokaka"] .pl li{padding:10px 16px;border-top:1px solid rgba(255,255,255,.1)}
+:root[data-skin="sokaka"] .pl li:first-child{background:#F5C542;color:#111;border-top:0}
+:root[data-skin="sokaka"] .pl li span:last-child{color:#9BD66E;font-weight:700}
+:root[data-skin="sokaka"] .pl li:first-child span:last-child{color:#111}
+:root[data-skin="sokaka"] .plate :is(.pm,.pa){margin-left:16px;margin-right:16px}
+:root[data-skin="sokaka"] .plate .lnk{color:#E9E6DC}
+:root[data-skin="sokaka"] :is(.btn,.pbtn){border:3px solid #000;border-radius:0;box-shadow:3px 3px 0 #000;font-family:var(--fh);font-weight:400;letter-spacing:.05em;text-transform:uppercase;font-size:19px;transform:skewX(-6deg)}
+:root[data-skin="sokaka"] .pbtn{background:#F5C542;color:#111}
+:root[data-skin="sokaka"] .btn.alt{background:transparent;color:var(--ink);border-color:transparent;box-shadow:inset 0 0 0 2px var(--ink)}
+/* Sokak B, yükleme ekranı: mor-pembe-turuncu gün batımı, altın sarısı pembe gölgeli başlık, degrade butonlar, tarihte el yazısı */
+:root[data-skin="sokakb"]{--bg:#14102B;--sf:#221A45;--ink:#F4F0FF;--mut:#B9B2DA;--line:#3A2E6B;--pri:#FF5C8A;--onpri:#14102B;--err:#FF8AA8;--up:#19C3B0;--rest:#4A3E82;--bar:#6B5CA8;--fill:#19C3B0;--red:#FF5C8A;--blue:#19C3B0;--yel:#FFD95A;--grn:#B48CFF;--c-red:#FF5C8A;--c-blue:#19C3B0;--c-yel:#FFD95A;--c-grn:#B48CFF;--c-rest:#6B5CA8;--f:"Barlow Condensed",system-ui,sans-serif;--fh:"Anton","Barlow Condensed",system-ui,sans-serif;--fw:400;color-scheme:dark}
+:root[data-skin="sokakb"] body{font-size:17px;background:linear-gradient(180deg,#2B0F4D 0,#14102B 560px) #14102B no-repeat}
+:root[data-skin="sokakb"] .date{font-family:"Pacifico","Barlow Condensed",cursive;font-weight:400;font-size:18px;color:#FF8AA8}
+:root[data-skin="sokakb"] .plate{background:#221A45;color:#F4F0FF;border-radius:22px;border-top:5px solid var(--pc);padding:16px}
+:root[data-skin="sokakb"] .plate .wn{color:#FFD95A;font-size:84px;text-transform:uppercase;text-shadow:5px 5px 0 #FF5C8A;transform:skewX(-8deg);transform-origin:left}
+:root[data-skin="sokakb"] .plate .lnk{color:#F4F0FF}
+:root[data-skin="sokakb"] .pl{font-size:19px;font-weight:600}
+:root[data-skin="sokakb"] .pl li{border-top:1px solid rgba(255,255,255,.12)}
+:root[data-skin="sokakb"] :is(.p-red,.p-blue,.p-yel,.p-grn){--po:#14102B}
+:root[data-skin="sokakb"] :is(.btn,.pbtn){border:0;border-radius:999px;background:linear-gradient(90deg,#FF5C8A,#FF8A3C);color:#14102B;font-family:var(--fh);font-weight:400;letter-spacing:.05em;text-transform:uppercase;font-size:20px}
+:root[data-skin="sokakb"] .btn.alt{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 2px var(--ink)}
+/* Arena: simsiyah zemin, neon yeşil ve camgöbeği, köşesi kesik kutular */
+:root[data-skin="arena"]{--bg:#07080C;--sf:#0E1016;--ink:#E9ECF5;--mut:#8A93A8;--line:#232838;--pri:#C6FF3D;--onpri:#07080C;--err:#FF6B7A;--up:#C6FF3D;--rest:#5A6280;--bar:#4A5270;--fill:#C6FF3D;--red:#C6FF3D;--blue:#35E0FF;--yel:#FFB020;--grn:#FF4D9D;--c-red:#C6FF3D;--c-blue:#35E0FF;--c-yel:#FFB020;--c-grn:#FF4D9D;--c-rest:#5A6280;--f:"Space Grotesk",system-ui,sans-serif;--fh:"Space Grotesk",system-ui,sans-serif;--fw:700;color-scheme:dark}
+:root[data-skin="arena"] :is(.p-red,.p-blue,.p-yel,.p-grn){--po:#07080C;--pl:rgba(0,0,0,.22)}
+:root[data-skin="arena"] :is(.plate,.btn,.pbtn){border-radius:0;clip-path:polygon(0 0,calc(100% - 14px) 0,100% 14px,100% 100%,0 100%)}
+:root[data-skin="arena"] .plate .wn{text-transform:uppercase;letter-spacing:-.03em}
+/* Cyberpunk: mor-siyah zemin, magenta, camgöbeği ve sari, glitch başliklar, tarama çizgileri */
+:root[data-skin="cyber"]{--bg:#0B0614;--sf:#140C26;--ink:#EDE9FF;--mut:#A99FCF;--line:#3A2C63;--pri:#F9F002;--onpri:#0B0614;--err:#FF6B8A;--up:#05D9E8;--rest:#4A3D7A;--bar:#6B5CA8;--fill:#05D9E8;--red:#FF2A6D;--blue:#05D9E8;--yel:#F9F002;--grn:#B14AFF;--c-red:#FF2A6D;--c-blue:#05D9E8;--c-yel:#F9F002;--c-grn:#B14AFF;--c-rest:#6B5CA8;--f:"Rajdhani",system-ui,sans-serif;--fh:"Rajdhani",system-ui,sans-serif;--fw:700;color-scheme:dark}
+:root[data-skin="cyber"] body{font-size:17px}
+:root[data-skin="cyber"] body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;background:repeating-linear-gradient(0deg,rgba(255,255,255,.03) 0,rgba(255,255,255,.03) 1px,transparent 1px,transparent 3px)}
+:root[data-skin="cyber"] :is(.p-red,.p-blue,.p-yel,.p-grn){--po:#0B0614;--pl:rgba(11,6,20,.28)}
+:root[data-skin="cyber"] :is(.pt,.xt){text-shadow:2px 0 #FF2A6D,-2px 0 #05D9E8}
+:root[data-skin="cyber"] .plate .wn{text-transform:uppercase;letter-spacing:.02em}
+:root[data-skin="cyber"] :is(.plate,.btn,.pbtn){border-radius:0;clip-path:polygon(0 0,calc(100% - 14px) 0,100% 14px,100% 100%,0 100%)}
+/* Poster: sari zemin, kalin siyah çerçeve, sert gölge, dev yazi */
+:root[data-skin="poster"]{--bg:#FFE14D;--sf:#FFFFFF;--ink:#0A0A0A;--mut:#3B3B3B;--line:rgba(10,10,10,.3);--pri:#0A0A0A;--onpri:#FFE14D;--err:#B00020;--up:#0A7A3B;--rest:#9A9A9A;--bar:#6B6B6B;--fill:#0A0A0A;--red:#FF4D8D;--blue:#6EC1FF;--yel:#FFFFFF;--grn:#7CE08A;--c-red:#E0306F;--c-blue:#2A8FD6;--c-yel:#B88A00;--c-grn:#1E9E4A;--c-rest:#6B6B6B;--f:"Space Grotesk",system-ui,sans-serif;--fh:"Archivo Black","Space Grotesk",system-ui,sans-serif;--fw:400;color-scheme:light}
+:root[data-skin="poster"] :is(.p-red,.p-blue,.p-yel,.p-grn,.p-rest){--po:#0A0A0A;--pl:rgba(0,0,0,.25)}
+:root[data-skin="poster"] :is(.plate,.list,.card,.tip,.msg,select,input){border:3px solid #0A0A0A;border-radius:0}
+:root[data-skin="poster"] .plate{box-shadow:6px 6px 0 #0A0A0A}
+:root[data-skin="poster"] :is(.btn,.pbtn){border:3px solid #0A0A0A;border-radius:0;box-shadow:4px 4px 0 #0A0A0A;font-family:var(--fh);font-weight:400;text-transform:uppercase}
+:root[data-skin="poster"] .pbtn{background:#0A0A0A;color:#FFE14D}
+:root[data-skin="poster"] .btn.alt{background:#fff;color:#0A0A0A;box-shadow:4px 4px 0 #0A0A0A}
+:root[data-skin="poster"] .plate .wn{text-transform:uppercase;letter-spacing:-.03em}
 </style></head><body><div id="top" aria-hidden="true"><div><span></span><b></b><span></span></div></div><div id="app"></div><nav id="tabs" aria-label="Bölümler"><div></div></nav><input type="file" id="impf" accept=".json,application/json" hidden>
 <script>
 // Her kişinin verisi ayrı anahtarda: ulppl_v1:<isim>. Kişi listesi PKEY'de.
@@ -1387,7 +1440,7 @@ ${pushBase()?(pushOn()?`<div class="list"><div class="row"><span>Kilitliyken bil
 <p class="mut small">${pushOn()?'':'Ekran kilitliyken uygulama çalışamadığı için antrenman sırasında ekran açık tutulur; ekranı kendin kilitlersen ses, uygulamayı yeniden açtığında çalar. '}Telefonun sessiz modu (yandaki düğme) uygulamanın sesini kapatır; sessiz moddayken dinlenme bitince ekranın üstünde uyarı çıkar.</p>
 ${neckSet()}
 <div class="lab">Antrenman öncesi</div><div class="list"><button class="li" data-a="nochk"><span>Başlarken sabah kontrolü sor</span><b>${S.noChk?'Kapalı':'Açık'}</b></button><button class="li" data-a="nowarm"><span>Başlarken ısınma rutini</span><b>${S.noWarm?'Kapalı':'Açık'}</b></button><button class="li" data-a="nosplash"><span>Hızlı açılış (kaydırma ekranını atla)</span><b>${S.noSplash?'Açık':'Kapalı'}</b></button></div>
-<div class="lab">Görünüm</div><span class="sl">Tema</span><div class="segm sm" role="group" aria-label="Tema" style="margin-bottom:6px">${THEMES.map(([k,l])=>`<button class="${(S.theme||'sys')==k?'on':''}" data-a="thm" data-v="${k}" aria-pressed="${(S.theme||'sys')==k}">${l}</button>`).join('')}</div>
+<div class="lab">Görünüm</div>${skinSet()}<span class="sl">Tema</span><div class="segm sm" role="group" aria-label="Tema" style="margin-bottom:6px">${THEMES.map(([k,l])=>`<button class="${(S.theme||'sys')==k?'on':''}" data-a="thm" data-v="${k}" aria-pressed="${(S.theme||'sys')==k}">${l}</button>`).join('')}</div>
 <p class="mut small" style="margin:0 0 14px">Siyah, iPhone'un OLED ekranında tam siyah zemin kullanır; karanlık salonda gözü daha az yorar ve pil harcar.</p>
 <span class="sl">Renk paleti</span><div class="segm sm" role="group" aria-label="Renk paleti" style="margin-bottom:6px">${PALS.map(([k,l])=>`<button class="${(palRed()?'red':'classic')==k?'on':''}" data-a="pal" data-v="${k}" aria-pressed="${(palRed()?'red':'classic')==k}">${l}</button>`).join('')}</div>
 <p class="mut small" style="margin:0 0 14px">Kırmızı tonları: Upper kırmızı, Lower bordo, Push kiremit, Pull vişne; dinlenme ve esneme sayaçları da bu renklerde. Klasik: kırmızı, mavi, sarı, yeşil.</p>
@@ -2156,10 +2209,20 @@ const palRed=()=>!S||S.pal!='classic',accOf=k=>(palRed()&&ACC_R[k])||ACC[k];
 const PALS=[['red','Kırmızı tonları'],['classic','Klasik (4 renk)']];
 // Tema: sistem, açık, koyu ya da OLED siyah. Durum çubuğu rengi (theme-color) seçilen zemine uyar.
 const THEMES=[['sys','Sistem'],['light','Açık'],['dark','Koyu'],['oled','Siyah']],TCOL={light:'#E9EAEC',dark:'#111315',oled:'#000000'};
-function applyTheme(){const t=S&&S.theme||'sys',root=document.documentElement;if(t=='sys')delete root.dataset.theme;else root.dataset.theme=t;if(palRed())root.dataset.pal='red';else delete root.dataset.pal;
- document.querySelectorAll('meta[name=theme-color]').forEach(m=>{const light=/light/.test(m.media);m.content=t=='sys'?(light?TCOL.light:TCOL.dark):TCOL[t]})}
+// Görünüm temaları: Atölye varsayılan görünüm; diğerleri renk, yazı tipi ve şekilleri değiştirir. S.skin yoksa ya da 'auto' ise her gün sıradaki tema gelir.
+const SKINS=[['atolye','Atölye','Koyu zemin, kırmızı plaka renkleri, dar kalın yazı. Eski görünüm.','#111315'],['sokaka','Sokak A: görev menüsü','Asfalt zemin, altın sarısı, HUD yeşili; Bugün kartı duraklatma menüsü gibi, seçili satır altın.','#131314'],['arena','Arena','Simsiyah zemin, neon yeşil ve camgöbeği, köşesi kesik kutular.','#07080C'],['sokakb','Sokak B: yükleme ekranı','Mor-pembe-turuncu gün batımı, altın sarısı başlık, degrade butonlar, el yazısı tarih.','#14102B'],['cyber','Cyberpunk','Mor-siyah zemin, magenta, camgöbeği ve sarı, glitch başlıklar, tarama çizgileri.','#0B0614'],['poster','Poster','Sarı zemin, kalın siyah çerçeve, sert gölge, dev yazı.','#FFE14D']];
+const dayNum=()=>{const d=new Date();return Math.floor((d.getTime()-d.getTimezoneOffset()*6e4)/864e5)};
+// Eski kayıtlı 'sokak' seçimi Sokak A'ya taşınır.
+const skinOf=()=>{let k=S&&S.skin;if(k=='sokak')k='sokaka';return k&&SKINS.some(x=>x[0]==k)?k:SKINS[dayNum()%SKINS.length][0]};
+function skinSet(){const cur=S.skin&&SKINS.some(x=>x[0]==S.skin)?S.skin:'auto',td=SKINS.find(x=>x[0]==skinOf());
+ return`<span class="sl">Görünüm teması</span><div class="list"><button class="li" data-a="skin" data-v="auto" aria-pressed="${cur=='auto'}"><span>Otomatik: her gün bir tema<span class="sub">${SKINS.length} tema sırayla döner. Bugün: ${esc(td[1])}</span></span><b>${cur=='auto'?'Seçili':''}</b></button>${SKINS.map(([k,l,d])=>`<button class="li" data-a="skin" data-v="${k}" aria-pressed="${cur==k}"><span>${esc(l)}<span class="sub">${esc(d)}</span></span><b>${cur==k?'Seçili':''}</b></button>`).join('')}</div><p class="mut small" style="margin:6px 0 14px">${skinOf()=='atolye'?'':'Açık, koyu ve siyah seçimi yalnızca Atölye temasında geçerli. '}Bir temayı elle seçersen o sabit kalır; Otomatik'e dönünce her gün değişmeye devam eder.</p>`}
+function applyTheme(){const t=S&&S.theme||'sys',root=document.documentElement,sk=skinOf(),skc=SKINS.find(x=>x[0]==sk)[3];
+ if(sk!='atolye'){delete root.dataset.theme;delete root.dataset.pal;root.dataset.skin=sk}
+ else{delete root.dataset.skin;if(t=='sys')delete root.dataset.theme;else root.dataset.theme=t;if(palRed())root.dataset.pal='red';else delete root.dataset.pal}
+ document.querySelectorAll('meta[name=theme-color]').forEach(m=>{const light=/light/.test(m.media);m.content=sk!='atolye'?skc:t=='sys'?(light?TCOL.light:TCOL.dark):TCOL[t]})}
 function dayAcc(){if(!PROF||!S.w)return ACC.ink;const w=eff()[today()];return S.w[w]&&accOf(pc(w))||ACC.ink}
-function applyAccent(){applyTheme();const k=S&&S.accent||'day',a=k=='day'?dayAcc():accOf(k)||ACC.ink,st=document.documentElement.style;if(a[1]){st.setProperty('--pri',a[1]);st.setProperty('--onpri',a[2])}else{st.removeProperty('--pri');st.removeProperty('--onpri')}}
+function applyAccent(){applyTheme();const st=document.documentElement.style;if(skinOf()!='atolye'){st.removeProperty('--pri');st.removeProperty('--onpri');return}
+ const k=S&&S.accent||'day',a=k=='day'?dayAcc():accOf(k)||ACC.ink;if(a[1]){st.setProperty('--pri',a[1]);st.setProperty('--onpri',a[2])}else{st.removeProperty('--pri');st.removeProperty('--onpri')}}
 // ---- Akıllı dinlenme: setin zorluğuna göre programdaki dinlenme süresini uzatır ya da kısaltır ----
 function smartRest(e,base,rpe,reps){if(S.noSmartRest||isTimed(e))return{sec:base,why:''};const rg=repRange(e.reps);let d=0,w='';
  if(rpe>=10){d=30;w='Tükenişe giden bir setti'}else if(rpe>=9.5){d=20;w='Tükenişe çok yakın bir setti'}else if(rpe>=9){d=15;w='Zor bir setti'}else if(rg&&reps&&reps<rg[0]){d=30;w='Hedef tekrarın altında kaldın'}else if(rpe&&rpe<=7&&base>60){d=-15;w='Rahat bir setti'}
@@ -2171,13 +2234,17 @@ lower:[['Kalça çevirme',30],['Bacak sallama öne-arkaya (bacak başına 15)',4
 full:[['Hafif tempoda yerinde koşu ya da ip',60],['Kol çevirme',30],['Kalça çevirme',30],['Vücut ağırlığıyla squat',40],['Hafif şınav',30],['Glute bridge',30]],
 cool:[['Göğüs esnetme (kapı pervazında)',40],['Lat esnetme (bir tutamağa asılarak)',40],['Quadriceps esnetme (bacak başına 30 sn)',60],['Hamstring esnetme (öne eğilerek)',40],['Kalça esnetme, güvercin (bacak başına 30 sn)',60],['Derin nefes, burundan al ağızdan ver',60]]};
 const rtType=w=>/lower|leg|squat test|deadlift test/i.test(w)?'lower':/upper|push|pull|chest|back|shoulder|arm|bench test/i.test(w)?'upper':'full';
-function rtV(r){const k=r.mode=='cool'?'cool':rtType(r.w),L=RTN[k],t=r.rt||{i:0,end:Date.now()+L[0][1]*1000},it=L[t.i];r.rt=t;
+// Her hareketin süresi, hazırlık geri sayımından (ısınmada 8 sn, soğumada 5 sn) sonra başlar; t.ps hazırlığın bitiş anıdır.
+const rtPrep=r=>r.mode=='cool'?5:8;
+function rtBegin(r,i){r.rt.i=i;r.rt.ps=Date.now()+rtPrep(r)*1000;r.rt.end=0}
+function rtV(r){const k=r.mode=='cool'?'cool':rtType(r.w),L=RTN[k],t=r.rt||{i:0,ps:Date.now()+rtPrep(r)*1000,end:0},it=L[t.i];r.rt=t;
  return`<div class="hd"><span class="eyebrow mut">${r.mode=='cool'?'Soğuma':'Isınma'}, ${t.i+1}/${L.length}</span><button class="lnk" data-a="rtend">${r.mode=='cool'?'Bitir':'Isınmayı geç'}</button></div>
-<h1 class="xt">${esc(it[0])}</h1><div class="timer" id="rtt">${fmt(Math.max(0,Math.ceil((t.end-Date.now())/1000)))}</div>
-<p class="mut">Sıradaki: ${t.i+1<L.length?esc(L[t.i+1][0]):r.mode=='cool'?'bitti':'antrenmana başla'}</p><button class="btn" data-a="rtnext">${t.i+1<L.length?'Sonraki':r.mode=='cool'?'Bitir':'Antrenmana başla'}</button>
+${t.ps?'<p class="eyebrow">Hazırlan</p>':''}<h1 class="xt">${esc(it[0])}</h1><div class="timer" id="rtt" ${t.ps?'style="opacity:.55"':''}>${fmt(Math.max(0,Math.ceil(((t.ps||t.end)-Date.now())/1000)))}</div>
+<p class="mut">${t.ps?`Süre ${it[1]} sn, geri sayım bitince başlar. `:''}Sıradaki: ${t.i+1<L.length?esc(L[t.i+1][0]):r.mode=='cool'?'bitti':'antrenmana başla'}</p>${t.ps?'<button class="btn" data-a="rtnow">Hemen başla</button>':`<button class="btn" data-a="rtnext">${t.i+1<L.length?'Sonraki':r.mode=='cool'?'Bitir':'Antrenmana başla'}</button>`}
 <div class="lab">Rutin, ${(t.done||[]).length}/${L.length} tamam</div><div class="list rtl">${L.map((x,i)=>{const ok=(t.done||[]).includes(i);return`<button class="li ${i==t.i?'cur':''}" data-a="rtgo" data-i="${i}" ${i==t.i?'aria-current="step"':''}><span class="ck ${ok?'on':''}" aria-hidden="true">${ok?'✓':''}</span><span class="grow">${esc(x[0])}${ok?'<span class="sr"> (tamam)</span>':''}</span><span class="mut">${x[1]} sn</span></button>`}).join('')}</div>
 <p class="mut small">Bir harekete dokunarak ona geçebilirsin; "Sonraki" yaptığın hareketi tamamlandı olarak işaretler.</p>`}
-function rtStep(r){const L=RTN[r.mode=='cool'?'cool':rtType(r.w)];r.rt.done=r.rt.done||[];if(!r.rt.done.includes(r.rt.i))r.rt.done.push(r.rt.i);r.rt.i++;if(r.rt.i>=L.length){rtEnd(r);return}r.rt.end=Date.now()+L[r.rt.i][1]*1000;beep();save();render()}
+function rtStep(r){const L=RTN[r.mode=='cool'?'cool':rtType(r.w)];r.rt.done=r.rt.done||[];if(!r.rt.done.includes(r.rt.i))r.rt.done.push(r.rt.i);r.rt.i++;if(r.rt.i>=L.length){rtEnd(r);return}rtBegin(r,r.rt.i);beep();save();render()}
+function rtGo(r){const L=RTN[r.mode=='cool'?'cool':rtType(r.w)];delete r.rt.ps;r.rt.end=Date.now()+L[r.rt.i][1]*1000;beep();save();render()}
 function rtEnd(r){const warm=r.mode=='warm';r.mode=null;delete r.rt;if(warm)r.t0=Date.now();save();render();window.scrollTo(0,0)}
 // ---- Süreli setler (plank, statik tutuş): tekrar yerine saniye ----
 const isTimed=e=>/\bsn\b|saniye|\d\s*s\b|\d+-\d+s\b/i.test(String(e.reps))||/plank|static hold|statik tutuş/i.test(e.n);
@@ -2633,7 +2700,7 @@ setInterval(()=>{const m=V.mob;if(V.view!='mob'||!m||m.fin)return;const rem=Math
  const t=document.getElementById('mt'),tb=document.getElementById('mtb');if(t)t.textContent=fmt(rem);if(tb)tb.style.strokeDashoffset=(282.74*(1-Math.max(0,Math.min(1,rem/mobS()[m.i][1])))).toFixed(2)},250);
 // Isınma/soğuma rutini ve süreli set sayaçları.
 setInterval(()=>{const r=V.run;if(V.view!='run'||!r)return;
- if((r.mode=='warm'||r.mode=='cool')&&r.rt){const rem=Math.ceil((r.rt.end-Date.now())/1000),el=document.getElementById('rtt');if(rem<=0)rtStep(r);else if(el)el.textContent=fmt(rem)}
+ if((r.mode=='warm'||r.mode=='cool')&&r.rt){const rem=Math.ceil(((r.rt.ps||r.rt.end)-Date.now())/1000),el=document.getElementById('rtt');if(rem<=0){if(r.rt.ps)rtGo(r);else rtStep(r)}else if(el)el.textContent=fmt(rem)}
  if(r.tt&&!r.mode){const rem=Math.ceil((r.tt.end-Date.now())/1000),el=document.getElementById('tsc');if(rem<=0){const sec=r.tt.sec;delete r.tt;r.drp=String(sec);beep();setTimeout(beep,450);save();render()}else if(el)el.textContent=fmt(rem)}},250);
 document.getElementById('tabs').addEventListener('click',ev=>{const b=ev.target.closest('[data-tab]');if(!b)return;const was=V.view=='main'&&(V.tab||'bugun')==b.dataset.tab;
  V.tab=b.dataset.tab;V.view='main';V.msg='';render();window.scrollTo({top:0,behavior:was?'smooth':'auto'})});
@@ -2663,7 +2730,8 @@ if(a=='wat'){const k=dkey();S.water=S.water||{};S.water[k]=Math.max(0,(S.water[k
 if(a=='bwq'){const v=num(document.getElementById('bwq').value);if(v>=25&&v<=300){setTodayH('bw',Math.round(v*10)/10);S.bw=String(Math.round(v*10)/10);save()}render();return}
 if(a=='ci'){V.ci=V.ci||{};V.ci[d.k]=+d.v;render();return}
 if(a=='cisave'||a=='ciskip'){const k=ciKey();if(k){S.wci=S.wci||{};S.wci[k]=a=='ciskip'?{skip:1}:{...V.ci};V.ci=null;save()}render();return}
-if(a=='rtgo'){const r=V.run,L=RTN[r.mode=='cool'?'cool':rtType(r.w)];r.rt.i=+d.i;r.rt.end=Date.now()+L[r.rt.i][1]*1000;save();render();return}
+if(a=='rtgo'){const r=V.run;rtBegin(r,+d.i);save();render();return}
+if(a=='rtnow'){const r=V.run;if(r.rt&&r.rt.ps)rtGo(r);return}
 if(a=='mob'){try{actx=actx||new (window.AudioContext||window.webkitAudioContext)()}catch(e){}const k=ROUT[d.v]?d.v:'kolay';V.mob={k,i:0,end:Date.now()+ROUT[k].s[0][1]*1000,done:[],t0:Date.now()};V.view='mob';render();window.scrollTo(0,0);return}
 if(a=='mobn'){mobStep(1);return}
 if(a=='mobp'){mobStep(-1);return}
@@ -2697,6 +2765,7 @@ if(a=='pusht'){pushTest();toast('Deneme bildirimi 10 saniye içinde gelecek');re
 if(a=='beept'){unlockA();beep();setTimeout(beep,450);toast('Ses denendi');return}
 if(a=='mobx'){mobEnd();return}
 if(a=='nomob'){S.noMob=!S.noMob;save();render();return}
+if(a=='skin'){S.skin=d.v=='auto'?undefined:d.v;save();render();return}
 if(a=='thm'){S.theme=d.v=='sys'?undefined:d.v;save();render();return}
 if(a=='stog'){suppTog(d.v);V.js=d.v;render();V.js=null;return}
 if(a=='sedit'){V.sedit=!V.sedit;suppList();render();return}
